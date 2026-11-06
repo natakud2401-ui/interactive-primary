@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Интерактивная мастерская</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f3f6fc;
+  font-family: Arial, sans-serif;
+  color: #24344b;
+}
+header {
+  background: linear-gradient(120deg,#2456b7,#648ce9);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+}
+h1 { margin: 0 0 12px; font-size: 30px; }
+header p { margin: 0; }
+main { max-width: 950px; margin: auto; padding: 25px 16px; }
+h2 { text-align: center; font-size: 23px; }
+.grades, .subjects, .tasks {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0 30px;
+}
+.grades { grid-template-columns: repeat(4,1fr); }
+.subjects { grid-template-columns: repeat(3,1fr); }
+button {
+  border: 0;
+  border-radius: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+}
+.grade {
+  padding: 18px 5px;
+  background: white;
+  color: #2456b7;
+  box-shadow: 0 2px 8px #dce3f0;
+}
+.grade.active { background: #2456b7; color: white; }
+.subject {
+  min-height: 115px;
+  padding: 20px 10px;
+  font-size: 17px;
+  color: #24344b;
+  box-shadow: 0 3px 8px #dce3f0;
+}
+.subject:nth-child(6n+1) { background: #ffe6a3; }
+.subject:nth-child(6n+2) { background: #cce5ff; }
+.subject:nth-child(6n+3) { background: #c9efd5; }
+.subject:nth-child(6n+4) { background: #e6dbff; }
+.subject:nth-child(6n+5) { background: #ffdbcd; }
+.subject:nth-child(6n+6) { background: #f8d7ec; }
+.subject.active { outline: 3px solid #2456b7; }
+#taskSection {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px #e1e6f0;
+}
+.tasks { grid-template-columns: repeat(2,1fr); }
+.tasks a {
+  display: block;
+  padding: 18px;
+  background: #eaf1ff;
+  border-radius: 10px;
+  color: #194b9c;
+  text-decoration: none;
+  font-weight: bold;
+}
+.tasks a:hover { background: #d5e4ff; }
+.empty {
+  text-align: center;
+  color: #66758d;
+  padding: 20px;
+  line-height: 1.6;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #66758d;
+  font-size: 14px;
+}
+@media(max-width:650px) {
+  .subjects { grid-template-columns: repeat(2,1fr); }
+  .tasks { grid-template-columns: 1fr; }
+  h1 { font-size: 25px; }
+  .subject { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Интерактивная мастерская</h1>
+  <p>Учимся, исследуем, решаем!</p>
+</header>
+
+<main>
+  <h2>Выбери свой класс</h2>
+  <div class="grades" id="grades"></div>
+
+  <h2>Выбери предмет</h2>
+  <div class="subjects" id="subjects"></div>
+
+  <section id="taskSection">
+    <h2 id="taskTitle">Интерактивные задания</h2>
+    <div id="taskList" class="empty">
+      Выбери класс и предмет, чтобы увидеть задания.
+    </div>
+  </section>
+</main>
+
+<footer>
+  Интерактивная мастерская · Начальная школа
+</footer>
+
+<script>
+const subjects = [
+  "Математика",
+  "Русский язык",
+  "Естествознание",
+  "Познание мира",
+  "Вычислительное мышление",
+  "Основы языкознания",
+  "Я познаю мир",
+  "Математическое моделирование"
+];
+// Здесь будут добавляться опубликованные задания.
+// Пример записи:
+// {
+//   grade: 3,
+//   subject: "Математика",
+//   title: "Таблица умножения",
+//   file: "grade-3/math/multiplication.html"
+// }
+const lessons = [];
+
+let selectedGrade = 3;
+let selectedSubject = "";
+
+const gradesBox = document.getElementById("grades");
+const subjectsBox = document.getElementById("subjects");
+const taskList = document.getElementById("taskList");
+const taskTitle = document.getElementById("taskTitle");
+
+function showGrades() {
+  gradesBox.innerHTML = "";
+  for (let n = 1; n <= 4; n++) {
+    const button = document.createElement("button");
+    button.className =
+      "grade" + (selectedGrade === n ? " active" : "");
+    button.textContent = n + " класс";
+    button.onclick = () => {
+      selectedGrade = n;
+      selectedSubject = "";
+      showGrades();
+      showSubjects();
+      showTasks();
+    };
+    gradesBox.appendChild(button);
+  }
+}
+
+function showSubjects() {
+  subjectsBox.innerHTML = "";
+  subjects.forEach(name => {
+    const button = document.createElement("button");
+    button.className =
+      "subject" + (selectedSubject === name ? " active" : "");
+    button.textContent = name;
+    button.onclick = () => {
+      selectedSubject = name;
+      showSubjects();
+      showTasks();
+    };
+    subjectsBox.appendChild(button);
+  });
+}
+
+function showTasks() {
+  taskList.replaceChildren();
+
+  if (!selectedSubject) {
+    taskTitle.textContent = "Интерактивные задания";
+    taskList.className = "empty";
+    taskList.textContent =
+      "Выбери предмет, чтобы увидеть задания.";
+    return;
+  }
+
+  taskTitle.textContent =
+    selectedGrade + " класс · " + selectedSubject;
+
+  const found = lessons.filter(item =>
+    item.grade === selectedGrade &&
+    item.subject === selectedSubject
+  );
+
+  if (found.length === 0) {
+    taskList.className = "empty";
+    taskList.textContent =
+      "Задания для этого раздела скоро появятся.";
+    return;
+  }
+
+  taskList.className = "tasks";
+  found.forEach(item => {
+    const link = document.createElement("a");
+    link.href = item.file;
+    link.textContent = item.title;
+    taskList.appendChild(link);
+  });
+}
+
+showGrades();
+showSubjects();
+showTasks();
+</script>
+
+</body>
+</html>
