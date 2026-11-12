@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#edf6f7">
+<title>Уравнения — записываю и решаю · 2 класс</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#253748;background:#edf5f6;--blue:#226b75;--ink:#294967;--green:#147c54;--red:#b12c35;--line:#d6e4e9}
+*{box-sizing:border-box}body{margin:0;padding:14px 10px 42px}.app{max-width:920px;margin:auto;background:#fff;border:1px solid #d9e6e9;border-radius:18px;overflow:hidden;box-shadow:0 15px 38px #15495b12}
+header{background:#236d77;color:white;padding:21px 27px}header h1{font-size:clamp(22px,4.5vw,31px);line-height:1.15;margin:0 0 6px}header p{margin:0;font-size:14px;opacity:.94}
+main{padding:22px 26px 30px}.line{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.pill{font-size:12px;background:#e8f3f4;color:#27616e;padding:7px 10px;border-radius:50px;font-weight:700}.muted{font-size:13px;color:#597180}.progress{height:8px;background:#dfedf0;border-radius:30px;margin:14px 0 20px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:#258a79;transition:width .2s}.heading{font-size:clamp(19px,3.4vw,24px);line-height:1.4;font-weight:750;margin:7px 0 13px}.instruction{line-height:1.55;margin:0 0 13px;color:#3c5362}.rowgap{display:grid;gap:18px;grid-template-columns:minmax(0,1fr) 230px;align-items:start}
+.notebook{background-color:#fff;border:1px solid #b8d2e6;border-radius:13px;padding:19px 18px 15px;min-height:268px;background-image:linear-gradient(#dce9f5 1px, transparent 1px);background-size:100% 37px;box-shadow:0 4px 12px #2d5b7a0c}.nbhead{font-size:12px;font-weight:750;text-transform:uppercase;letter-spacing:.08em;color:#527289;display:inline-block;background:#fff;padding:3px 7px;margin:-5px 0 10px}.inkrow{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#25547e;font-size:clamp(21px,3.9vw,28px);line-height:37px;white-space:pre-wrap;word-break:break-word;min-height:37px;padding-left:8px}.inkrow.check{color:#26725d}.inkrow.bad-ink{color:#ac3d42}.active-label{font-size:12px;font-weight:700;color:#4b677c;margin:12px 0 6px;padding-left:8px}.writing{width:100%;border:2px solid #5b9fbb;border-radius:9px;outline:none;padding:10px 12px;font:700 clamp(20px,4vw,27px) ui-monospace,Consolas,monospace;min-height:53px;letter-spacing:.025em;color:#25547e;background:#fff;box-shadow:0 0 0 3px #e5f4fa}.writing:focus{border-color:#24789d;box-shadow:0 0 0 4px #d3ecf7}.writing.error{border-color:#bd5555;box-shadow:0 0 0 3px #fce3e3}.writing.correct{border-color:#2b936e;box-shadow:0 0 0 3px #ddf5e9}.helper{font-size:12px;line-height:1.45;color:#637b8a;margin:6px 0 0}.keybox{background:#f4f9fa;padding:11px;border:1px solid #d5e5ea;border-radius:12px}.keytitle{font-size:13px;font-weight:700;color:#526f7c;margin:0 0 10px;text-align:center}.keypad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.key{min-height:46px;border:1px solid #c9dce2;background:white;color:#2f4658;border-radius:9px;font-size:21px;font-weight:700;cursor:pointer;touch-action:manipulation}.key:active{background:#dbeff1}.key.math{background:#e9f3f6;color:#225b72}.key.del{background:#fff0ed;color:#a04140}.key:focus-visible,.btn:focus-visible{outline:3px solid #d3a340;outline-offset:2px}.notice{margin-top:17px;padding:12px 14px;border-radius:11px;line-height:1.52;border-left:5px solid #3d8dab;background:#edf6f8;color:#2b5263}.notice.error{border-color:#bd4145;background:#fff0ef;color:#883135}.notice.hint{border-color:#b88e38;background:#fff8e9;color:#72551f}.notice.success{border-color:#329264;background:#e8f7ee;color:#176043}.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.btn{border:0;background:#246e71;color:white;padding:11px 17px;min-height:45px;font:700 15px system-ui;border-radius:10px;cursor:pointer}.btn.secondary{background:#e7f2f1;color:#22665c}.btn.outline{background:white;border:1px solid #a9c9ce;color:#26636c}.btn:disabled{opacity:.46;cursor:not-allowed}.mini-info{padding:11px 14px;border-radius:10px;border:1px solid #d9e4e7;background:#f7fafb;font-size:14px;line-height:1.5;margin:14px 0}.wrongwork{padding:12px 15px;background:#fff7f4;border-left:4px solid #cc8677;border-radius:10px;margin:10px 0 17px}.wrongwork .inkrow{font-size:22px;line-height:32px;min-height:32px}.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0 18px}.resultcell{padding:15px 12px;border:1px solid #d7e8e4;background:#edf8f3;border-radius:11px}.resultcell b{display:block;font-size:27px;color:#1c755b}.resultcell span{font-size:12px;color:#49665e}.listrow{padding:10px 0;border-bottom:1px solid #e8eef0;line-height:1.45}.listrow small{color:#627a85;display:block}.welcome{line-height:1.6;max-width:620px}.welcome h2{font-size:23px;line-height:1.3;margin:0 0 8px}.welcome .example{margin:16px 0;background:#f2f7fb;border:1px solid #dbeaf4;border-radius:12px;padding:15px 18px;display:inline-block}.example .inkrow{font-size:22px}.copyright{margin-top:24px;text-align:center;color:#8598a2;font-size:11px}
+@media(max-width:650px){body{margin:0;padding:0}.app{min-height:100vh;border:0;border-radius:0}header{padding:19px 17px}main{padding:17px 15px 27px}.rowgap{grid-template-columns:1fr;gap:12px}.keypad{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.key{font-size:20px;min-height:44px}.keybox{padding:8px}.keytitle{display:none}.notebook{min-height:225px;padding:14px 12px}.writing{min-height:53px}.results{gap:6px}.resultcell{padding:12px 8px}.resultcell b{font-size:23px}.resultcell span{font-size:11px}}
+@media(max-width:380px){.keypad{grid-template-columns:repeat(4,1fr)}.key{min-height:40px}.buttons .btn{flex:1;padding:10px 9px;font-size:14px}}
+</style>
+</head>
+<body><div class="app"><header><h1>Уравнения по шагам</h1><p>2 класс · Запись уравнения и его решения</p></header><main id="app" aria-live="polite"></main></div>
+<script>
+'use strict';
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const core=(id,kind,pos,known,sum,extra={})=>({id,kind,pos,known,sum,...extra});
+const diagnosis=[
+ core('d1','eqonly','first',8,42),
+ core('d2','eqonly','second',9,46),
+ core('d3','oponly','first',7,35),
+ core('d4','valueonly','second',6,51)
+];
+const baseline=[
+ core('b1','full','first',9,57),
+ core('b2','full','second',8,53),
+ core('b3','repair','second',9,47),
+ core('b4','full','first',6,73)
+];
+const checkpoints=[core('c1','full','first',8,65),core('c2','full','second',7,83)];
+const attention={equation:'запись уравнения',operation:'запись действия',value:'вычисление неизвестного',check:'проверка'};
+const state={phase:'intro',idx:0,queue:[],stage:0,entry:'',attempts:0,hintCount:0,feedback:null,success:false,assisted:false,completed:[],taskIssues:[],diagResults:[],practiceResults:[],checkpointResults:[],allRecords:[],independentStreak:0,remedialCount:{equation:0,operation:0,value:0,check:0},helpTask:null,returnState:null,errors:0,hints:0};
+const stages=t=>t.kind==='eqonly'?['equation']:t.kind==='oponly'?['operation']:t.kind==='valueonly'?['value']:t.kind==='checkonly'?['check']:t.kind==='repair'?['operation','value']:['equation','operation','value','check'];
+const current=()=>state.helpTask||(state.phase==='diagnosis'?diagnosis[state.idx]:state.phase==='practice'?state.queue[state.idx]:state.phase==='checkpoint'?checkpoints[state.idx]:null);
+const stg=()=>stages(current())[state.stage];
+const ans=t=>t.sum-t.known;
+const line=(t,kind)=>{
+ const x='х';
+ if(kind==='equation')return t.pos==='first'?`${x} + ${t.known} = ${t.sum}`:`${t.known} + ${x} = ${t.sum}`;
+ if(kind==='operation')return `${x} = ${t.sum} − ${t.known}`;
+ if(kind==='value')return `${x} = ${ans(t)}`;
+ if(kind==='check')return t.pos==='first'?`${ans(t)} + ${t.known} = ${t.sum}`:`${t.known} + ${ans(t)} = ${t.sum}`;
+ return '';
+};
+const normalize=s=>String(s).replace(/[\s\u00a0]/g,'').replace(/[ХхX]/g,'x').replace(/[–—−]/g,'-').replace(/＝/g,'=').replace(/＋/g,'+');
+const checkCorrect=(t,k,v)=>normalize(v)===normalize(line(t,k));
+const stageTitle={equation:'Запиши уравнение',operation:'Первая строка решения',value:'Вторая строка решения',check:'Проверка'};
+const stageInstruction={equation:'Запиши всё уравнение: оба слагаемых и сумму.',operation:'Запиши действие, с помощью которого найдёшь х.',value:'Вычисли и запиши, чему равен х.',check:'Подставь найденное число вместо х и запиши равенство.'};
+function prompt(t){
+ if(t.kind==='eqonly' || t.kind==='full')return t.pos==='first'?`Первое слагаемое неизвестно, второе — ${t.known}, сумма — ${t.sum}.`:`Первое слагаемое — ${t.known}, второе неизвестно, сумма — ${t.sum}.`;
+ if(t.kind==='repair')return 'В чужом решении есть ошибка. Запиши правильные строки решения.';
+ if(t.kind==='oponly')return 'Найди неизвестное слагаемое. Запиши сначала действие, а не только ответ.';
+ if(t.kind==='valueonly')return 'Вычисли значение неизвестного и запиши вторую строку решения.';
+ if(t.kind==='checkonly')return 'Запиши проверку найденного значения.';
+ return '';
+}
+function stageHint(k,t,n){
+ const texts={
+ equation:['Вспомни порядок: первое слагаемое, знак +, второе слагаемое, знак =, сумма.','Неизвестное слагаемое обозначь буквой х. Смотри, первое оно или второе.'],
+ operation:['Чтобы найти неизвестное слагаемое, из суммы вычитают известное слагаемое.','Строка решения начинается с «х =». После знака = запиши вычитание.'],
+ value:['Посмотри на действие в предыдущей строке. Выполни вычитание.','В новой строке запиши «х =» и полученное число.'],
+ check:['Вместо х поставь найденное число. Проверь, получилась ли исходная сумма.','В проверке слагаемые должны стоять в том же порядке, что в исходном уравнении.']
+ };return texts[k][Math.min(n,1)];
+}
+function errorMessage(t,k,v){
+ const s=normalize(v),expected=normalize(line(t,k));
+ if(k==='equation'){
+  if(!s.includes('x'))return 'Неизвестное слагаемое в записи обозначают буквой х.';
+  if(s.includes('-'))return 'В уравнении два слагаемых. Между ними должен стоять знак сложения.';
+  if(!s.includes('='))return 'В уравнении после слагаемых должен быть знак = и сумма.';
+  const rev=normalize(t.pos==='first'?`${t.known}+х=${t.sum}`:`х+${t.known}=${t.sum}`);
+  if(s===rev)return 'Слагаемые поменялись местами. Запиши их в порядке из условия.';
+  return 'Сравни запись с условием: где первое слагаемое, где второе и какое число является суммой.';
+ }
+ if(k==='operation'){
+  if(!s.startsWith('x='))return 'Решение записывают с буквы х и знака =.';
+  if(!s.includes('-'))return 'Сначала запиши действие вычитания: из суммы вычитают известное слагаемое.';
+  if(s===normalize(`х=${t.known}-${t.sum}`))return 'Порядок чисел в вычитании изменён. Начни с суммы.';
+  if(s===normalize(`х=${ans(t)}`))return 'Получен ответ, но первая строка решения должна показывать действие.';
+  return 'В первой строке решения запиши сумму, знак − и известное слагаемое.';
+ }
+ if(k==='value'){
+  if(!s.startsWith('x='))return 'Записывай не одно число, а полную строку: х = ...';
+  if(s===normalize(line(t,'operation')))return 'Действие уже записано строкой выше. Теперь его нужно вычислить.';
+  return 'Проверь вычитание в предыдущей строке и запиши найденное число.';
+ }
+ if(k==='check'){
+  if(s.includes('x'))return 'В проверке вместо буквы х должно стоять найденное число.';
+  if(s===normalize(t.pos==='first'?`${t.known}+${ans(t)}=${t.sum}`:`${ans(t)}+${t.known}=${t.sum}`))return 'Равенство верное, но для проверки сохрани порядок слагаемых исходного уравнения.';
+  return 'Подставь найденное число вместо х и проверь, получается ли сумма.';
+ }
+ return 'Сверь запись с условием.';
+}
+const tpl=(s)=>esc(s);
+function firstLines(t){
+ const start=[];
+ if(t.kind==='oponly')start.push({kind:'equation',text:line(t,'equation')});
+ if(t.kind==='valueonly'){start.push({kind:'equation',text:line(t,'equation')});start.push({kind:'operation',text:line(t,'operation')});}
+ if(t.kind==='repair')start.push({kind:'equation',text:line(t,'equation')});
+ if(t.kind==='checkonly'){start.push({kind:'equation',text:line(t,'equation')});start.push({kind:'operation',text:line(t,'operation')});start.push({kind:'value',text:line(t,'value')});}
+ return start;
+}
+function taskLines(t){return [...firstLines(t),...state.completed];}
+function stageLabel(k){return k==='equation'?'Уравнение':k==='operation'||k==='value'?'Решение':'Проверка';}
+function intro(){return `<div class="welcome"><h2>Запиши уравнение и реши его</h2><p>Сначала проверим, как ты записываешь уравнения. Затем потренируем то, что пока вызывает затруднение.</p><p>На каждом шаге <b>записывай строку сам</b>. Вводи её с клавиатуры или с помощью кнопок на экране.</p><div class="example"><div class="inkrow">х + 5 = 17</div><div class="inkrow">х = 17 − 5</div><div class="inkrow">х = 12</div></div><p class="muted">Это только образец оформления. В заданиях будут другие числа.</p><div class="buttons"><button class="btn" id="start">Начать</button></div></div>`;}
+function visibleProgress(){
+ let total=diagnosis.length+state.queue.length+checkpoints.length;
+ let done=state.phase==='diagnosis'?state.idx:state.phase==='practice'?diagnosis.length+state.idx:state.phase==='checkpoint'?diagnosis.length+state.queue.length+state.idx:total;
+ return Math.round((done/Math.max(total,1))*100);
+}
+function phaseName(){return state.helpTask?'Похожий пример':state.phase==='diagnosis'?'Проверяем умения':state.phase==='practice'?'Тренируемся':'Решаю сам';}
+function phasePosition(){return state.helpTask?'':state.phase==='diagnosis'?`${state.idx+1} из ${diagnosis.length}`:state.phase==='practice'?`${state.idx+1} из ${state.queue.length}`:`${state.idx+1} из ${checkpoints.length}`;}
+function renderTask(){
+ const t=current(),k=stg(),all=taskLines(t),ink=all.map(x=>`<div class="inkrow ${x.kind==='check'?'check':''}">${esc(x.text)}</div>`).join('');
+ const isWriting=!!t;let wrong='';
+ if(t.kind==='repair')wrong=`<div class="wrongwork"><b class="muted">Так записал другой ученик:</b><div class="inkrow bad-ink">${esc(line(t,'equation'))}</div><div class="inkrow bad-ink">х = ${t.sum} + ${t.known}</div><div class="inkrow bad-ink">х = ${t.sum+t.known}</div></div>`;
+ const notice=state.feedback?`<div class="notice ${state.feedback.type}" role="status">${esc(state.feedback.text)}</div>`:'';
+ const keypad=['7','8','9','х','4','5','6','+','1','2','3','−','0','=','⌫','Очистить'];
+ return `<div class="line"><b>${esc(phaseName())}</b><span class="pill">${esc(phasePosition())}</span></div><div class="progress"><span style="width:${visibleProgress()}%"></span></div>${state.helpTask?'<div class="mini-info">Разберись с похожей записью, затем вернись к своему примеру.</div>':''}<div class="heading">${esc(stageTitle[k])}</div><p class="instruction">${esc(prompt(t))}</p>${wrong}<div class="rowgap"><div class="notebook"><span class="nbhead">Тетрадь</span>${ink}<div class="active-label">${esc(stageLabel(k))}</div><input id="answer" class="writing ${state.feedback?.type==='error'?'error':state.success?'correct':''}" aria-label="Запиши строку ${esc(stageLabel(k))}" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(state.entry)}" placeholder="Запиши строку"></div><div class="keybox"><div class="keytitle">Клавиатура для записи</div><div class="keypad">${keypad.map(v=>`<button type="button" class="key ${v==='⌫'?'del':/[х+−=]/.test(v)?'math':''}" data-key="${esc(v)}" aria-label="${v==='⌫'?'Удалить символ':v==='Очистить'?'Очистить запись':v}">${esc(v==='Очистить'?'С':v)}</button>`).join('')}</div></div></div>${notice}<div class="buttons">${state.success?`<button class="btn" id="next">${state.helpTask?'К своему примеру':'Продолжить'}</button>`:`<button class="btn" id="check">Проверить запись</button><button class="btn secondary" id="hint">Подсказка</button>${state.attempts>=2&&!state.helpTask?'<button class="btn outline" id="support">Похожий пример</button>':''}`}</div>`;
+}
+function draw(){
+ if(state.phase==='intro')app.innerHTML=intro();
+ else if(state.phase==='result')app.innerHTML=renderResult();
+ else app.innerHTML=renderTask();
+ if(state.phase==='intro'){document.getElementById('start').onclick=start;return;}
+ if(state.phase==='result'){document.getElementById('restart').onclick=start;document.getElementById('copy').onclick=copyResult;return;}
+ const input=document.getElementById('answer');
+ input.addEventListener('input',()=>{if(!state.success)state.entry=input.value;});
+ input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();state.success?advance():check();}});
+ document.querySelectorAll('[data-key]').forEach(btn=>btn.addEventListener('click',()=>key(btn.dataset.key)));
+ const ch=document.getElementById('check'),hi=document.getElementById('hint'),su=document.getElementById('support'),n=document.getElementById('next');
+ if(ch)ch.onclick=check;if(hi)hi.onclick=hint;if(su)su.onclick=openSupport;if(n)n.onclick=advance;
+ if(!state.success)input.focus({preventScroll:true});
+}
+function key(s){if(state.success)return;const el=document.getElementById('answer');el.focus({preventScroll:true});const st=el.selectionStart??el.value.length,en=el.selectionEnd??st;
+ let val=el.value,cursor=st;
+ if(s==='Очистить'){val='';cursor=0;}
+ else if(s==='⌫'){if(st===en&&st>0){val=val.slice(0,st-1)+val.slice(en);cursor=st-1;}else{val=val.slice(0,st)+val.slice(en);cursor=st;}}
+ else {val=val.slice(0,st)+s+val.slice(en);cursor=st+s.length;}
+ el.value=val;state.entry=val;el.setSelectionRange(cursor,cursor);
+}
+function start(){Object.assign(state,{phase:'diagnosis',idx:0,queue:[],stage:0,entry:'',attempts:0,hintCount:0,feedback:null,success:false,assisted:false,completed:[],taskIssues:[],diagResults:[],practiceResults:[],checkpointResults:[],allRecords:[],independentStreak:0,remedialCount:{equation:0,operation:0,value:0,check:0},helpTask:null,returnState:null,errors:0,hints:0});draw();}
+function stageReset(){state.entry='';state.attempts=0;state.hintCount=0;state.feedback=null;state.success=false;}
+function openTaskReset(){state.stage=0;state.completed=[];state.assisted=false;state.taskIssues=[];stageReset();}
+function check(){
+ if(state.success)return;
+ const t=current(),k=stg(),s=state.entry;
+ if(!s.trim()){state.feedback={type:'hint',text:'Запиши строку, затем нажми «Проверить запись».'};draw();return;}
+ if(!checkCorrect(t,k,s)){
+  state.attempts++;state.errors++;state.assisted=true;
+  if(!state.taskIssues.includes(k))state.taskIssues.push(k);
+  state.feedback={type:'error',text:(state.attempts===1?'Есть ошибка. ':'Ошибка повторяется. ')+errorMessage(t,k,s)};draw();return;
+ }
+ const independent=state.attempts===0&&state.hintCount===0&&!state.assisted;
+ state.allRecords.push({phase:state.helpTask?'help':state.phase,skill:k,independent,errors:state.attempts,hints:state.hintCount,taskId:t.id});
+ state.success=true;
+ state.feedback={type:'success',text:'Верно. Запись получилась.'};
+ if(state.attempts>0||state.hintCount>0)state.assisted=true;
+ draw();
+}
+function hint(){if(state.success)return;const t=current(),k=stg();state.hintCount++;state.hints++;state.assisted=true;
+ if(!state.taskIssues.includes(k))state.taskIssues.push(k);
+ state.feedback={type:'hint',text:stageHint(k,t,state.hintCount-1)};draw();}
+function openSupport(){if(state.helpTask||state.attempts<2)return;const k=stg(),t=current();
+ state.returnState={stage:state.stage,completed:state.completed.slice(),taskIssues:state.taskIssues.slice(),assisted:true};
+ const supports={equation:t.pos==='first'?core('h_eq_first','eqonly','first',4,13):core('h_eq_second','eqonly','second',5,14),operation:core('h_op','oponly',t.pos,4,15),value:core('h_value','valueonly',t.pos,5,14),check:core('h_check','checkonly',t.pos,4,13)};
+ state.helpTask=supports[k];state.stage=0;state.completed=[];stageReset();draw();
+}
+// Support step: an independent, easier example in the same skill.
+const oldStages=stages;
+function stagesFor(t){return t.kind==='checkonly'?['check']:oldStages(t);}
+// Full-stage accessor handles the extra check-only support type.
+function actualStages(t){return stagesFor(t);}
+function nextStageList(t){return actualStages(t);}
+// Rebind the original stages function via task-kind support in the public accessor below.
+// (It is intentionally kept local to avoid modifying any original task definitions.)
+function advance(){
+ if(!state.success)return;
+ const t=current(),all=stages(t);
+ state.completed.push({kind:stg(),text:line(t,stg())});
+ if(state.stage+1<all.length){state.stage++;stageReset();draw();return;}
+ if(state.helpTask){state.helpTask=null;state.stage=state.returnState.stage;state.completed=state.returnState.completed;state.taskIssues=state.returnState.taskIssues;state.assisted=true;state.returnState=null;stageReset();state.feedback={type:'hint',text:'Теперь исправь запись в своём примере.'};draw();return;}
+ const rec={taskId:t.id,kind:t.kind,pos:t.pos,known:t.known,sum:t.sum,independent:!state.assisted,issues:state.taskIssues.slice()};
+ if(state.phase==='diagnosis')state.diagResults.push(rec);
+ else if(state.phase==='practice')state.practiceResults.push(rec);
+ else state.checkpointResults.push(rec);
+ if(state.phase==='practice' && (t.kind==='full'||t.kind==='repair') && state.taskIssues.length){
+  const news=[];
+  for(const skill of state.taskIssues){if(state.remedialCount[skill]>=1)continue;state.remedialCount[skill]++;
+   const examples={equation:core('extraeq'+state.idx,'eqonly',t.pos,t.pos==='first'?7:8,t.pos==='first'?36:54),operation:core('extraop'+state.idx,'oponly',t.pos,8,45),value:core('extravalue'+state.idx,'valueonly',t.pos,9,52),check:core('extracheck'+state.idx,'checkonly',t.pos,6,41)};
+   news.push(examples[skill]);
+  }
+  if(news.length)state.queue.splice(state.idx+1,0,...news);
+ }
+ if(state.phase==='practice' && t.kind==='full'){state.independentStreak=rec.independent?state.independentStreak+1:0;}
+ state.idx++;
+ if(state.phase==='diagnosis'&&state.idx>=diagnosis.length){buildRoute();state.phase='practice';state.idx=0;}
+ else if(state.phase==='practice'&&state.idx>=state.queue.length){
+  if(state.independentStreak>=2){checkpoints[0]=core('c1_plus','full','first',15,62);checkpoints[1]=core('c2_plus','full','second',18,94);}
+  else{checkpoints[0]=core('c1','full','first',8,65);checkpoints[1]=core('c2','full','second',7,83);}
+  state.phase='checkpoint';state.idx=0;}
+ else if(state.phase==='checkpoint'&&state.idx>=checkpoints.length){state.phase='result';}
+ if(state.phase!=='result')openTaskReset();draw();
+}
+function buildRoute(){
+ const d=state.diagResults;let route=[];
+ if(!d[0]?.independent)route.push(core('route-first','eqonly','first',7,32));
+ if(!d[1]?.independent)route.push(core('route-second','eqonly','second',6,35));
+ if(!d[2]?.independent)route.push(core('route-operation','oponly','first',9,43));
+ if(!d[3]?.independent)route.push(core('route-value','valueonly','second',8,46));
+ state.queue=[...route,...baseline];
+}
+function resultText(){
+ const diag=state.diagResults.map((r,i)=>`${i+1}. ${['Уравнение: х первым','Уравнение: х вторым','Запись действия','Вычисление'][i]} — ${r.independent?'самостоятельно':'с исправлением или подсказкой'}`).join('\n');
+ const cp=state.checkpointResults.map((r,i)=>`${i+1}. ${r.pos==='first'?'х — первое слагаемое':'х — второе слагаемое'}: ${r.independent?'самостоятельно':'с исправлением или подсказкой'}`).join('\n');
+ return `Уравнения. Запись и решение. 2 класс\n\nПроверка в начале:\n${diag}\n\nСамостоятельные задания:\n${cp}\n\nВсего ошибок до исправления: ${state.errors}\nПодсказок открыто: ${state.hints}\nЗаданий в тренировке: ${state.practiceResults.length}\n\nНужна дополнительная тренировка: ${weakSkills()}.`;
+}
+function weakSkills(){
+ const d=state.diagResults;const wrong=[];
+ if(!d[0]?.independent||!d[1]?.independent)wrong.push('запись уравнения');
+ if(!d[2]?.independent)wrong.push('выбор действия');
+ if(!d[3]?.independent)wrong.push('вычисление');
+ for(const r of [...state.practiceResults,...state.checkpointResults])for(const skill of r.issues)if(!wrong.includes(attention[skill]))wrong.push(attention[skill]);
+ return wrong.length?wrong.join(', '):'по итогам выполнения выраженных затруднений не выявлено';
+}
+function renderResult(){
+ const independent=state.checkpointResults.filter(r=>r.independent).length;
+ const diag=state.diagResults.map((r,i)=>`<div class="listrow">${esc(['Запись: х — первое слагаемое','Запись: х — второе слагаемое','Первая строка решения','Вторая строка решения'][i])}<small>${r.independent?'Самостоятельно с первой попытки':'Исправлено после затруднения или подсказки'}</small></div>`).join('');
+ const check=state.checkpointResults.map((r,i)=>`<div class="listrow">${i+1}. ${r.pos==='first'?'х — первое слагаемое':'х — второе слагаемое'}<small>${r.independent?'Все строки самостоятельно':'Решено с исправлением или подсказкой'}</small></div>`).join('');
+ return `<h2>Результат</h2><div class="results"><div class="resultcell"><b>${independent}/2</b><span>самостоятельных итоговых уравнений</span></div><div class="resultcell"><b>${state.errors}</b><span>ошибок до исправления</span></div><div class="resultcell"><b>${state.hints}</b><span>открытых подсказок</span></div></div><h3>Проверка в начале</h3>${diag}<h3>Самостоятельные задания</h3>${check}<p class="mini-info"><b>Что потренировать:</b> ${esc(weakSkills())}.</p><div class="buttons"><button class="btn" id="copy">Скопировать результат</button><button class="btn secondary" id="restart">Пройти ещё раз</button></div><p id="copyMsg" class="muted" aria-live="polite"></p>`;
+}
+async function copyResult(){const txt=resultText();try{await navigator.clipboard.writeText(txt);document.getElementById('copyMsg').textContent='Результат скопирован.';}catch(e){const a=document.createElement('textarea');a.value=txt;document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();document.getElementById('copyMsg').textContent=ok?'Результат скопирован.':'Не удалось скопировать автоматически.';}}
+draw();
+</script>
+</body>
+</html>
