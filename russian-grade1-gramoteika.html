@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Космо-Правописание: ЖИ-ШИ, ЧА-ЩА, ЧУ-ЩУ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fdf4ff 0%, #e0f2fe 50%, #fef3c7 100%);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseFast {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+        .animate-pulse-fast {
+            animation: pulseFast 0.6s infinite;
+        }
+
+        .btn-3d {
+            transition: all 0.1s ease;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+        }
+        .btn-3d:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+        }
+
+        .btn-green {
+            box-shadow: 0 6px 0 #15803d;
+        }
+        .btn-green:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #15803d;
+        }
+
+        .btn-red {
+            box-shadow: 0 5px 0 #b91c1c;
+        }
+        .btn-red:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #b91c1c;
+        }
+
+        .space-track {
+            background: linear-gradient(180deg, #0f172a 0%, #3b0764 45%, #4c1d95 75%, #ec4899 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes floatUpFade {
+            0% { transform: translateY(0) scale(0.8); opacity: 1; }
+            100% { transform: translateY(-45px) scale(1.2); opacity: 0; }
+        }
+        .floating-bonus {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUpFade 0.9s ease-out forwards;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800">
+
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Шапка -->
+    <header class="w-full max-w-4xl mx-auto px-4 pt-3 pb-1 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 bg-white/85 backdrop-blur px-3.5 sm:px-4 py-2 rounded-2xl shadow-sm border border-white">
+            <span class="text-xl sm:text-2xl">✍️</span>
+            <h1 class="font-black text-base sm:text-xl text-purple-900 tracking-tight">Грамотейка <span class="text-purple-600 text-xs sm:text-sm font-extrabold">1 класс</span></h1>
+        </div>
+
+        <div class="flex items-center gap-1.5 sm:gap-2">
+            <button id="btn-teacher-top" onclick="openTeacherPinModal()" class="bg-purple-900 hover:bg-purple-800 text-white font-extrabold px-3 py-2 rounded-2xl shadow-sm text-xs sm:text-sm transition active:scale-95 flex items-center gap-1.5" title="Панель учителя">
+                <span>👩‍🏫</span>
+                <span class="hidden sm:inline">Кабинет учителя</span>
+                <span class="sm:hidden">Учитель</span>
+            </button>
+            <button id="btn-sound" onclick="toggleSound()" class="bg-white/90 hover:bg-white p-2 sm:p-2.5 rounded-2xl shadow-sm border border-slate-200 text-lg sm:text-xl transition active:scale-95" title="Включить/выключить звук">
+                🔊
+            </button>
+            <button id="btn-home-top" onclick="confirmExitToMenu()" class="hidden bg-white/90 hover:bg-rose-50 text-rose-600 font-bold px-3 sm:px-3.5 py-2 rounded-2xl shadow-sm border border-slate-200 text-xs sm:text-base transition active:scale-95">
+                🏠 В меню
+            </button>
+        </div>
+    </header>
+
+    <!-- Главный контейнер -->
+    <main class="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-4 py-2 flex flex-col justify-center">
+
+        <!-- ==================== 1. ГЛАВНОЕ МЕНЮ ==================== -->
+        <section id="screen-menu" class="bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border-4 border-white p-5 sm:p-7 animate-pop">
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center gap-2 bg-purple-100 text-purple-800 font-extrabold text-xs sm:text-sm px-3 py-1 rounded-full mb-1">
+                    <span>📚 Тренажёр орфограмм: ЖИ-ШИ, ЧА-ЩА, ЧУ-ЩУ</span>
+                    <span id="cloud-status-dot" class="w-2 h-2 rounded-full bg-emerald-500" title="Статус журнала"></span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-800">Выбери космическую миссию орфографии!</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                <!-- Левая колонка -->
+                <div class="space-y-3.5">
+                    <!-- Профиль ученика -->
+                    <div class="bg-purple-50/70 p-3.5 rounded-2xl border-2 border-purple-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-xs font-extrabold uppercase tracking-wider text-purple-800">🧑‍🎓 Ученик и класс</label>
+                            <button type="button" onclick="resetStudentProfile()" class="text-xs font-bold text-purple-600 hover:text-purple-800 underline">
+                                Сменить ученика
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-2">
+                            <div class="col-span-8">
+                                <input type="text" id="input-player-name" maxlength="28" placeholder="Твоё имя" 
+                                    class="w-full bg-white border-2 border-purple-200 focus:border-purple-500 rounded-xl px-3.5 py-2 text-base font-extrabold text-purple-950 outline-none transition">
+                            </div>
+                            <div class="col-span-4">
+                                <select id="select-player-class" onchange="handleClassSelectChange()"
+                                    class="w-full bg-white border-2 border-purple-200 focus:border-purple-500 rounded-xl px-2 py-2 text-base font-extrabold text-purple-950 outline-none transition cursor-pointer">
+                                    <option value="1 «А»">1 «А»</option>
+                                    <option value="1 «Б»">1 «Б»</option>
+                                    <option value="1 «В»">1 «В»</option>
+                                    <option value="1 «Г»">1 «Г»</option>
+                                    <option value="1 «Д»">1 «Д»</option>
+                                    <option value="custom">Свой...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="custom-class-wrap" class="hidden mt-2">
+                            <input type="text" id="input-custom-class" maxlength="10" placeholder="Напр. 1 «Е»"
+                                class="w-full bg-white border-2 border-purple-200 focus:border-purple-500 rounded-xl px-3.5 py-1.5 text-sm font-extrabold text-purple-950 outline-none">
+                        </div>
+                        <p id="student-validation-msg" class="hidden text-xs font-extrabold text-rose-600 mt-1.5">
+                            ⚠️ Пожалуйста, напиши своё имя перед началом!
+                        </p>
+                    </div>
+
+                    <!-- Выбор темы / правила -->
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border-2 border-slate-100">
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2">🎯 Какое правило тренируем?</label>
+                        <div class="grid grid-cols-1 gap-2" id="rule-options">
+                            <button type="button" data-val="jishi" onclick="selectOption('rule', 'jishi')" 
+                                class="option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-purple-600 text-white border-purple-600 shadow-md">
+                                <span>ЖИ / ШИ <span class="font-semibold text-xs opacity-90 block sm:inline">(пиши с буквой И)</span></span>
+                                <span class="text-lg">🐍</span>
+                            </button>
+                            <button type="button" data-val="chasha" onclick="selectOption('rule', 'chasha')" 
+                                class="option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-white text-slate-700 border-slate-200 hover:border-purple-300">
+                                <span>ЧА / ЩА <span class="font-semibold text-xs opacity-75 block sm:inline">(пиши с буквой А)</span></span>
+                                <span class="text-lg">☕</span>
+                            </button>
+                            <button type="button" data-val="chuchu" onclick="selectOption('rule', 'chuchu')" 
+                                class="option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-white text-slate-700 border-slate-200 hover:border-purple-300">
+                                <span>ЧУ / ЩУ <span class="font-semibold text-xs opacity-75 block sm:inline">(пиши с буквой У)</span></span>
+                                <span class="text-lg">щука</span>
+                            </button>
+                            <button type="button" data-val="mix" onclick="selectOption('rule', 'mix')" 
+                                class="option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-white text-slate-700 border-slate-200 hover:border-purple-300">
+                                <span>🔀 Все правила сразу (Микс)</span>
+                                <span class="text-lg">⭐</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка -->
+                <div class="space-y-3.5 flex flex-col justify-between">
+                    <!-- Режим игры -->
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border-2 border-slate-100">
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2">🎮 Режим игры</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <button type="button" data-val="practice" onclick="selectOption('mode', 'practice')" 
+                                class="option-btn-mode p-3 rounded-xl font-extrabold border-2 transition text-left bg-white text-slate-700 border-slate-200 hover:border-amber-400">
+                                <div class="flex items-center gap-2 text-base">
+                                    <span>📖</span> <span>Тренировка</span>
+                                </div>
+                                <p class="text-xs font-semibold opacity-80 mt-1">Без таймера. Есть кнопка с правилом!</p>
+                            </button>
+
+                            <button type="button" data-val="race" onclick="selectOption('mode', 'race')" 
+                                class="option-btn-mode p-3 rounded-xl font-extrabold border-2 transition text-left bg-amber-500 text-white border-amber-600 shadow-md">
+                                <div class="flex items-center gap-2 text-base">
+                                    <span>⏱️</span> <span>Гонка (60 сек)</span>
+                                </div>
+                                <p class="text-xs font-semibold opacity-95 mt-1">Результат сохранится в этом браузере!</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Подсказка-напоминалка правил -->
+                    <div class="bg-amber-50/80 p-3.5 rounded-2xl border-2 border-amber-200/80 text-amber-950">
+                        <div class="font-black text-xs sm:text-sm mb-1 flex items-center gap-1.5">
+                            <span>💡</span> <span>Золотое правило 1 класса:</span>
+                        </div>
+                        <p class="text-xs font-bold leading-relaxed opacity-90">
+                            «<b>ЖИ-ШИ</b> пиши с буквой <b>И</b>»<br>
+                            «<b>ЧА-ЩА</b> пиши с буквой <b>А</b>»<br>
+                            «<b>ЧУ-ЩУ</b> пиши с буквой <b>У</b>»
+                        </p>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-purple-50 px-4 py-2.5 rounded-2xl border border-purple-100">
+                        <span class="text-xs sm:text-sm font-bold text-purple-900">🏆 Лучший результат:</span>
+                        <span id="menu-best-score" class="font-black text-purple-600 text-sm sm:text-base">0 очков</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка СТАРТ -->
+            <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+                <button onclick="startGame()" 
+                    class="w-full sm:w-2/3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xl sm:text-2xl py-3.5 px-8 rounded-2xl btn-green flex items-center justify-center gap-3 tracking-wide">
+                    <span>НАЧАТЬ УРОК!</span>
+                    <span class="text-2xl">🚀</span>
+                </button>
+                <button onclick="showLeaderboardOnly()" 
+                    class="w-full sm:w-auto bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-base py-3.5 px-5 rounded-2xl transition active:scale-95 flex items-center justify-center gap-2">
+                    <span>🏆</span>
+                    <span>Рейтинг класса</span>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ==================== 2. ИГРОВОЙ ЭКРАН ==================== -->
+        <section id="screen-game" class="hidden flex-col gap-3 animate-pop">
+            
+            <!-- HUD Гонки -->
+            <div id="hud-race" class="bg-white/95 rounded-2xl p-3 shadow-md border-2 border-white">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                    <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl">
+                        <span class="text-xl">⏱️</span>
+                        <span id="timer-text" class="font-black text-xl sm:text-2xl text-slate-800 tabular-nums">60</span>
+                        <span class="text-xs font-bold text-slate-500">сек</span>
+                    </div>
+
+                    <div id="combo-badge" class="opacity-0 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3.5 py-1.5 rounded-xl shadow-sm">
+                        <span class="text-lg">🔥</span>
+                        <span id="combo-text" class="font-black text-sm sm:text-base">Серия 3! x2</span>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 bg-purple-50 px-3.5 py-1.5 rounded-xl border border-purple-100">
+                        <span class="text-lg">⭐</span>
+                        <span id="score-text" class="font-black text-xl sm:text-2xl text-purple-700 tabular-nums">0</span>
+                    </div>
+                </div>
+
+                <div class="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden p-0.5">
+                    <div id="timer-bar" class="h-full bg-gradient-to-r from-purple-400 via-indigo-400 to-pink-500 rounded-full transition-all duration-300" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- HUD Тренировка -->
+            <div id="hud-practice" class="hidden bg-white/95 rounded-2xl p-3 shadow-md border-2 border-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="bg-purple-100 text-purple-800 font-extrabold px-3 py-1 rounded-xl text-sm">📖 Тренировка</span>
+                    <span id="practice-student-tag" class="text-xs sm:text-sm font-bold text-slate-500 hidden sm:inline"></span>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="bg-emerald-50 text-emerald-700 font-extrabold px-3 py-1 rounded-xl text-xs sm:text-base">
+                        Верно: <span id="practice-solved-count" class="font-black">0</span>
+                    </div>
+                    <button onclick="toggleHint()" id="btn-hint" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold px-3 py-1.5 rounded-xl text-xs sm:text-sm shadow-sm transition active:scale-95 flex items-center gap-1">
+                        <span>💡</span> <span>Правило</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Игровая зона: Ракета слева + Слово с пропуском и варианты справа -->
+            <div class="grid grid-cols-12 gap-3 items-stretch">
+                
+                <!-- Трек ракеты (слева) -->
+                <div class="col-span-3 sm:col-span-2 space-track rounded-3xl shadow-lg border-4 border-white flex flex-col justify-between items-center py-3 px-1 min-h-[340px] sm:min-h-[410px]">
+                    <div class="text-center z-10">
+                        <span class="text-2xl sm:text-3xl block">🪐</span>
+                        <span class="text-[10px] font-extrabold text-purple-200 uppercase tracking-wider">Финиш</span>
+                    </div>
+
+                    <div class="absolute inset-0 pointer-events-none opacity-60 text-white text-xs">
+                        <span class="absolute top-12 left-3">✦</span>
+                        <span class="absolute top-24 right-3">★</span>
+                        <span class="absolute top-40 left-4">·</span>
+                        <span class="absolute top-56 right-4">✦</span>
+                        <span class="absolute bottom-24 left-3">★</span>
+                    </div>
+
+                    <div class="relative flex-1 w-full my-2">
+                        <div id="rocket-actor" class="absolute left-1/2 -translate-x-1/2 transition-all duration-500 ease-out flex flex-col items-center" style="bottom: 0%;">
+                            <div class="text-4xl sm:text-5xl animate-float drop-shadow-md">🚀</div>
+                            <div class="w-3 h-4 bg-gradient-to-b from-amber-300 to-transparent rounded-full opacity-80 -mt-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-center z-10">
+                        <span class="text-[10px] font-extrabold text-sky-100 uppercase tracking-wider">Старт</span>
+                        <span class="text-xl block">🌍</span>
+                    </div>
+                </div>
+
+                <!-- Карточка задания и выбор буквы (справа) -->
+                <div class="col-span-9 sm:col-span-10 flex flex-col gap-3">
+                    
+                    <!-- Слово с пропуском -->
+                    <div id="problem-card" class="relative bg-white rounded-3xl shadow-lg border-4 border-white p-4 sm:p-6 flex flex-col items-center justify-center transition-colors duration-200 min-h-[170px] sm:min-h-[195px]">
+                        
+                        <div id="feedback-banner" class="h-7 mb-1 flex items-center justify-center text-sm sm:text-base font-extrabold">
+                            <span class="text-slate-400">Вставь пропущенную букву</span>
+                        </div>
+
+                        <!-- Слово -->
+                        <div class="flex items-center justify-center gap-1 sm:gap-2 text-3xl sm:text-5xl font-black text-slate-800 tracking-wide my-1">
+                            <span id="word-prefix" class="text-purple-950">МАТ</span>
+                            <div id="gap-box" class="min-w-[62px] sm:min-w-[80px] h-14 sm:h-18 bg-purple-50 border-4 border-purple-300 rounded-2xl flex items-center justify-center text-purple-700 shadow-inner">
+                                <span id="user-letter-display" class="animate-pulse text-purple-600">?</span>
+                            </div>
+                            <span id="word-suffix" class="text-purple-950">НА</span>
+                        </div>
+
+                        <!-- Подсказка-правило для тренировки -->
+                        <div id="visual-rule-box" class="hidden mt-3 pt-3 border-t-2 border-dashed border-amber-200 w-full text-center">
+                            <p id="rule-explanation" class="text-xs sm:text-sm font-extrabold text-amber-900"></p>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки выбора букв (И, А, У) и Дополнительные -->
+                    <div class="bg-white/90 backdrop-blur rounded-3xl p-4 sm:p-5 shadow-lg border-2 border-white flex-1 flex flex-col justify-center">
+                        <p class="text-xs font-extrabold uppercase tracking-wider text-slate-400 text-center mb-3">Какую букву нужно написать?</p>
+                        <div class="grid grid-cols-3 gap-3 max-w-md mx-auto w-full mb-3">
+                            <button type="button" onclick="chooseLetter('И')" class="btn-3d bg-purple-600 hover:bg-purple-500 text-white font-black text-3xl sm:text-4xl py-4 rounded-2xl border-b-4 border-purple-800 flex items-center justify-center">И</button>
+                            <button type="button" onclick="chooseLetter('А')" class="btn-3d bg-emerald-600 hover:bg-emerald-500 text-white font-black text-3xl sm:text-4xl py-4 rounded-2xl border-b-4 border-emerald-800 flex items-center justify-center">А</button>
+                            <button type="button" onclick="chooseLetter('У')" class="btn-3d bg-amber-500 hover:bg-amber-400 text-white font-black text-3xl sm:text-4xl py-4 rounded-2xl border-b-4 border-amber-700 flex items-center justify-center">У</button>
+                        </div>
+
+                        <div class="max-w-md mx-auto w-full flex justify-center">
+                            <button type="button" onclick="skipOrNext()" class="text-xs font-bold text-slate-400 hover:text-slate-600 underline py-1">
+                                Пропустить пример ⏭️
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 3. ЭКРАН РЕЗУЛЬТАТОВ ==================== -->
+        <section id="screen-results" class="hidden bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border-4 border-white p-5 sm:p-7 animate-pop">
+            
+            <div id="results-summary-block" class="text-center mb-5">
+                <div id="new-record-badge" class="hidden inline-block bg-gradient-to-r from-amber-400 to-orange-500 text-white font-black text-xs sm:text-sm px-4 py-1 rounded-full mb-2 shadow animate-bounce">
+                    🎉 НОВЫЙ ЛИЧНЫЙ РЕКОРД! 🎉
+                </div>
+                <div class="text-5xl sm:text-6xl mb-1" id="rank-medal">🏅</div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-800" id="rank-title">Мастер орфографии!</h2>
+                <p class="text-slate-500 font-bold text-sm sm:text-base mt-0.5" id="results-subtitle">Отличный результат!</p>
+                <p id="save-cloud-status" class="text-xs font-extrabold text-emerald-600 mt-1">Результат сохранён на этом устройстве</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
+                    <div class="bg-purple-50 border-2 border-purple-100 rounded-2xl p-3">
+                        <div class="text-xs font-extrabold text-purple-400 uppercase">Очки</div>
+                        <div id="res-score" class="text-2xl sm:text-3xl font-black text-purple-700 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-emerald-50 border-2 border-emerald-100 rounded-2xl p-3">
+                        <div class="text-xs font-extrabold text-emerald-500 uppercase">Верно</div>
+                        <div id="res-solved" class="text-2xl sm:text-3xl font-black text-emerald-700 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-sky-50 border-2 border-sky-100 rounded-2xl p-3">
+                        <div class="text-xs font-extrabold text-sky-500 uppercase">Точность</div>
+                        <div id="res-accuracy" class="text-2xl sm:text-3xl font-black text-sky-700 mt-0.5">100%</div>
+                    </div>
+                    <div class="bg-amber-50 border-2 border-amber-100 rounded-2xl p-3">
+                        <div class="text-xs font-extrabold text-amber-500 uppercase">Макс. серия</div>
+                        <div id="res-combo" class="text-2xl sm:text-3xl font-black text-amber-600 mt-0.5">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl border-2 border-slate-100 p-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <h3 class="font-black text-base sm:text-lg text-slate-800 flex items-center gap-2">
+                        <span>🏆</span> <span>Таблица чемпионов класса</span>
+                    </h3>
+                    <div class="flex items-center gap-1.5">
+                        <select id="leaderboard-class-filter" onchange="renderLeaderboard()" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1 text-xs font-extrabold text-slate-700 outline-none">
+                            <option value="ALL">Все классы</option>
+                            <option value="1 «А»">1 «А»</option>
+                            <option value="1 «Б»">1 «Б»</option>
+                            <option value="1 «В»">1 «В»</option>
+                            <option value="1 «Г»">1 «Г»</option>
+                            <option value="1 «Д»">1 «Д»</option>
+                        </select>
+                        <label class="inline-flex items-center gap-1 text-xs font-bold text-slate-500 cursor-pointer bg-white px-2.5 py-1 rounded-xl border border-slate-200">
+                            <input type="checkbox" id="toggle-bots-checkbox" onchange="renderLeaderboard()" class="rounded text-purple-600">
+                            <span>Персонажи</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="leaderboard-list" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                <button onclick="startGame()" id="btn-play-again"
+                    class="btn-green bg-emerald-500 hover:bg-emerald-400 text-white font-black text-lg py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2">
+                    <span>🔄</span> <span>Сыграть ещё раз</span>
+                </button>
+                <button onclick="goToMenu()" 
+                    class="btn-3d bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-lg py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2">
+                    <span>🏠</span> <span>В главное меню</span>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ==================== 4. КАБИНЕТ УЧИТЕЛЯ ==================== -->
+        <section id="screen-teacher" class="hidden bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border-4 border-white p-4 sm:p-6 animate-pop">
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b-2 border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-3xl">👩‍🏫</span>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-slate-800">Кабинет учителя</h2>
+                        <p class="text-xs font-bold text-slate-500">Журнал результатов на этом устройстве</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="exportTeacherCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition active:scale-95 flex items-center gap-1.5">
+                        <span>📥</span> <span>Скачать отчёт (Excel / CSV)</span>
+                    </button>
+                    <button onclick="openChangePinModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs sm:text-sm px-3 py-2.5 rounded-xl transition active:scale-95">
+                        🔑 ПИН-код
+                    </button>
+                    <button onclick="goToMenu()" class="bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl transition active:scale-95">
+                        ✕ Закрыть
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-4">
+                <div class="bg-purple-50 border border-purple-100 rounded-2xl p-3">
+                    <div class="text-[11px] font-extrabold text-purple-500 uppercase">Всего попыток</div>
+                    <div id="t-stat-attempts" class="text-2xl font-black text-purple-900 mt-0.5">0</div>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-3">
+                    <div class="text-[11px] font-extrabold text-emerald-600 uppercase">Учеников</div>
+                    <div id="t-stat-students" class="text-2xl font-black text-emerald-900 mt-0.5">0</div>
+                </div>
+                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-3">
+                    <div class="text-[11px] font-extrabold text-amber-600 uppercase">Средний балл</div>
+                    <div id="t-stat-avg-score" class="text-2xl font-black text-amber-900 mt-0.5">0</div>
+                </div>
+                <div class="bg-sky-50 border border-sky-100 rounded-2xl p-3">
+                    <div class="text-[11px] font-extrabold text-sky-600 uppercase">Средняя точность</div>
+                    <div id="t-stat-avg-acc" class="text-2xl font-black text-sky-900 mt-0.5">0%</div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200/80 mb-3 grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                <div class="sm:col-span-5">
+                    <input type="text" id="t-filter-search" oninput="renderTeacherDashboard()" placeholder="🔍 Поиск по имени или фамилии..."
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 outline-none focus:border-purple-500">
+                </div>
+                <div class="sm:col-span-3">
+                    <select id="t-filter-class" onchange="renderTeacherDashboard()"
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 outline-none focus:border-purple-500">
+                        <option value="ALL">Все классы</option>
+                        <option value="1 «А»">1 «А»</option>
+                        <option value="1 «Б»">1 «Б»</option>
+                        <option value="1 «В»">1 «В»</option>
+                        <option value="1 «Г»">1 «Г»</option>
+                        <option value="1 «Д»">1 «Д»</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-4">
+                    <select id="t-filter-rule" onchange="renderTeacherDashboard()"
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 outline-none focus:border-purple-500">
+                        <option value="ALL">Все темы</option>
+                        <option value="jishi">ЖИ-ШИ</option>
+                        <option value="chasha">ЧА-ЩА</option>
+                        <option value="chuchu">ЧУ-ЩУ</option>
+                        <option value="mix">Все правила (Микс)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 max-h-80 overflow-y-auto">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead class="bg-slate-100 text-slate-600 font-extrabold uppercase text-[11px] sticky top-0 z-10">
+                        <tr>
+                            <th class="py-2.5 px-3">Дата и время</th>
+                            <th class="py-2.5 px-3">Ученик</th>
+                            <th class="py-2.5 px-3">Класс</th>
+                            <th class="py-2.5 px-3">Тема</th>
+                            <th class="py-2.5 px-3 text-right">Очки</th>
+                            <th class="py-2.5 px-3 text-center">Верно/Всего</th>
+                            <th class="py-2.5 px-3 text-center">Точность</th>
+                            <th class="py-2.5 px-3 text-center">Оценка</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacher-table-body" class="divide-y divide-slate-100 bg-white font-semibold text-slate-700"></tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                <span id="teacher-count-info" class="text-xs font-bold text-slate-400">Показано записей: 0</span>
+                <button onclick="openClearModal()" class="bg-rose-50 hover:bg-rose-100 text-rose-600 font-extrabold text-xs px-3.5 py-2 rounded-xl border border-rose-200 transition active:scale-95 flex items-center gap-1.5">
+                    <span>🗑️</span> <span>Очистить результаты</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Модальные окна -->
+    <div id="pin-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-purple-100 text-center animate-pop">
+            <div class="text-4xl mb-2">🔐</div>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Вход для учителя</h3>
+            <p class="text-xs font-bold text-slate-500 mb-4">Введите ПИН-код (по умолчанию: <span class="text-purple-600 font-black">1234</span>)</p>
+            <input type="password" id="input-teacher-pin" maxlength="8" inputmode="numeric" placeholder="••••"
+                onkeydown="if(event.key==='Enter') verifyTeacherPin()"
+                class="w-full text-center tracking-[0.5em] text-2xl font-black bg-slate-50 border-2 border-purple-200 focus:border-purple-500 rounded-2xl py-3 px-4 mb-2 outline-none">
+            <p id="pin-error-msg" class="hidden text-xs font-extrabold text-rose-600 mb-3">Неверный ПИН-код.</p>
+            <div class="grid grid-cols-2 gap-3 mt-3">
+                <button onclick="closePinModal()" class="py-3 rounded-xl font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700">Отмена</button>
+                <button onclick="verifyTeacherPin()" class="py-3 rounded-xl font-extrabold bg-purple-600 hover:bg-purple-700 text-white">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="change-pin-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-purple-100 text-center animate-pop">
+            <div class="text-4xl mb-2">🔑</div>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Сменить ПИН-код</h3>
+            <input type="text" id="input-new-pin" maxlength="8" inputmode="numeric" placeholder="Новый ПИН"
+                class="w-full text-center tracking-widest text-xl font-black bg-slate-50 border-2 border-purple-200 focus:border-purple-500 rounded-2xl py-3 px-4 mb-2 outline-none">
+            <p id="new-pin-msg" class="hidden text-xs font-extrabold text-emerald-600 mb-3"></p>
+            <div class="grid grid-cols-2 gap-3 mt-3">
+                <button onclick="closeChangePinModal()" class="py-3 rounded-xl font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700">Закрыть</button>
+                <button onclick="saveNewTeacherPin()" class="py-3 rounded-xl font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="clear-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-rose-100 text-center animate-pop">
+            <div class="text-4xl mb-2">🗑️</div>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Удаление результатов</h3>
+            <select id="clear-target-select" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2.5 text-sm font-extrabold text-slate-800 mb-4 outline-none">
+                <option value="ALL">Удалить ВСЕ результаты</option>
+                <option value="1 «А»">Только класс 1 «А»</option>
+                <option value="1 «Б»">Только класс 1 «Б»</option>
+                <option value="1 «В»">Только класс 1 «В»</option>
+            </select>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="closeClearModal()" class="py-3 rounded-xl font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700">Отмена</button>
+                <button onclick="executeClearResults()" class="py-3 rounded-xl font-extrabold bg-rose-600 hover:bg-rose-700 text-white">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="exit-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-purple-100 text-center animate-pop">
+            <div class="text-4xl mb-2">🛸</div>
+            <h3 class="text-xl font-black text-slate-800 mb-1">Прервать полёт?</h3>
+            <p class="text-sm font-semibold text-slate-500 mb-5">Прогресс раунда не сохранится.</p>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="closeExitModal()" class="py-3 rounded-xl font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700">Продолжить</button>
+                <button onclick="goToMenu()" class="py-3 rounded-xl font-extrabold bg-rose-500 hover:bg-rose-600 text-white">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.cloudResults = [];
+        window.teacherPin = localStorage.getItem('gramoteika_teacher_pin') || '1234';
+        window.saveResultToCloud = async function () { return false; };
+        window.updateTeacherPinInCloud = async function (pin) {
+            window.teacherPin = pin;
+            localStorage.setItem('gramoteika_teacher_pin', pin);
+        };
+        window.deleteResultsFromCloud = async function () {};
+    </script>
+
+    <script>
+        // Проверенная база слов: пропущена ровно одна гласная в изучаемом сочетании.
+        const WORDS_DATABASE = [
+            { prefix: 'Ж', gap: 'И', suffix: 'РАФ', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'ЛЫЖ', gap: 'И', suffix: '', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'НОЖ', gap: 'И', suffix: '', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'ЕЖ', gap: 'И', suffix: '', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'УЖ', gap: 'И', suffix: '', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'ПРУЖ', gap: 'И', suffix: 'НА', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'Ж', gap: 'И', suffix: 'ВОТ', correct: 'И', rule: 'ЖИ пиши с буквой И' },
+            { prefix: 'Ш', gap: 'И', suffix: 'ШКА', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'Ш', gap: 'И', suffix: 'НА', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'МАШ', gap: 'И', suffix: 'НА', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'Ш', gap: 'И', suffix: 'ЛО', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'Ш', gap: 'И', suffix: 'РОКИЙ', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'ТИШ', gap: 'И', suffix: 'НА', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'КАМЫШ', gap: 'И', suffix: '', correct: 'И', rule: 'ШИ пиши с буквой И' },
+            { prefix: 'Ч', gap: 'А', suffix: 'Й', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'Ч', gap: 'А', suffix: 'ШКА', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'Ч', gap: 'А', suffix: 'СЫ', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'Ч', gap: 'А', suffix: 'СТО', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'ДАЧ', gap: 'А', suffix: '', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'ТУЧ', gap: 'А', suffix: '', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'ПЕЧ', gap: 'А', suffix: '', correct: 'А', rule: 'ЧА пиши с буквой А' },
+            { prefix: 'РОЩ', gap: 'А', suffix: '', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'ПИЩ', gap: 'А', suffix: '', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'Щ', gap: 'А', suffix: 'ВЕЛЬ', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'ГУЩ', gap: 'А', suffix: '', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'ЧАЩ', gap: 'А', suffix: '', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'ПЛОЩ', gap: 'А', suffix: 'ДЬ', correct: 'А', rule: 'ЩА пиши с буквой А' },
+            { prefix: 'Ч', gap: 'У', suffix: 'ДО', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'Ч', gap: 'У', suffix: 'ЛОК', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'Ч', gap: 'У', suffix: 'ЖОЙ', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'ЛЕЧ', gap: 'У', suffix: '', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'КРИЧ', gap: 'У', suffix: '', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'ПЛАЧ', gap: 'У', suffix: '', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'СТУЧ', gap: 'У', suffix: '', correct: 'У', rule: 'ЧУ пиши с буквой У' },
+            { prefix: 'Щ', gap: 'У', suffix: 'КА', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+            { prefix: 'ИЩ', gap: 'У', suffix: '', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+            { prefix: 'ТАЩ', gap: 'У', suffix: '', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+            { prefix: 'УГОЩ', gap: 'У', suffix: '', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+            { prefix: 'Щ', gap: 'У', suffix: 'ПАЛЬЦЕ', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+            { prefix: 'Щ', gap: 'У', suffix: 'П', correct: 'У', rule: 'ЩУ пиши с буквой У' },
+        ];
+
+        // Фильтрация слов под выбранное правило
+        function getWordsForRule(rule) {
+            if (rule === 'jishi') {
+                return WORDS_DATABASE.filter(w => w.rule.includes('ЖИ') || w.rule.includes('ШИ'));
+            } else if (rule === 'chasha') {
+                return WORDS_DATABASE.filter(w => w.rule.includes('ЧА') || w.rule.includes('ЩА'));
+            } else if (rule === 'chuchu') {
+                return WORDS_DATABASE.filter(w => w.rule.includes('ЧУ') || w.rule.includes('ЩУ'));
+            }
+            return WORDS_DATABASE; // mix
+        }
+
+        const state = {
+            playerName: '',
+            playerClass: '1 «А»',
+            rule: 'jishi',      // 'jishi' | 'chasha' | 'chuchu' | 'mix'
+            mode: 'race',         // 'practice' | 'race'
+            soundEnabled: true,
+
+            isPlaying: false,
+            timeLeft: 60,
+            maxTime: 60,
+            timerInterval: null,
+
+            currentWordObj: null,
+            hintVisible: false,
+
+            score: 0,
+            solvedCount: 0,
+            totalAttempts: 0,
+            streak: 0,
+            maxStreak: 0,
+            rocketHeight: 0
+        };
+
+        const VIRTUAL_RIVALS = [
+            { id: 'bot_1', studentName: 'Мышонок Пик', studentClass: 'Космос', avatar: '🐭', score: 70, isBot: true },
+            { id: 'bot_2', studentName: 'Котик Вася', studentClass: 'Космос', avatar: '🐱', score: 140, isBot: true },
+            { id: 'bot_3', studentName: 'Лисичка Рыжик', studentClass: 'Космос', avatar: '🦊', score: 210, isBot: true },
+            { id: 'bot_4', studentName: 'Робот Бип', studentClass: 'Космос', avatar: '🤖', score: 280, isBot: true },
+            { id: 'bot_5', studentName: 'Сова Умница', studentClass: 'Космос', avatar: '🦉', score: 360, isBot: true },
+            { id: 'bot_6', studentName: 'Дракоша Искрыш', studentClass: 'Космос', avatar: '🐲', score: 480, isBot: true }
+        ];
+
+        const STORAGE_KEY = 'gramoteika_1class_records_v1';
+
+        // Звуки
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSound(type) {
+            if (!state.soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.exponentialRampToValueAtTime(680, now + 0.05);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+            } else if (type === 'correct') {
+                const notes = [523.25, 659.25, 783.99];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'triangle'; o.connect(g); g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, now + idx * 0.06);
+                    g.gain.setValueAtTime(0.14, now + idx * 0.06);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.22);
+                    o.start(now + idx * 0.06); o.stop(now + idx * 0.06 + 0.22);
+                });
+            } else if (type === 'combo') {
+                const notes = [587.33, 739.99, 880, 1174.66];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'sine'; o.connect(g); g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, now + idx * 0.05);
+                    g.gain.setValueAtTime(0.15, now + idx * 0.05);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.28);
+                    o.start(now + idx * 0.05); o.stop(now + idx * 0.05 + 0.28);
+                });
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(165, now + 0.22);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+                osc.start(now); osc.stop(now + 0.24);
+            } else if (type === 'tick') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, now);
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                osc.start(now); osc.stop(now + 0.04);
+            } else if (type === 'finish') {
+                const fanfare = [523.25, 659.25, 783.99, 1046.50];
+                fanfare.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'triangle'; o.connect(g); g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, now + idx * 0.11);
+                    g.gain.setValueAtTime(0.18, now + idx * 0.11);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.45);
+                    o.start(now + idx * 0.11); o.stop(now + idx * 0.11 + 0.45);
+                });
+            }
+        }
+
+        function toggleSound() {
+            state.soundEnabled = !state.soundEnabled;
+            document.getElementById('btn-sound').textContent = state.soundEnabled ? '🔊' : '🔇';
+            if (state.soundEnabled) playSound('click');
+        }
+
+        window.onload = function () {
+            loadSavedProfile();
+            updateMenuBestScore();
+        };
+
+        function loadSavedProfile() {
+            try {
+                const savedName = localStorage.getItem('gramoteika_player_name');
+                const savedClass = localStorage.getItem('gramoteika_player_class');
+                const savedPin = localStorage.getItem('gramoteika_teacher_pin');
+                if (savedPin) window.teacherPin = savedPin;
+                if (savedName) {
+                    document.getElementById('input-player-name').value = savedName;
+                    state.playerName = savedName;
+                }
+                if (savedClass) {
+                    const selectEl = document.getElementById('select-player-class');
+                    const options = Array.from(selectEl.options).map(o => o.value);
+                    if (options.includes(savedClass)) {
+                        selectEl.value = savedClass;
+                    } else {
+                        selectEl.value = 'custom';
+                        document.getElementById('custom-class-wrap').classList.remove('hidden');
+                        document.getElementById('input-custom-class').value = savedClass;
+                    }
+                    state.playerClass = savedClass;
+                }
+            } catch (e) {}
+        }
+
+        function handleClassSelectChange() {
+            const val = document.getElementById('select-player-class').value;
+            const customWrap = document.getElementById('custom-class-wrap');
+            if (val === 'custom') {
+                customWrap.classList.remove('hidden');
+                document.getElementById('input-custom-class').focus();
+            } else {
+                customWrap.classList.add('hidden');
+            }
+        }
+
+        function resetStudentProfile() {
+            playSound('click');
+            document.getElementById('input-player-name').value = '';
+            document.getElementById('input-player-name').focus();
+            document.getElementById('student-validation-msg').classList.add('hidden');
+            try { localStorage.removeItem('gramoteika_player_name'); } catch (e) {}
+        }
+
+        function getSelectedStudentClass() {
+            const sel = document.getElementById('select-player-class').value;
+            if (sel === 'custom') {
+                const customVal = document.getElementById('input-custom-class').value.trim();
+                return customVal || '1 класс';
+            }
+            return sel;
+        }
+
+        function selectOption(category, value) {
+            playSound('click');
+            state[category] = value;
+
+            if (category === 'rule') {
+                document.querySelectorAll('.option-btn-rule').forEach(btn => {
+                    const active = btn.dataset.val === value;
+                    btn.className = active
+                        ? 'option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-purple-600 text-white border-purple-600 shadow-md'
+                        : 'option-btn-rule text-left px-4 py-2.5 rounded-xl font-extrabold border-2 transition flex items-center justify-between bg-white text-slate-700 border-slate-200 hover:border-purple-300';
+                });
+            } else if (category === 'mode') {
+                document.querySelectorAll('.option-btn-mode').forEach(btn => {
+                    const active = btn.dataset.val === value;
+                    btn.className = active
+                        ? 'option-btn-mode p-3 rounded-xl font-extrabold border-2 transition text-left bg-amber-500 text-white border-amber-600 shadow-md'
+                        : 'option-btn-mode p-3 rounded-xl font-extrabold border-2 transition text-left bg-white text-slate-700 border-slate-200 hover:border-amber-400';
+                });
+            }
+        }
+
+        // Генерация задания
+        function generateProblem() {
+            const pool = getWordsForRule(state.rule);
+            const wordObj = pool[Math.floor(Math.random() * pool.length)];
+            state.currentWordObj = wordObj;
+
+            document.getElementById('word-prefix').textContent = wordObj.prefix;
+            document.getElementById('word-suffix').textContent = wordObj.suffix;
+            document.getElementById('user-letter-display').textContent = '?';
+            document.getElementById('user-letter-display').className = 'animate-pulse text-purple-600';
+
+            const card = document.getElementById('problem-card');
+            card.classList.remove('border-emerald-400', 'bg-emerald-50/70', 'border-rose-400', 'bg-rose-50/70');
+            card.classList.add('border-white', 'bg-white');
+
+            const gapBox = document.getElementById('gap-box');
+            gapBox.className = 'min-w-[62px] sm:min-w-[80px] h-14 sm:h-18 bg-purple-50 border-4 border-purple-300 rounded-2xl flex items-center justify-center text-purple-700 shadow-inner transition-colors';
+
+            document.getElementById('feedback-banner').innerHTML = `<span class="text-slate-400">Выбери букву ниже</span>`;
+
+            if (state.mode === 'practice' && state.hintVisible) {
+                renderRuleHint();
+            }
+        }
+
+        function toggleHint() {
+            playSound('click');
+            state.hintVisible = !state.hintVisible;
+            const box = document.getElementById('visual-rule-box');
+            const btn = document.getElementById('btn-hint');
+
+            if (state.hintVisible) {
+                box.classList.remove('hidden');
+                btn.classList.replace('bg-amber-400', 'bg-amber-500');
+                renderRuleHint();
+            } else {
+                box.classList.add('hidden');
+                btn.classList.replace('bg-amber-500', 'bg-amber-400');
+            }
+        }
+
+        function renderRuleHint() {
+            const explanation = document.getElementById('rule-explanation');
+            if (state.currentWordObj) {
+                explanation.textContent = `💡 Подсказка: правило орфограммы — «${state.currentWordObj.rule}»`;
+            }
+        }
+
+        function startGame() {
+            const rawName = document.getElementById('input-player-name').value.trim();
+            const errMsg = document.getElementById('student-validation-msg');
+
+            if (state.mode === 'race' && rawName.length < 2) {
+                playSound('wrong');
+                errMsg.classList.remove('hidden');
+                const nameInput = document.getElementById('input-player-name');
+                nameInput.classList.add('border-rose-500', 'animate-shake');
+                nameInput.focus();
+                setTimeout(() => nameInput.classList.remove('border-rose-500', 'animate-shake'), 600);
+                return;
+            }
+
+            errMsg.classList.add('hidden');
+            initAudio();
+            playSound('click');
+
+            state.playerName = rawName || 'Ученик 1 класса';
+            state.playerClass = getSelectedStudentClass();
+
+            try {
+                if (rawName) localStorage.setItem('gramoteika_player_name', state.playerName);
+                localStorage.setItem('gramoteika_player_class', state.playerClass);
+            } catch (e) {}
+
+            state.isPlaying = true;
+            state.timeLeft = 60;
+            state.score = 0;
+            state.solvedCount = 0;
+            state.totalAttempts = 0;
+            state.streak = 0;
+            state.maxStreak = 0;
+            state.rocketHeight = 0;
+            state.hintVisible = false;
+
+            document.getElementById('screen-menu').classList.add('hidden');
+            document.getElementById('screen-results').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            document.getElementById('screen-game').classList.add('flex');
+            document.getElementById('btn-home-top').classList.remove('hidden');
+            document.getElementById('btn-teacher-top').classList.add('hidden');
+            document.getElementById('visual-rule-box').classList.add('hidden');
+
+            if (state.mode === 'race') {
+                document.getElementById('hud-race').classList.remove('hidden');
+                document.getElementById('hud-practice').classList.add('hidden');
+                updateRaceHUD();
+                startTimer();
+            } else {
+                document.getElementById('hud-race').classList.add('hidden');
+                document.getElementById('hud-practice').classList.remove('hidden');
+                document.getElementById('practice-solved-count').textContent = '0';
+                document.getElementById('practice-student-tag').textContent = `${state.playerName} (${state.playerClass})`;
+            }
+
+            updateRocketPosition();
+            generateProblem();
+        }
+
+        function startTimer() {
+            clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                if (!state.isPlaying) return;
+                state.timeLeft--;
+                updateRaceHUD();
+                if (state.timeLeft <= 10 && state.timeLeft > 0) playSound('tick');
+                if (state.timeLeft <= 0) finishGame();
+            }, 1000);
+        }
+
+        function updateRaceHUD() {
+            const timerText = document.getElementById('timer-text');
+            const timerBar = document.getElementById('timer-bar');
+            const scoreText = document.getElementById('score-text');
+
+            timerText.textContent = Math.max(0, state.timeLeft);
+            scoreText.textContent = state.score;
+
+            const pct = Math.min(100, Math.max(0, (state.timeLeft / state.maxTime) * 100));
+            timerBar.style.width = `${pct}%`;
+
+            if (state.timeLeft <= 10) {
+                timerText.classList.add('text-rose-600', 'animate-pulse-fast');
+                timerBar.className = 'h-full bg-gradient-to-r from-rose-500 to-orange-500 rounded-full transition-all duration-300';
+            } else {
+                timerText.classList.remove('text-rose-600', 'animate-pulse-fast');
+                timerBar.className = 'h-full bg-gradient-to-r from-purple-400 via-indigo-400 to-pink-500 rounded-full transition-all duration-300';
+            }
+        }
+
+        function chooseLetter(letter) {
+            if (!state.isPlaying) return;
+            state.totalAttempts++;
+            const wordObj = state.currentWordObj;
+            const card = document.getElementById('problem-card');
+            const gapBox = document.getElementById('gap-box');
+            const feedback = document.getElementById('feedback-banner');
+            const displayLetter = document.getElementById('user-letter-display');
+
+            displayLetter.textContent = letter;
+            displayLetter.classList.remove('animate-pulse');
+
+            if (letter === wordObj.correct) {
+                state.solvedCount++;
+                state.streak++;
+                if (state.streak > state.maxStreak) state.maxStreak = state.streak;
+
+                let multiplier = 1;
+                if (state.streak >= 10) multiplier = 3;
+                else if (state.streak >= 5) multiplier = 2;
+                else if (state.streak >= 3) multiplier = 1.5;
+
+                const pointsEarned = Math.round(12 * multiplier);
+                state.score += pointsEarned;
+
+                let bonusTimeText = '';
+                if (state.mode === 'race' && state.streak > 0 && state.streak % 5 === 0) {
+                    state.timeLeft = Math.min(state.maxTime, state.timeLeft + 2);
+                    bonusTimeText = ' +2 сек ⏱️!';
+                    playSound('combo');
+                } else {
+                    playSound('correct');
+                }
+
+                card.classList.remove('border-white', 'bg-white');
+                card.classList.add('border-emerald-400', 'bg-emerald-50/70');
+                gapBox.className = 'min-w-[62px] sm:min-w-[80px] h-14 sm:h-18 bg-emerald-500 border-4 border-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-md';
+
+                const praiseWords = ['Верно!', 'Отлично!', 'Правильно!', 'Умница!'];
+                const praise = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+
+                if (state.mode === 'race') {
+                    feedback.innerHTML = `<span class="text-emerald-600">🌟 ${praise} +${pointsEarned} очков${bonusTimeText}</span>`;
+                    spawnFloatingBonus(`+${pointsEarned}`, 'text-emerald-600');
+                    updateComboBadge();
+                    updateRaceHUD();
+                } else {
+                    feedback.innerHTML = `<span class="text-emerald-600">🌟 ${praise} ${wordObj.rule}</span>`;
+                    document.getElementById('practice-solved-count').textContent = state.solvedCount;
+                }
+
+                state.rocketHeight = Math.min(100, state.rocketHeight + 7);
+                updateRocketPosition();
+
+                setTimeout(() => {
+                    if (state.isPlaying) generateProblem();
+                }, 450);
+
+            } else {
+                state.streak = 0;
+                playSound('wrong');
+
+                card.classList.remove('border-white', 'bg-white');
+                card.classList.add('border-rose-400', 'bg-rose-50/70', 'animate-shake');
+                gapBox.className = 'min-w-[62px] sm:min-w-[80px] h-14 sm:h-18 bg-rose-500 border-4 border-rose-600 rounded-2xl flex items-center justify-center text-white shadow-md';
+
+                displayLetter.textContent = wordObj.correct;
+                feedback.innerHTML = `<span class="text-rose-600">Ошибка! Правильно: <b>${wordObj.correct}</b> (${wordObj.rule})</span>`;
+
+                if (state.mode === 'race') updateComboBadge();
+
+                state.rocketHeight = Math.max(0, state.rocketHeight - 3);
+                updateRocketPosition();
+
+                setTimeout(() => {
+                    card.classList.remove('animate-shake');
+                    if (state.isPlaying) generateProblem();
+                }, 1350);
+            }
+        }
+
+        function skipOrNext() {
+            if (!state.isPlaying) return;
+            playSound('click');
+            generateProblem();
+        }
+
+        function updateComboBadge() {
+            const badge = document.getElementById('combo-badge');
+            const text = document.getElementById('combo-text');
+            if (state.streak >= 3) {
+                badge.classList.remove('opacity-0');
+                badge.classList.add('opacity-100', 'scale-105');
+                let mult = state.streak >= 10 ? 'x3' : (state.streak >= 5 ? 'x2' : 'x1.5');
+                text.textContent = `Серия ${state.streak}! ${mult}`;
+            } else {
+                badge.classList.remove('opacity-100', 'scale-105');
+                badge.classList.add('opacity-0');
+            }
+        }
+
+        function updateRocketPosition() {
+            const rocket = document.getElementById('rocket-actor');
+            const clamped = Math.min(82, Math.max(0, state.rocketHeight * 0.82));
+            rocket.style.bottom = `${clamped}%`;
+        }
+
+        function spawnFloatingBonus(text, colorClass) {
+            const card = document.getElementById('problem-card');
+            const el = document.createElement('div');
+            el.className = `floating-bonus font-black text-lg sm:text-xl ${colorClass}`;
+            el.textContent = text;
+            el.style.left = '50%';
+            el.style.top = '30%';
+            el.style.transform = 'translateX(-50%)';
+            card.appendChild(el);
+            setTimeout(() => el.remove(), 900);
+        }
+
+        async function finishGame() {
+            state.isPlaying = false;
+            clearInterval(state.timerInterval);
+            playSound('finish');
+
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('flex');
+            document.getElementById('btn-home-top').classList.add('hidden');
+            document.getElementById('btn-teacher-top').classList.remove('hidden');
+            document.getElementById('screen-results').classList.remove('hidden');
+            document.getElementById('results-summary-block').classList.remove('hidden');
+            document.getElementById('btn-play-again').classList.remove('hidden');
+
+            const accuracy = state.totalAttempts > 0 ? Math.round((state.solvedCount / state.totalAttempts) * 100) : 0;
+
+            let medal = '🌱';
+            let rankTitle = 'Юный грамотей';
+            if (state.score >= 300) {
+                medal = '👑';
+                rankTitle = 'Профессор Орфографии!';
+            } else if (state.score >= 180) {
+                medal = '🏆';
+                rankTitle = 'Отличник правописания!';
+            } else if (state.score >= 100) {
+                medal = '🥈';
+                rankTitle = 'Знаток правил!';
+            } else if (state.score >= 40) {
+                medal = '🥉';
+                rankTitle = 'Звёздный ученик!';
+            }
+
+            document.getElementById('rank-medal').textContent = medal;
+            document.getElementById('rank-title').textContent = rankTitle;
+            document.getElementById('results-subtitle').textContent = `${state.playerName} (${state.playerClass})`;
+
+            document.getElementById('res-score').textContent = state.score;
+            document.getElementById('res-solved').textContent = state.solvedCount;
+            document.getElementById('res-accuracy').textContent = `${accuracy}%`;
+            document.getElementById('res-combo').textContent = state.maxStreak;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+            const resultRecord = {
+                studentName: state.playerName,
+                studentClass: state.playerClass,
+                score: state.score,
+                solvedCount: state.solvedCount,
+                totalAttempts: state.totalAttempts,
+                accuracy: accuracy,
+                maxStreak: state.maxStreak,
+                rule: state.rule,
+                dateFormatted: dateStr,
+                timestamp: Date.now()
+            };
+
+            const isNewRecord = saveLocalRecord(resultRecord);
+            const cloudStatusEl = document.getElementById('save-cloud-status');
+            cloudStatusEl.textContent = '⏳ Сохраняем результат...';
+            cloudStatusEl.className = 'text-xs font-extrabold text-purple-600 mt-1';
+
+            if (typeof window.saveResultToCloud === 'function') {
+                const saved = await window.saveResultToCloud(resultRecord);
+                if (saved) {
+                    cloudStatusEl.textContent = '✅ Результат сохранён!';
+                    cloudStatusEl.className = 'text-xs font-extrabold text-emerald-600 mt-1';
+                } else {
+                    cloudStatusEl.textContent = '💾 Результат сохранён на этом устройстве';
+                    cloudStatusEl.className = 'text-xs font-extrabold text-slate-500 mt-1';
+                }
+            }
+
+            const recordBadge = document.getElementById('new-record-badge');
+            if (isNewRecord && state.score > 0) {
+                recordBadge.classList.remove('hidden');
+                launchConfetti();
+            } else {
+                recordBadge.classList.add('hidden');
+                if (state.score >= 150) launchConfetti();
+            }
+
+            renderLeaderboard();
+            updateMenuBestScore();
+        }
+
+        function getAllResultsCombined() {
+            const local = getLocalRecords();
+            const cloud = Array.isArray(window.cloudResults) ? window.cloudResults : [];
+            const map = new Map();
+            local.forEach(item => map.set(item.timestamp || Math.random(), item));
+            cloud.forEach(item => map.set(item.timestamp || item.id, item));
+            return Array.from(map.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        }
+
+        function getLocalRecords() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) { return []; }
+        }
+
+        function saveLocalRecord(record) {
+            const records = getLocalRecords();
+            const prevBest = records
+                .filter(r => (r.studentName || '').toLowerCase() === record.studentName.toLowerCase())
+                .reduce((max, r) => Math.max(max, r.score), 0);
+
+            records.unshift(record);
+            if (records.length > 200) records.length = 200;
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch (e) {}
+            return record.score > prevBest;
+        }
+
+        function updateMenuBestScore() {
+            const all = getAllResultsCombined();
+            const best = all.reduce((max, r) => Math.max(max, r.score || 0), 0);
+            document.getElementById('menu-best-score').textContent = `${best} очков`;
+        }
+
+        function renderLeaderboard() {
+            const classFilter = document.getElementById('leaderboard-class-filter').value;
+            const includeBots = document.getElementById('toggle-bots-checkbox').checked;
+            const allRecords = getAllResultsCombined();
+
+            const bestByStudent = new Map();
+            allRecords.forEach(rec => {
+                if (classFilter !== 'ALL' && rec.studentClass !== classFilter) return;
+                const key = `${(rec.studentName || '').trim().toLowerCase()}_${rec.studentClass || ''}`;
+                const existing = bestByStudent.get(key);
+                if (!existing || (rec.score || 0) > (existing.score || 0)) {
+                    bestByStudent.set(key, {
+                        studentName: rec.studentName || 'Ученик',
+                        studentClass: rec.studentClass || '1 класс',
+                        score: rec.score || 0,
+                        accuracy: rec.accuracy || 0,
+                        avatar: '🧑‍🎓',
+                        isBot: false
+                    });
+                }
+            });
+
+            let combined = Array.from(bestByStudent.values());
+            if (includeBots) combined = [...combined, ...VIRTUAL_RIVALS];
+            combined.sort((a, b) => b.score - a.score);
+
+            const container = document.getElementById('leaderboard-list');
+            container.innerHTML = '';
+
+            if (combined.length === 0) {
+                container.innerHTML = `<div class="text-center py-6 text-slate-400 font-bold text-sm">Пока нет результатов. Стань первым чемпионом! 🚀</div>`;
+                return;
+            }
+
+            combined.forEach((entry, index) => {
+                const place = index + 1;
+                let placeBadge = `<span class="w-7 h-7 rounded-full bg-slate-200 text-slate-700 font-black text-xs flex items-center justify-center">${place}</span>`;
+                if (place === 1) placeBadge = `<span class="text-xl">🥇</span>`;
+                else if (place === 2) placeBadge = `<span class="text-xl">🥈</span>`;
+                else if (place === 3) placeBadge = `<span class="text-xl">🥉</span>`;
+
+                const isCurrentPlayer = !entry.isBot && state.playerName && entry.studentName.toLowerCase() === state.playerName.toLowerCase();
+                const rowStyle = isCurrentPlayer ? 'bg-purple-100/90 border-2 border-purple-400 shadow-sm' : 'bg-white border border-slate-200';
+                const classBadge = entry.isBot ? `<span class="ml-1.5 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-extrabold">Персонаж</span>` : `<span class="ml-1.5 text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-extrabold">${escapeHtml(entry.studentClass)}</span>`;
+
+                const row = document.createElement('div');
+                row.className = `flex items-center justify-between px-3.5 py-2.5 rounded-xl ${rowStyle}`;
+                row.innerHTML = `
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <div class="w-7 flex-shrink-0 flex justify-center">${placeBadge}</div>
+                        <span class="text-xl flex-shrink-0">${entry.avatar || '🧑‍🎓'}</span>
+                        <div class="truncate">
+                            <span class="font-extrabold text-sm sm:text-base text-slate-800">${escapeHtml(entry.studentName)}</span>
+                            ${classBadge}
+                        </div>
+                    </div>
+                    <div class="font-black text-purple-700 text-sm sm:text-base flex-shrink-0 ml-2">
+                        ${entry.score} <span class="text-xs font-bold text-slate-400">очк.</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function showLeaderboardOnly() {
+            playSound('click');
+            document.getElementById('screen-menu').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.add('hidden');
+            document.getElementById('screen-results').classList.remove('hidden');
+            document.getElementById('results-summary-block').classList.add('hidden');
+            document.getElementById('btn-play-again').classList.add('hidden');
+            renderLeaderboard();
+        }
+
+        // Кабинет учителя
+        function openTeacherPinModal() {
+            playSound('click');
+            document.getElementById('pin-error-msg').classList.add('hidden');
+            const pinInput = document.getElementById('input-teacher-pin');
+            pinInput.value = '';
+            document.getElementById('pin-modal').classList.remove('hidden');
+            setTimeout(() => pinInput.focus(), 50);
+        }
+
+        function closePinModal() { document.getElementById('pin-modal').classList.add('hidden'); }
+
+        function verifyTeacherPin() {
+            const entered = document.getElementById('input-teacher-pin').value.trim();
+            const expected = window.teacherPin || '1234';
+            if (entered === expected) {
+                playSound('correct');
+                closePinModal();
+                openTeacherDashboard();
+            } else {
+                playSound('wrong');
+                document.getElementById('pin-error-msg').classList.remove('hidden');
+                const pinInput = document.getElementById('input-teacher-pin');
+                pinInput.value = ''; pinInput.focus();
+            }
+        }
+
+        function openTeacherDashboard() {
+            state.isPlaying = false;
+            clearInterval(state.timerInterval);
+            document.getElementById('screen-menu').classList.add('hidden');
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('flex');
+            document.getElementById('screen-results').classList.add('hidden');
+            document.getElementById('btn-home-top').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.remove('hidden');
+            renderTeacherDashboard();
+        }
+
+        const RULE_LABELS = {
+            'jishi': 'ЖИ-ШИ',
+            'chasha': 'ЧА-ЩА',
+            'chuchu': 'ЧУ-ЩУ',
+            'mix': 'Все правила (Микс)'
+        };
+
+        function getFilteredTeacherResults() {
+            const search = (document.getElementById('t-filter-search').value || '').trim().toLowerCase();
+            const classFilter = document.getElementById('t-filter-class').value;
+            const ruleFilter = document.getElementById('t-filter-rule').value;
+
+            return getAllResultsCombined().filter(item => {
+                if (classFilter !== 'ALL' && item.studentClass !== classFilter) return false;
+                if (ruleFilter !== 'ALL' && item.rule !== ruleFilter) return false;
+                if (search && !(item.studentName || '').toLowerCase().includes(search)) return false;
+                return true;
+            });
+        }
+
+        function calculateGrade(accuracy, solvedCount) {
+            if (solvedCount < 3) return { label: 'Мало ответов', badge: 'bg-slate-100 text-slate-600' };
+            if (accuracy >= 90 && solvedCount >= 8) return { label: '5 (Отлично)', badge: 'bg-emerald-100 text-emerald-800' };
+            if (accuracy >= 75 && solvedCount >= 5) return { label: '4 (Хорошо)', badge: 'bg-sky-100 text-sky-800' };
+            if (accuracy >= 50) return { label: '3 (Удовл.)', badge: 'bg-amber-100 text-amber-800' };
+            return { label: 'Нужна тренировка', badge: 'bg-rose-100 text-rose-700' };
+        }
+
+        function renderTeacherDashboard() {
+            const filtered = getFilteredTeacherResults();
+            const tbody = document.getElementById('teacher-table-body');
+            tbody.innerHTML = '';
+
+            const totalAttempts = filtered.length;
+            const uniqueStudents = new Set(filtered.map(r => `${(r.studentName || '').toLowerCase()}_${r.studentClass || ''}`)).size;
+            const avgScore = totalAttempts > 0 ? Math.round(filtered.reduce((sum, r) => sum + (r.score || 0), 0) / totalAttempts) : 0;
+            const avgAcc = totalAttempts > 0 ? Math.round(filtered.reduce((sum, r) => sum + (r.accuracy || 0), 0) / totalAttempts) : 0;
+
+            document.getElementById('t-stat-attempts').textContent = totalAttempts;
+            document.getElementById('t-stat-students').textContent = uniqueStudents;
+            document.getElementById('t-stat-avg-score').textContent = avgScore;
+            document.getElementById('t-stat-avg-acc').textContent = `${avgAcc}%`;
+            document.getElementById('teacher-count-info').textContent = `Показано записей: ${totalAttempts}`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400 font-bold">Записей пока нет. Как только ученики пройдут «Гонку (60 сек)», результаты появятся здесь!</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const grade = calculateGrade(item.accuracy || 0, item.solvedCount || 0);
+                const ruleText = RULE_LABELS[item.rule] || item.rule || 'ЖИ-ШИ';
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-purple-50/40 transition';
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 whitespace-nowrap text-slate-500 text-xs">${escapeHtml(item.dateFormatted || '—')}</td>
+                    <td class="py-2.5 px-3 font-extrabold text-slate-800">${escapeHtml(item.studentName || 'Ученик')}</td>
+                    <td class="py-2.5 px-3 whitespace-nowrap"><span class="bg-purple-50 text-purple-800 font-extrabold px-2 py-0.5 rounded-lg text-xs">${escapeHtml(item.studentClass || '1 класс')}</span></td>
+                    <td class="py-2.5 px-3 whitespace-nowrap text-xs">${escapeHtml(ruleText)}</td>
+                    <td class="py-2.5 px-3 text-right font-black text-purple-700">${item.score || 0}</td>
+                    <td class="py-2.5 px-3 text-center font-bold">${item.solvedCount || 0} / ${item.totalAttempts || 0}</td>
+                    <td class="py-2.5 px-3 text-center font-extrabold">${item.accuracy || 0}%</td>
+                    <td class="py-2.5 px-3 text-center whitespace-nowrap"><span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold ${grade.badge}">${grade.label}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportTeacherCSV() {
+            playSound('click');
+            const rowsData = getFilteredTeacherResults();
+            if (rowsData.length === 0) return;
+
+            const headers = ['Дата и время', 'Ученик', 'Класс', 'Тема орфограммы', 'Очки', 'Правильных ответов', 'Всего попыток', 'Точность (%)', 'Макс. серия', 'Рекомендованная оценка'];
+            const csvLines = [headers.join(';')];
+
+            rowsData.forEach(item => {
+                const grade = calculateGrade(item.accuracy || 0, item.solvedCount || 0);
+                const line = [
+                    `"${(item.dateFormatted || '').replace(/"/g, '""')}"`,
+                    `"${(item.studentName || '').replace(/"/g, '""')}"`,
+                    `"${(item.studentClass || '').replace(/"/g, '""')}"`,
+                    `"${RULE_LABELS[item.rule] || item.rule || ''}"`,
+                    item.score || 0, item.solvedCount || 0, item.totalAttempts || 0,
+                    item.accuracy || 0, item.maxStreak || 0, `"${grade.label}"`
+                ];
+                csvLines.push(line.join(';'));
+            });
+
+            const csvContent = '\uFEFF' + csvLines.join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const today = new Date().toISOString().slice(0, 10);
+            link.href = url;
+            link.setAttribute('download', `Otchet_Gramoteika_${today}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function openChangePinModal() {
+            playSound('click');
+            document.getElementById('input-new-pin').value = '';
+            document.getElementById('new-pin-msg').classList.add('hidden');
+            document.getElementById('change-pin-modal').classList.remove('hidden');
+        }
+
+        function closeChangePinModal() { document.getElementById('change-pin-modal').classList.add('hidden'); }
+
+        async function saveNewTeacherPin() {
+            const newPin = document.getElementById('input-new-pin').value.trim();
+            const msgEl = document.getElementById('new-pin-msg');
+            if (newPin.length < 4) {
+                msgEl.textContent = '⚠️ Минимум 4 символа';
+                msgEl.className = 'text-xs font-extrabold text-rose-600 mb-3';
+                msgEl.classList.remove('hidden');
+                return;
+            }
+            if (typeof window.updateTeacherPinInCloud === 'function') await window.updateTeacherPinInCloud(newPin);
+            else window.teacherPin = newPin;
+
+            playSound('correct');
+            msgEl.textContent = `✅ ПИН-код (${newPin}) сохранен!`;
+            msgEl.className = 'text-xs font-extrabold text-emerald-600 mb-3';
+            msgEl.classList.remove('hidden');
+        }
+
+        function openClearModal() { playSound('click'); document.getElementById('clear-modal').classList.remove('hidden'); }
+        function closeClearModal() { document.getElementById('clear-modal').classList.add('hidden'); }
+
+        async function executeClearResults() {
+            const target = document.getElementById('clear-target-select').value;
+            playSound('click');
+            try {
+                if (target === 'ALL') localStorage.removeItem(STORAGE_KEY);
+                else {
+                    const filteredLocal = getLocalRecords().filter(r => r.studentClass !== target);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredLocal));
+                }
+            } catch (e) {}
+
+            if (typeof window.deleteResultsFromCloud === 'function') await window.deleteResultsFromCloud(target);
+            if (Array.isArray(window.cloudResults)) {
+                window.cloudResults = target === 'ALL' ? [] : window.cloudResults.filter(r => r.studentClass !== target);
+            }
+            closeClearModal();
+            renderTeacherDashboard();
+            updateMenuBestScore();
+        }
+
+        function confirmExitToMenu() {
+            if (!state.isPlaying || state.mode === 'practice') { goToMenu(); return; }
+            document.getElementById('exit-modal').classList.remove('hidden');
+        }
+
+        function closeExitModal() { document.getElementById('exit-modal').classList.add('hidden'); }
+
+        function goToMenu() {
+            state.isPlaying = false;
+            clearInterval(state.timerInterval);
+            closeExitModal();
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('flex');
+            document.getElementById('screen-results').classList.add('hidden');
+            document.getElementById('screen-teacher').classList.add('hidden');
+            document.getElementById('btn-home-top').classList.add('hidden');
+            document.getElementById('btn-teacher-top').classList.remove('hidden');
+            document.getElementById('screen-menu').classList.remove('hidden');
+            updateMenuBestScore();
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, m => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[m]));
+        }
+
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#a855f7', '#ec4899', '#3b82f6', '#10b981', '#f59e0b'];
+            const pieces = Array.from({ length: 90 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                w: Math.random() * 10 + 6,
+                h: Math.random() * 6 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vy: Math.random() * 3 + 2.5,
+                vx: Math.random() * 2 - 1,
+                rot: Math.random() * 360,
+                vRot: Math.random() * 6 - 3
+            }));
+
+            let frame = 0;
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.vy; p.x += p.vx; p.rot += p.vRot;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rot * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                frame++;
+                if (frame < 160) requestAnimationFrame(draw);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            draw();
+        }
+    </script>
+</body>
+</html>
