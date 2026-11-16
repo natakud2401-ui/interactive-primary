@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Математическая Ракета — Тренажёр для 1 класса</title>
+  <style>
+    :root {
+      --bg-grad: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 50%, #fce7f3 100%);
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-grad);
+      color: var(--text-main);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 14px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 2.2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .brand p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-icon {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-icon:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    .btn-teacher {
+      background: #eef2ff;
+      border-color: #c7d2fe;
+      color: #3730a3;
+    }
+
+    .btn-teacher:hover {
+      background: #e0e7ff;
+    }
+
+    .student-bar {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 12px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-left: 6px solid var(--primary);
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .badge-class {
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 820px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 500px) {
+      .controls-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    select, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
+
+    .mode-btn {
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .mode-btn.race-tab.active {
+      color: #d97706;
+    }
+
+    .race-hud {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+
+    .race-hud.visible {
+      display: flex;
+    }
+
+    .hud-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .hud-timer {
+      color: #b45309;
+      font-size: 1.15rem;
+    }
+
+    .hud-score {
+      color: var(--primary);
+    }
+
+    .hud-combo {
+      background: #fef3c7;
+      color: #d97706;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      border: 1px solid #f59e0b;
+    }
+
+    .rocket-track {
+      position: relative;
+      height: 30px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .rocket-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6, #f59e0b);
+      transition: width 0.3s ease;
+    }
+
+    .rocket-icon {
+      position: relative;
+      z-index: 2;
+      font-size: 1.25rem;
+      transition: left 0.3s ease;
+    }
+
+    .planet-icon {
+      position: absolute;
+      right: 8px;
+      z-index: 2;
+      font-size: 1.2rem;
+    }
+
+    .problem-box {
+      background: #f8fafc;
+      border: 3px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      margin-bottom: 14px;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .problem-box.correct {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .problem-box.wrong {
+      border-color: var(--danger);
+      background: #fef2f2;
+      animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .equation {
+      font-size: 3.1rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .answer-slot {
+      min-width: 78px;
+      height: 64px;
+      border-bottom: 4px solid var(--primary);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--primary);
+      background: #eff6ff;
+      border-radius: 12px 12px 4px 4px;
+      padding: 0 12px;
+    }
+
+    .feedback-msg {
+      min-height: 24px;
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .hint-area {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 1.45rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .hint-area.visible {
+      display: block;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .key-btn {
+      padding: 15px 0;
+      font-size: 1.55rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 16px;
+      background: #f1f5f9;
+      color: #0f172a;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #cbd5e1;
+      transition: transform 0.08s, box-shadow 0.08s, background 0.15s;
+    }
+
+    .key-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #cbd5e1;
+    }
+
+    .key-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .key-clear {
+      background: #fee2e2;
+      color: #b91c1c;
+      box-shadow: 0 4px 0 #fecaca;
+    }
+
+    .key-clear:hover {
+      background: #fecaca;
+    }
+
+    .key-submit {
+      background: var(--success);
+      color: #fff;
+      box-shadow: 0 4px 0 #15803d;
+    }
+
+    .key-submit:hover {
+      background: #15803d;
+    }
+
+    .extra-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn-primary {
+      flex: 1;
+      padding: 13px;
+      border: none;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #1e40af;
+      transition: all 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-hint {
+      padding: 13px 16px;
+      border: 2px solid #fde047;
+      border-radius: 14px;
+      background: #fefce8;
+      color: #854d0e;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lb-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lb-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .lb-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .lb-filters select {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      width: auto;
+    }
+
+    .toggle-bots {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .lb-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 410px;
+      overflow-y: auto;
+    }
+
+    .lb-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .lb-item.top-1 {
+      background: #fef9c3;
+      border-color: #fde047;
+    }
+
+    .lb-item.top-2 {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .lb-item.top-3 {
+      background: #ffedd5;
+      border-color: #fdba74;
+    }
+
+    .lb-item.is-me {
+      border: 2px solid var(--primary);
+    }
+
+    .lb-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .lb-rank {
+      font-weight: 900;
+      width: 26px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .lb-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-meta {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .lb-score {
+      font-weight: 900;
+      color: var(--primary);
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 24px;
+      padding: 24px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal.modal-wide {
+      max-width: 880px;
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal p.sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .form-field {
+      margin-bottom: 14px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .teacher-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .teacher-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-box .num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .stat-box .lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .teacher-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .teacher-toolbar select,
+    .teacher-toolbar input {
+      width: auto;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-height: 340px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 800;
+      position: sticky;
+      top: 0;
+    }
+
+    .grade-pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .grade-5 { background: #dcfce7; color: #166534; }
+    .grade-4 { background: #dbeafe; color: #1e40af; }
+    .grade-3 { background: #fef3c7; color: #92400e; }
+    .grade-2 { background: #fee2e2; color: #991b1b; }
+
+    .pin-settings {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .sync-badge {
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🚀</div>
+      <div>
+        <h1>Математическая Ракета</h1>
+        <p>Тренажёр сложения и вычитания • 1 класс</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" id="soundToggleBtn" title="Включить/выключить звук">🔊 Звук: ВКЛ</button>
+      <button class="btn-icon btn-teacher" id="openTeacherBtn">👩‍🏫 Кабинет учителя</button>
+    </div>
+  </header>
+
+  <div class="student-bar">
+    <div class="student-info">
+      <span>🧑‍🚀 Ученик: <strong id="displayStudentName">Не выбран</strong></span>
+      <span class="badge-class" id="displayStudentClass">—</span>
+    </div>
+    <button class="btn-icon" id="changeStudentBtn">✏️ Сменить ученика</button>
+  </div>
+
+  <div class="main-grid">
+    <div class="card">
+      <div class="controls-row">
+        <div class="control-group">
+          <label for="levelSelect">Уровень сложности</label>
+          <select id="levelSelect">
+            <option value="10">Счёт до 10</option>
+            <option value="20_no_carry">До 20 без перехода</option>
+            <option value="20_carry">До 20 с переходом через 10</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="opSelect">Действие</label>
+          <select id="opSelect">
+            <option value="mix">Сложение и вычитание (+ / −)</option>
+            <option value="add">Только сложение (+)</option>
+            <option value="sub">Только вычитание (−)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-btn active" id="modeTrainBtn">🌱 Тренировка</button>
+        <button class="mode-btn race-tab" id="modeRaceBtn">⏱️ Гонка (60 сек)</button>
+      </div>
+
+      <div class="race-hud" id="raceHud">
+        <div class="hud-stats">
+          <span class="hud-timer">⏳ <span id="timeLeft">60</span> сек</span>
+          <span class="hud-combo" id="comboBadge">Серия: 0 (x1)</span>
+          <span class="hud-score">⭐ <span id="raceScore">0</span></span>
+        </div>
+        <div class="rocket-track">
+          <div class="rocket-progress" id="rocketProgress"></div>
+          <span class="rocket-icon" id="rocketIcon" style="left: 0%;">🚀</span>
+          <span class="planet-icon">🪐</span>
+        </div>
+      </div>
+
+      <div class="problem-box" id="problemBox">
+        <div class="equation" id="equationDisplay">
+          <span id="numA">3</span>
+          <span id="opSign">+</span>
+          <span id="numB">4</span>
+          <span>=</span>
+          <span class="answer-slot" id="answerSlot">?</span>
+        </div>
+        <div class="feedback-msg" id="feedbackMsg">Введи ответ с кнопок или клавиатуры</div>
+        <div class="hint-area" id="hintArea"></div>
+      </div>
+
+      <div class="keypad" id="keypad">
+        <button class="key-btn" data-key="1">1</button>
+        <button class="key-btn" data-key="2">2</button>
+        <button class="key-btn" data-key="3">3</button>
+        <button class="key-btn" data-key="4">4</button>
+        <button class="key-btn" data-key="5">5</button>
+        <button class="key-btn" data-key="6">6</button>
+        <button class="key-btn" data-key="7">7</button>
+        <button class="key-btn" data-key="8">8</button>
+        <button class="key-btn" data-key="9">9</button>
+        <button class="key-btn key-clear" data-key="C">⌫</button>
+        <button class="key-btn" data-key="0">0</button>
+        <button class="key-btn key-submit" data-key="OK">✔</button>
+      </div>
+
+      <div class="extra-actions">
+        <button class="btn-hint" id="hintBtn">🍎 Подсказка</button>
+        <button class="btn-primary" id="startRaceBtn" style="display:none;">🚀 Старт гонки!</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lb-header">
+        <h2>🏆 Таблица чемпионов</h2>
+        <span class="sync-badge" id="syncStatus">Сохранено на устройстве</span>
+      </div>
+
+      <div class="lb-filters">
+        <select id="lbClassFilter">
+          <option value="ALL">Все классы</option>
+          <option value="1 «А»">1 «А»</option>
+          <option value="1 «Б»">1 «Б»</option>
+          <option value="1 «В»">1 «В»</option>
+          <option value="1 «Г»">1 «Г»</option>
+          <option value="1 «Д»">1 «Д»</option>
+        </select>
+        <label class="toggle-bots">
+          <input type="checkbox" id="showBotsCheck" checked />
+          Показать соперников
+        </label>
+      </div>
+
+      <div class="lb-list" id="leaderboardList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="studentModal">
+  <div class="modal">
+    <h3>🧑‍🚀 Представься перед стартом</h3>
+    <p class="sub">Результат сохраняется в этом браузере.</p>
+    <div class="form-field">
+      <label for="studentNameInput">Твоё имя</label>
+      <input type="text" id="studentNameInput" placeholder="Например: Алихан" maxlength="35" />
+    </div>
+    <div class="form-field">
+      <label for="studentClassSelect">Выбери класс</label>
+      <select id="studentClassSelect">
+        <option value="1 «А»">1 «А»</option>
+        <option value="1 «Б»">1 «Б»</option>
+        <option value="1 «В»">1 «В»</option>
+        <option value="1 «Г»">1 «Г»</option>
+        <option value="1 «Д»">1 «Д»</option>
+        <option value="custom">Другой класс...</option>
+      </select>
+    </div>
+    <div class="form-field" id="customClassWrap" style="display:none;">
+      <label for="customClassInput">Укажи свой класс</label>
+      <input type="text" id="customClassInput" placeholder="Например: 1 «Е»" maxlength="15" />
+    </div>
+    <div class="modal-footer">
+      <button class="btn-icon" id="cancelStudentBtn">Отмена</button>
+      <button class="btn-primary" id="saveStudentBtn">Сохранить и продолжить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="finishModal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:3rem; margin-bottom:8px;">🎉</div>
+    <h3>Гонка завершена!</h3>
+    <p class="sub" id="finishStudentLabel">Отличный полёт!</p>
+    <div class="teacher-stats" style="margin: 16px 0;">
+      <div class="stat-box">
+        <div class="num" id="finScore">0</div>
+        <div class="lbl">Очков</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="finCorrect">0 / 0</div>
+        <div class="lbl">Верных ответов</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="finAccuracy">0%</div>
+        <div class="lbl">Точность</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem; color:#16a34a; font-weight:700; margin-bottom:14px;">
+      Результат сохранён на этом устройстве.
+    </p>
+    <div class="modal-footer" style="justify-content:center;">
+      <button class="btn-icon" id="closeFinishBtn">Закрыть</button>
+      <button class="btn-primary" id="playAgainBtn">🔄 Сыграть ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="pinModal">
+  <div class="modal">
+    <h3>🔐 Вход для учителя</h3>
+    <p class="sub">Введите ПИН-код для доступа к журналу результатов (по умолчанию: <strong>1234</strong>).</p>
+    <div class="form-field">
+      <input type="password" id="pinInput" placeholder="••••" maxlength="8" inputmode="numeric" />
+    </div>
+    <div id="pinError" style="color:#dc2626; font-size:0.85rem; font-weight:700; display:none; margin-bottom:8px;">
+      Неверный ПИН-код! Попробуйте ещё раз.
+    </div>
+    <div class="modal-footer">
+      <button class="btn-icon" id="cancelPinBtn">Отмена</button>
+      <button class="btn-primary" id="submitPinBtn">Войти</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="teacherModal">
+  <div class="modal modal-wide">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+      <div>
+        <h3>👩‍🏫 Кабинет учителя — Журнал результатов</h3>
+        <p class="sub" style="margin-bottom:0;">Сводная статистика попыток учеников в режиме «Гонка»</p>
+      </div>
+      <button class="btn-icon" id="closeTeacherBtn">✖ Закрыть</button>
+    </div>
+
+    <div class="teacher-stats">
+      <div class="stat-box">
+        <div class="num" id="tTotalAttempts">0</div>
+        <div class="lbl">Всего попыток</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="tAvgScore">0</div>
+        <div class="lbl">Средний балл</div>
+      </div>
+      <div class="stat-box">
+        <div class="num" id="tAvgAcc">0%</div>
+        <div class="lbl">Средняя точность</div>
+      </div>
+    </div>
+
+    <div class="teacher-toolbar">
+      <select id="tClassFilter">
+        <option value="ALL">Все классы</option>
+        <option value="1 «А»">1 «А»</option>
+        <option value="1 «Б»">1 «Б»</option>
+        <option value="1 «В»">1 «В»</option>
+        <option value="1 «Г»">1 «Г»</option>
+        <option value="1 «Д»">1 «Д»</option>
+      </select>
+      <select id="tLevelFilter">
+        <option value="ALL">Все уровни</option>
+        <option value="10">Счёт до 10</option>
+        <option value="20_no_carry">До 20 без перехода</option>
+        <option value="20_carry">До 20 с переходом</option>
+      </select>
+      <input type="text" id="tSearchInput" placeholder="🔍 Поиск по фамилии..." />
+      <button class="btn-primary" id="exportCsvBtn" style="flex:0 0 auto; padding:10px 16px;">📥 Скачать отчёт (Excel / CSV)</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Дата и время</th>
+            <th>Ученик</th>
+            <th>Класс</th>
+            <th>Уровень</th>
+            <th>Очки</th>
+            <th>Верно / Всего</th>
+            <th>Точность</th>
+            <th>Оценка</th>
+          </tr>
+        </thead>
+        <tbody id="teacherTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="pin-settings">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span>🔑 Сменить ПИН-код:</span>
+        <input type="text" id="newPinInput" placeholder="Новый ПИН" maxlength="8" style="width:120px; padding:6px 10px;" />
+        <button class="btn-icon" id="saveNewPinBtn">Сохранить ПИН</button>
+      </div>
+      <button class="btn-icon" id="clearRecordsBtn" style="color:#dc2626; border-color:#fecaca;">🗑️ Очистить журнал</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CLOUD_WEBHOOK_URL = "";
+  const STORAGE_KEYS = {
+    STUDENT: 'math_rocket_student_v2',
+    RECORDS: 'math_rocket_records_v2',
+    PIN: 'math_rocket_teacher_pin_v2'
+  };
+
+  const LEVEL_NAMES = {
+    '10': 'Счёт до 10',
+    '20_no_carry': 'До 20 без перехода',
+    '20_carry': 'До 20 с переходом'
+  };
+
+  const VIRTUAL_BOTS = [
+    { name: 'Дракоша 🐉', studentClass: '1 «А»', score: 420, correct: 18, total: 19, level: '20_carry', isBot: true },
+    { name: 'Мудрая Сова 🦉', studentClass: '1 «Б»', score: 340, correct: 15, total: 16, level: '20_no_carry', isBot: true },
+    { name: 'Лисичка 🦊', studentClass: '1 «А»', score: 250, correct: 12, total: 14, level: '10', isBot: true },
+    { name: 'Кот Базилио 🐱', studentClass: '1 «В»', score: 160, correct: 9, total: 11, level: '10', isBot: true }
+  ];
+
+  let student = JSON.parse(localStorage.getItem(STORAGE_KEYS.STUDENT) || 'null');
+  let records = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECORDS) || '[]');
+  let teacherPin = localStorage.getItem(STORAGE_KEYS.PIN) || '1234';
+
+  let mode = 'train';
+  let soundEnabled = true;
+  let currentProblem = { a: 3, b: 4, op: '+', ans: 7 };
+  let userInput = '';
+
+  let raceActive = false;
+  let timerInterval = null;
+  let timeLeft = 60;
+  let score = 0;
+  let streak = 0;
+  let correctCount = 0;
+  let totalCount = 0;
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function playTone(type) {
+    if (!soundEnabled) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+    if (type === 'correct') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.14);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+      osc.start(now);
+      osc.stop(now + 0.16);
+    } else if (type === 'wrong') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.linearRampToValueAtTime(160, now + 0.2);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+      osc.start(now);
+      osc.stop(now + 0.22);
+    } else if (type === 'finish') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.setValueAtTime(659.25, now + 0.12);
+      osc.frequency.setValueAtTime(783.99, now + 0.24);
+      osc.frequency.setValueAtTime(1046.5, now + 0.36);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+      osc.start(now);
+      osc.stop(now + 0.55);
+    }
+  }
+
+  const displayStudentName = document.getElementById('displayStudentName');
+  const displayStudentClass = document.getElementById('displayStudentClass');
+  const levelSelect = document.getElementById('levelSelect');
+  const opSelect = document.getElementById('opSelect');
+  const modeTrainBtn = document.getElementById('modeTrainBtn');
+  const modeRaceBtn = document.getElementById('modeRaceBtn');
+  const raceHud = document.getElementById('raceHud');
+  const timeLeftEl = document.getElementById('timeLeft');
+  const comboBadge = document.getElementById('comboBadge');
+  const raceScoreEl = document.getElementById('raceScore');
+  const rocketProgress = document.getElementById('rocketProgress');
+  const rocketIcon = document.getElementById('rocketIcon');
+  const problemBox = document.getElementById('problemBox');
+  const numAEl = document.getElementById('numA');
+  const opSignEl = document.getElementById('opSign');
+  const numBEl = document.getElementById('numB');
+  const answerSlot = document.getElementById('answerSlot');
+  const feedbackMsg = document.getElementById('feedbackMsg');
+  const hintArea = document.getElementById('hintArea');
+  const hintBtn = document.getElementById('hintBtn');
+  const startRaceBtn = document.getElementById('startRaceBtn');
+
+  function updateStudentUI() {
+    if (student && student.name) {
+      displayStudentName.textContent = student.name;
+      displayStudentClass.textContent = student.studentClass;
+    } else {
+      displayStudentName.textContent = 'Не выбран';
+      displayStudentClass.textContent = '—';
+    }
+    renderLeaderboard();
+  }
+
+  function generateProblem() {
+    const level = levelSelect.value;
+    const opMode = opSelect.value;
+    const op = opMode === 'mix' ? (Math.random() < 0.5 ? '+' : '-') : (opMode === 'add' ? '+' : '-');
+    let a = 1, b = 1, ans = 2;
+
+    if (level === '10') {
+      if (op === '+') {
+        ans = Math.floor(Math.random() * 9) + 2;
+        a = Math.floor(Math.random() * (ans - 1)) + 1;
+        b = ans - a;
+      } else {
+        a = Math.floor(Math.random() * 9) + 2;
+        b = Math.floor(Math.random() * (a - 1)) + 1;
+        ans = a - b;
+      }
+    } else if (level === '20_no_carry') {
+      if (op === '+') {
+        a = Math.floor(Math.random() * 9) + 10;
+        const maxB = 20 - a;
+        b = Math.floor(Math.random() * maxB) + 1;
+        ans = a + b;
+      } else {
+        a = Math.floor(Math.random() * 9) + 11;
+        const units = a % 10;
+        b = Math.floor(Math.random() * units) + 1;
+        ans = a - b;
+      }
+    } else if (level === '20_carry') {
+      if (op === '+') {
+        a = Math.floor(Math.random() * 8) + 2;
+        const minB = 11 - a;
+        b = Math.floor(Math.random() * (9 - minB + 1)) + minB;
+        ans = a + b;
+      } else {
+        a = Math.floor(Math.random() * 8) + 11;
+        const units = a % 10;
+        const minB = units + 1;
+        b = Math.floor(Math.random() * (9 - minB + 1)) + minB;
+        ans = a - b;
+      }
+    }
+
+    currentProblem = { a, b, op, ans };
+    userInput = '';
+    numAEl.textContent = a;
+    opSignEl.textContent = op === '+' ? '+' : '−';
+    numBEl.textContent = b;
+    answerSlot.textContent = '?';
+    problemBox.classList.remove('correct', 'wrong');
+    hintArea.classList.remove('visible');
+    hintArea.innerHTML = '';
+  }
+
+  hintBtn.addEventListener('click', () => {
+    if (mode === 'race' && raceActive) return;
+    const { a, b, op } = currentProblem;
+    if (op === '+') {
+      const red = '🍎'.repeat(a);
+      const green = '🍏'.repeat(b);
+      hintArea.innerHTML = `<div>${red} <strong>+</strong> ${green}</div><div style="font-size:0.85rem; color:#64748b; margin-top:4px;">Сосчитай все яблочки вместе!</div>`;
+    } else {
+      const left = '🍎'.repeat(a - b);
+      const crossed = `<span style="opacity:0.35; text-decoration:line-through;">${'🍎'.repeat(b)}</span>`;
+      hintArea.innerHTML = `<div>${left}${crossed}</div><div style="font-size:0.85rem; color:#64748b; margin-top:4px;">Было ${a}, убрали ${b}. Сколько осталось?</div>`;
+    }
+    hintArea.classList.add('visible');
+  });
+
+  function handleDigit(d) {
+    if (mode === 'race' && !raceActive) return;
+    if (userInput.length >= 2) return;
+    userInput += d;
+    answerSlot.textContent = userInput;
+  }
+
+  function handleClear() {
+    if (mode === 'race' && !raceActive) return;
+    userInput = userInput.slice(0, -1);
+    answerSlot.textContent = userInput || '?';
+  }
+
+  function checkAnswer() {
+    if (mode === 'race' && !raceActive) return;
+    if (userInput === '') return;
+
+    const val = parseInt(userInput, 10);
+    const isRight = val === currentProblem.ans;
+
+    if (mode === 'race') totalCount++;
+
+    if (isRight) {
+      playTone('correct');
+      problemBox.classList.remove('wrong');
+      problemBox.classList.add('correct');
+
+      if (mode === 'race') {
+        correctCount++;
+        streak++;
+        const mult = streak >= 10 ? 3 : streak >= 6 ? 2 : streak >= 3 ? 1.5 : 1;
+        const pts = Math.round(20 * mult);
+        score += pts;
+
+        let bonusText = '';
+        if (streak % 5 === 0) {
+          timeLeft = Math.min(60, timeLeft + 2);
+          timeLeftEl.textContent = timeLeft;
+          bonusText = ' +2 сек ⏱️!';
+        }
+
+        raceScoreEl.textContent = score;
+        comboBadge.textContent = `Серия: ${streak} (x${mult})`;
+        feedbackMsg.style.color = '#16a34a';
+        feedbackMsg.textContent = `Верно! +${pts} очков${bonusText}`;
+        updateRocketPosition();
+      } else {
+        feedbackMsg.style.color = '#16a34a';
+        feedbackMsg.textContent = 'Молодец! Правильный ответ! 🌟';
+      }
+
+      setTimeout(() => {
+        generateProblem();
+        if (mode === 'train') {
+          feedbackMsg.style.color = '#64748b';
+          feedbackMsg.textContent = 'Реши следующий пример';
+        }
+      }, 320);
+    } else {
+      playTone('wrong');
+      problemBox.classList.remove('correct');
+      problemBox.classList.add('wrong');
+      streak = 0;
+      if (mode === 'race') {
+        comboBadge.textContent = 'Серия: 0 (x1)';
+      }
+      feedbackMsg.style.color = '#dc2626';
+      feedbackMsg.textContent = `Ой! Правильный ответ: ${currentProblem.ans}`;
+      userInput = '';
+      setTimeout(() => {
+        if (mode === 'race' && raceActive) {
+          generateProblem();
+        } else {
+          answerSlot.textContent = '?';
+          problemBox.classList.remove('wrong');
+        }
+      }, 650);
+    }
+  }
+
+  function updateRocketPosition() {
+    const pct = Math.min(92, (correctCount / 20) * 92);
+    rocketProgress.style.width = `${pct + 6}%`;
+    rocketIcon.style.left = `${pct}%`;
+  }
+
+  document.getElementById('keypad').addEventListener('click', (e) => {
+    const btn = e.target.closest('.key-btn');
+    if (!btn) return;
+    const key = btn.dataset.key;
+    if (key === 'C') handleClear();
+    else if (key === 'OK') checkAnswer();
+    else handleDigit(key);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (document.querySelector('.modal-backdrop.open')) return;
+    if (e.key >= '0' && e.key <= '9') handleDigit(e.key);
+    else if (e.key === 'Backspace' || e.key === 'Delete') handleClear();
+    else if (e.key === 'Enter') checkAnswer();
+  });
+
+  function setMode(newMode) {
+    if (raceActive) stopRace(false);
+    mode = newMode;
+    if (mode === 'train') {
+      modeTrainBtn.classList.add('active');
+      modeRaceBtn.classList.remove('active');
+      raceHud.classList.remove('visible');
+      hintBtn.style.display = 'inline-block';
+      startRaceBtn.style.display = 'none';
+      feedbackMsg.style.color = '#64748b';
+      feedbackMsg.textContent = 'Режим спокойной тренировки';
+      generateProblem();
+    } else {
+      modeRaceBtn.classList.add('active');
+      modeTrainBtn.classList.remove('active');
+      raceHud.classList.add('visible');
+      hintBtn.style.display = 'none';
+      startRaceBtn.style.display = 'block';
+      startRaceBtn.textContent = '🚀 Старт гонки!';
+      timeLeftEl.textContent = '60';
+      raceScoreEl.textContent = '0';
+      comboBadge.textContent = 'Серия: 0 (x1)';
+      rocketProgress.style.width = '0%';
+      rocketIcon.style.left = '0%';
+      feedbackMsg.style.color = '#d97706';
+      feedbackMsg.textContent = 'Нажми «Старт гонки!», чтобы начать отсчёт';
+    }
+  }
+
+  modeTrainBtn.addEventListener('click', () => setMode('train'));
+  modeRaceBtn.addEventListener('click', () => {
+    if (!student || !student.name) {
+      openStudentModal(() => setMode('race'));
+    } else {
+      setMode('race');
+    }
+  });
+
+  levelSelect.addEventListener('change', () => { if (!raceActive) generateProblem(); });
+  opSelect.addEventListener('change', () => { if (!raceActive) generateProblem(); });
+
+  function startRace() {
+    if (!student || !student.name) {
+      openStudentModal(startRace);
+      return;
+    }
+    raceActive = true;
+    timeLeft = 60;
+    score = 0;
+    streak = 0;
+    correctCount = 0;
+    totalCount = 0;
+
+    timeLeftEl.textContent = timeLeft;
+    raceScoreEl.textContent = '0';
+    comboBadge.textContent = 'Серия: 0 (x1)';
+    rocketProgress.style.width = '0%';
+    rocketIcon.style.left = '0%';
+    startRaceBtn.style.display = 'none';
+    feedbackMsg.style.color = '#2563eb';
+    feedbackMsg.textContent = 'Поехали! Решай быстрее!';
+
+    generateProblem();
+
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timeLeftEl.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        stopRace(true);
+      }
+    }, 1000);
+  }
+
+  function stopRace(completed) {
+    raceActive = false;
+    clearInterval(timerInterval);
+    startRaceBtn.style.display = 'block';
+    startRaceBtn.textContent = '🔄 Сыграть ещё раз';
+
+    if (completed) {
+      playTone('finish');
+      const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+      const newRecord = {
+        id: Date.now(),
+        timestamp: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        name: student.name,
+        studentClass: student.studentClass,
+        level: levelSelect.value,
+        score,
+        correct: correctCount,
+        total: totalCount,
+        accuracy
+      };
+
+      records.unshift(newRecord);
+      localStorage.setItem(STORAGE_KEYS.RECORDS, JSON.stringify(records));
+      renderLeaderboard();
+
+      document.getElementById('finishStudentLabel').textContent = `${student.name} (${student.studentClass}) • ${LEVEL_NAMES[levelSelect.value]}`;
+      document.getElementById('finScore').textContent = score;
+      document.getElementById('finCorrect').textContent = `${correctCount} / ${totalCount}`;
+      document.getElementById('finAccuracy').textContent = `${accuracy}%`;
+      document.getElementById('finishModal').classList.add('open');
+    }
+  }
+
+  startRaceBtn.addEventListener('click', startRace);
+
+  const lbClassFilter = document.getElementById('lbClassFilter');
+  const showBotsCheck = document.getElementById('showBotsCheck');
+  const leaderboardList = document.getElementById('leaderboardList');
+
+  function renderLeaderboard() {
+    const classFilter = lbClassFilter.value;
+    const includeBots = showBotsCheck.checked;
+
+    const bestMap = new Map();
+    records.forEach(r => {
+      const key = `${r.name}_${r.studentClass}`;
+      if (!bestMap.has(key) || r.score > bestMap.get(key).score) {
+        bestMap.set(key, { ...r, isBot: false });
+      }
+    });
+
+    let combined = Array.from(bestMap.values());
+    if (includeBots) {
+      combined = combined.concat(VIRTUAL_BOTS);
+    }
+
+    if (classFilter !== 'ALL') {
+      combined = combined.filter(item => item.studentClass === classFilter);
+    }
+
+    combined.sort((a, b) => b.score - a.score);
+
+    if (combined.length === 0) {
+      leaderboardList.innerHTML = `<div style="text-align:center; color:#64748b; padding:24px 10px; font-size:0.9rem;">Пока нет результатов для выбранного класса. Стань первым чемпионом! 🚀</div>`;
+      return;
+    }
+
+    leaderboardList.innerHTML = combined.slice(0, 15).map((item, idx) => {
+      const rank = idx + 1;
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `${rank}.`;
+      const topClass = rank === 1 ? 'top-1' : rank === 2 ? 'top-2' : rank === 3 ? 'top-3' : '';
+      const isMe = student && !item.isBot && item.name === student.name && item.studentClass === student.studentClass;
+      return `
+        <div class="lb-item ${topClass} ${isMe ? 'is-me' : ''}">
+          <div class="lb-left">
+            <div class="lb-rank">${medal}</div>
+            <div style="min-width:0;">
+              <div class="lb-name">${escapeHtml(item.name)} ${isMe ? '(Вы)' : ''}</div>
+              <div class="lb-meta">${escapeHtml(item.studentClass)} • ${LEVEL_NAMES[item.level] || ''}</div>
+            </div>
+          </div>
+          <div class="lb-score">${item.score} ⭐</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  lbClassFilter.addEventListener('change', renderLeaderboard);
+  showBotsCheck.addEventListener('change', renderLeaderboard);
+
+  const studentModal = document.getElementById('studentModal');
+  const studentNameInput = document.getElementById('studentNameInput');
+  const studentClassSelect = document.getElementById('studentClassSelect');
+  const customClassWrap = document.getElementById('customClassWrap');
+  const customClassInput = document.getElementById('customClassInput');
+  let afterStudentSaveCallback = null;
+
+  function openStudentModal(callback = null) {
+    afterStudentSaveCallback = callback;
+    if (student) {
+      studentNameInput.value = student.name;
+    }
+    studentModal.classList.add('open');
+    studentNameInput.focus();
+  }
+
+  studentClassSelect.addEventListener('change', () => {
+    customClassWrap.style.display = studentClassSelect.value === 'custom' ? 'block' : 'none';
+  });
+
+  document.getElementById('changeStudentBtn').addEventListener('click', () => openStudentModal());
+  document.getElementById('cancelStudentBtn').addEventListener('click', () => {
+    studentModal.classList.remove('open');
+  });
+
+  document.getElementById('saveStudentBtn').addEventListener('click', () => {
+    const name = studentNameInput.value.trim();
+    if (!name) {
+      studentNameInput.style.borderColor = '#dc2626';
+      studentNameInput.focus();
+      return;
+    }
+    studentNameInput.style.borderColor = '#e2e8f0';
+    let cls = studentClassSelect.value;
+    if (cls === 'custom') {
+      cls = customClassInput.value.trim() || '1 класс';
+    }
+    student = { name, studentClass: cls };
+    localStorage.setItem(STORAGE_KEYS.STUDENT, JSON.stringify(student));
+    studentModal.classList.remove('open');
+    updateStudentUI();
+    if (typeof afterStudentSaveCallback === 'function') {
+      afterStudentSaveCallback();
+      afterStudentSaveCallback = null;
+    }
+  });
+
+  document.getElementById('closeFinishBtn').addEventListener('click', () => {
+    document.getElementById('finishModal').classList.remove('open');
+  });
+  document.getElementById('playAgainBtn').addEventListener('click', () => {
+    document.getElementById('finishModal').classList.remove('open');
+    startRace();
+  });
+
+  document.getElementById('soundToggleBtn').addEventListener('click', (e) => {
+    soundEnabled = !soundEnabled;
+    e.currentTarget.textContent = soundEnabled ? '🔊 Звук: ВКЛ' : '🔇 Звук: ВЫКЛ';
+  });
+
+  const pinModal = document.getElementById('pinModal');
+  const pinInput = document.getElementById('pinInput');
+  const pinError = document.getElementById('pinError');
+  const teacherModal = document.getElementById('teacherModal');
+
+  document.getElementById('openTeacherBtn').addEventListener('click', () => {
+    pinInput.value = '';
+    pinError.style.display = 'none';
+    pinModal.classList.add('open');
+    pinInput.focus();
+  });
+
+  document.getElementById('cancelPinBtn').addEventListener('click', () => {
+    pinModal.classList.remove('open');
+  });
+
+  function verifyPin() {
+    if (pinInput.value === teacherPin) {
+      pinModal.classList.remove('open');
+      renderTeacherTable();
+      teacherModal.classList.add('open');
+    } else {
+      pinError.style.display = 'block';
+    }
+  }
+
+  document.getElementById('submitPinBtn').addEventListener('click', verifyPin);
+  pinInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyPin(); });
+  document.getElementById('closeTeacherBtn').addEventListener('click', () => { teacherModal.classList.remove('open'); });
+
+  function calculateGrade(scoreVal, accVal) {
+    if (scoreVal >= 260 && accVal >= 85) return { text: '5 (Отлично)', cls: 'grade-5' };
+    if (scoreVal >= 160 && accVal >= 70) return { text: '4 (Хорошо)', cls: 'grade-4' };
+    if (scoreVal >= 80 && accVal >= 50) return { text: '3 (Удовл.)', cls: 'grade-3' };
+    return { text: 'Тренировка', cls: 'grade-2' };
+  }
+
+  const tClassFilter = document.getElementById('tClassFilter');
+  const tLevelFilter = document.getElementById('tLevelFilter');
+  const tSearchInput = document.getElementById('tSearchInput');
+
+  function getFilteredTeacherRecords() {
+    const cls = tClassFilter.value;
+    const lvl = tLevelFilter.value;
+    const query = tSearchInput.value.trim().toLowerCase();
+
+    return records.filter(r => {
+      if (cls !== 'ALL' && r.studentClass !== cls) return false;
+      if (lvl !== 'ALL' && r.level !== lvl) return false;
+      if (query && !r.name.toLowerCase().includes(query)) return false;
+      return true;
+    });
+  }
+
+  function renderTeacherTable() {
+    const filtered = getFilteredTeacherRecords();
+    const tbody = document.getElementById('teacherTableBody');
+
+    document.getElementById('tTotalAttempts').textContent = filtered.length;
+    if (filtered.length > 0) {
+      const avgS = Math.round(filtered.reduce((s, r) => s + r.score, 0) / filtered.length);
+      const avgA = Math.round(filtered.reduce((s, r) => s + r.accuracy, 0) / filtered.length);
+      document.getElementById('tAvgScore').textContent = avgS;
+      document.getElementById('tAvgAcc').textContent = `${avgA}%`;
+    } else {
+      document.getElementById('tAvgScore').textContent = '0';
+      document.getElementById('tAvgAcc').textContent = '0%';
+    }
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#64748b; padding:20px;">Записей пока нет. Пройдите раунд в режиме «Гонка (60 сек)».</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(r => {
+      const g = calculateGrade(r.score, r.accuracy);
+      return `
+        <tr>
+          <td>${escapeHtml(r.timestamp)}</td>
+          <td><strong>${escapeHtml(r.name)}</strong></td>
+          <td>${escapeHtml(r.studentClass)}</td>
+          <td>${LEVEL_NAMES[r.level] || r.level}</td>
+          <td><strong>${r.score}</strong></td>
+          <td>${r.correct} / ${r.total}</td>
+          <td>${r.accuracy}%</td>
+          <td><span class="grade-pill ${g.cls}">${g.text}</span></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  tClassFilter.addEventListener('change', renderTeacherTable);
+  tLevelFilter.addEventListener('change', renderTeacherTable);
+  tSearchInput.addEventListener('input', renderTeacherTable);
+
+  document.getElementById('exportCsvBtn').addEventListener('click', () => {
+    const filtered = getFilteredTeacherRecords();
+    if (filtered.length === 0) {
+      alert('Нет данных для выгрузки!');
+      return;
+    }
+    const headers = ['Дата и время', 'Ученик', 'Класс', 'Уровень', 'Очки', 'Верно', 'Всего примеров', 'Точность (%)', 'Рекомендуемая оценка'];
+    const rows = filtered.map(r => {
+      const g = calculateGrade(r.score, r.accuracy).text;
+      return [
+        `"${r.timestamp}"`,
+        `"${r.name.replace(/"/g, '""')}"`,
+        `"${r.studentClass}"`,
+        `"${LEVEL_NAMES[r.level] || r.level}"`,
+        r.score,
+        r.correct,
+        r.total,
+        r.accuracy,
+        `"${g}"`
+      ].join(';');
+    });
+
+    const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Отчет_Математика_1класс_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('saveNewPinBtn').addEventListener('click', () => {
+    const np = document.getElementById('newPinInput').value.trim();
+    if (np.length >= 4) {
+      teacherPin = np;
+      localStorage.setItem(STORAGE_KEYS.PIN, teacherPin);
+      document.getElementById('newPinInput').value = '';
+      alert('Новый ПИН-код успешно сохранён!');
+    } else {
+      alert('ПИН-код должен содержать минимум 4 символа.');
+    }
+  });
+
+  document.getElementById('clearRecordsBtn').addEventListener('click', () => {
+    if (confirm('Вы уверены, что хотите удалить все результаты из журнала?')) {
+      records = [];
+      localStorage.setItem(STORAGE_KEYS.RECORDS, JSON.stringify(records));
+      renderTeacherTable();
+      renderLeaderboard();
+    }
+  });
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  updateStudentUI();
+  generateProblem();
+</script>
+</body>
+</html>
