@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Павильон во дворе — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Дизайн и архитектура</div><h1>Павильон во дворе</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Учебные модели павильона">
+<figure><canvas id="sampleFlat" width="340" height="215" role="img" aria-label="Павильон с небольшим свесом крыши"></canvas><figcaption><strong>Образец А</strong><br>Небольшой свес крыши.</figcaption></figure>
+<figure><canvas id="sampleDepth" width="340" height="215" role="img" aria-label="Павильон с широким свесом крыши"></canvas><figcaption><strong>Образец Б</strong><br>Широкий свес крыши.</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Спроектируй павильон</h2>
+<p>Спроектируй открытый павильон для отдыха во школьном дворе. Сравни два размера крыши. Выбери план, расположение опор и входа. На экране показан эскиз модели. По нему можно собрать макет из бумаги и картона.</p>
+<ul><li>Крыша прикрывает место отдыха.</li><li>Опоры поддерживают крышу, вход остаётся свободным.</li><li>Вид сверху помогает понять расположение деталей.</li></ul>
+<div class="controls">
+<label class="control">План павильона<select id="bodyShape"><option value="oval">Прямоугольный</option><option value="circle">Квадратный</option></select></label>
+<label class="control">Форма крыши<select id="wing"><option value="long">Плоская</option><option value="round">Двускатная</option><option value="raised">Односкатная</option></select></label>
+<label class="control">Свес крыши<select id="base"><option value="wide">Широкий</option><option value="narrow">Небольшой</option></select></label>
+<label class="control">Вход<select id="join"><option value="flap">Спереди</option><option value="slot">Справа</option></select></label>
+<label class="control">Палитра<select id="palette"><option value="blue">Синий и золотой</option><option value="green">Зелёный и кремовый</option><option value="red">Бордовый и розовый</option></select></label>
+<label class="control">Материал и инструменты<select id="material"><option>Картон, карандаш и ножницы</option><option>Плотная бумага, линейка и ножницы</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" role="img" aria-label="Эскиз павильона спереди и план сверху"></canvas>
+<label class="control">Как твои решения помогут людям отдыхать в павильоне? Как соединишь крышу и опоры в бумажной модели?<textarea id="idea" maxlength="330" rows="3" placeholder="Я сравнил(а) размеры крыши… Вход разместил(а)… В макете детали соединю…"></textarea></label>
+<p>Для бумажного макета сначала наметь детали и клапаны карандашом. Проверь их расположение до приклеивания. Работай ножницами сидя, передавай их кольцами вперёд.</p><button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над макетом павильона.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre><fieldset id="selfReview"><legend>Оцени свой эскиз</legend>
+<label class="choice"><input type="checkbox" value="Место отдыха предусмотрено"> В моём павильоне есть место для отдыха.</label>
+<label class="choice"><input type="checkbox" value="Соединения продуманы"> Я продумал(а), как соединить крышу и опоры.</label>
+<label class="choice"><input type="checkbox" value="Крыша и вход продуманы"> Я сравнил(а) свесы крыши и оставил(а) вход свободным.</label></fieldset>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Назначение и форма','Крыша и опоры','План и вход'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+ task('Какой эскиз подходит открытому павильону для отдыха летом?', 'Крыша над скамейками и свободный проход между опорами', 'Сплошные стены без входа и крыша над ними', 'Высокие опоры без крыши над скамейками', 'Подумай, что даёт тень и позволяет войти.'),
+ task('Сравни образцы А и Б. Опоры стоят одинаково. Что меняет широкий свес?', 'Крыша прикрывает большую площадку вокруг опор', 'Опоры становятся выше', 'Сам павильон занимает меньше места', 'Посмотри, насколько край крыши выходит за опоры.'),
+ task('Что помогает показать план павильона сверху?', 'Расположение опор, скамейки и входа', 'Только высоту опор', 'Только цвет неба над крышей', 'Представь, что смотришь на площадку сверху без крыши.')
+];
+const training=[
+ [task('Хочешь сделать павильон заметным, сохранив удобный вход. Что можно изменить?', 'Форму крыши и цвет опор, сохранив проход', 'Поставить скамейку поперёк входа', 'Закрыть все стороны сплошными стенами', 'Выразительная форма должна сочетаться с назначением.'),
+ task('На эскизе опора перекрывает середину входа. Что улучшить?', 'Передвинуть опору к краю, сохранив поддержку крыши', 'Покрасить опору ярче', 'Сделать вход ещё уже', 'Проверь, где пройдёт человек.'),
+ task('Что нужно оставить свободным, чтобы люди вошли?', 'Проход', 'Центр крыши', 'Край подставки сзади', 'Проследи путь от двора к скамейке.')],
+ [task('Как проверить крышу бумажного макета до склеивания?', 'Примерить её к опорам и проверить, на что она опирается', 'Приклеить один край и обрезать остальные опоры', 'Положить её рядом с подставкой', 'Сначала проверь взаимное расположение деталей.'),
+ task('Как прикрепить бумажную опору к основанию?', 'Оставить клапаны, загнуть и приклеить их', 'Поставить тонкий край бумаги без крепления', 'Срезать все места для приклеивания', 'Клапан даёт площадку для соединения.'),
+ task('Что в модели поддерживает крышу?', 'Опоры', 'Рисунок дорожки', 'Цвет скамейки', 'Найди детали между крышей и основанием.')],
+ [task('Как согласовать план и вид спереди?', 'Проверить число и расположение опор и место входа', 'Одинаково раскрасить небо', 'Убрать обозначение входа с плана', 'На двух видах изображено одно сооружение.'),
+ task('Зачем отмечать вход на плане?', 'Чтобы проверить, свободен ли путь к скамейке', 'Чтобы увеличить высоту крыши', 'Чтобы сделать опоры толще', 'Проследи путь человека на виде сверху.'),
+ task('На плане скамейка закрывает проход. Что сделать?', 'Передвинуть скамейку к задней стороне', 'Закрасить обозначение входа', 'Добавить опору в проход', 'Освободи путь от входа к месту отдыха.')]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. Открой подсказку, если нужна помощь.','retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['bodyShape','wing','base','join','palette','material'];
+const canvas=el('art');
+const palettes={blue:['#215a80','#f2bb4c'],green:['#397465','#f8e4aa'],red:['#8c3454','#f3b7bd']};
+function model(target,{bodyShape='oval',wing='long',base='wide',join='flap',palette='blue'}={}){
+ const ctx=target.getContext('2d'),[main,accent]=palettes[palette];
+ ctx.fillStyle='#f4f7ff';ctx.fillRect(0,0,target.width,target.height);
+ ctx.save();ctx.scale(target.width/680,target.height/430);
+ function poly(points,color){ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=color;ctx.fill()}
+ ctx.fillStyle='#40305f';ctx.textAlign='center';ctx.font='20px sans-serif';
+ ctx.fillText('Вид спереди',190,48);ctx.fillText('План без крыши',518,48);
+ ctx.fillStyle='#bfd7ab';ctx.fillRect(35,334,310,24);
+ const left=bodyShape==='circle'?90:65,right=bodyShape==='circle'?290:315,roofLeft=base==='wide'?left-30:left-8,roofRight=base==='wide'?right+30:right+8;
+ ctx.fillStyle=main;
+ for(const x of [left,right]){const top=wing==='raised'?141+(x-roofLeft)/(roofRight-roofLeft)*35:168;ctx.fillRect(x-9,top,18,334-top)}
+ if(wing==='round')poly([[roofLeft,168],[190,92],[roofRight,168]],accent);
+ else if(wing==='raised')poly([[roofLeft,126],[roofRight,161],[roofRight,176],[roofLeft,141]],accent);
+ else {ctx.fillStyle=accent;ctx.fillRect(roofLeft,147,roofRight-roofLeft,21)}
+ ctx.fillStyle='#77523d';ctx.fillRect(118,282,146,13);
+ ctx.fillRect(126,295,8,39);ctx.fillRect(248,295,8,39);
+ const x=415,y=115,w=bodyShape==='circle'?194:210,h=bodyShape==='circle'?194:160;
+ const corners=bodyShape==='triangle'?[[x+w/2,y],[x+w,y+h],[x,y+h]]:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]];
+ poly(corners,'#e5e1f6');
+ ctx.strokeStyle=main;ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle=main;for(const [a,b] of corners)ctx.fillRect(a-6,b-6,12,12);
+ ctx.fillStyle='#77523d';ctx.fillRect(x+w*.28,y+h*.62,w*.44,12);
+ ctx.strokeStyle='#156551';ctx.lineWidth=5;ctx.beginPath();
+ if(join==='flap'){ctx.moveTo(x+w/2,y+h+42);ctx.lineTo(x+w/2,y+h-20)}
+ else{ctx.moveTo(x+w+30,y+h*.5);ctx.lineTo(x+w-35,y+h*.5)}
+ ctx.stroke();ctx.fillStyle='#156551';ctx.font='17px sans-serif';ctx.fillText('Вход',join==='flap'?x+w/2:x+w-15,join==='flap'?y+h+65:y+h*.5-15);
+ ctx.fillStyle='#40305f';ctx.font='17px sans-serif';ctx.fillText('Сравни план и фасад при сборке макета',340,407);
+ ctx.restore();
+}
+function draw(){model(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+model(el('sampleFlat'),{base:'narrow'});model(el('sampleDepth'));
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Объясни выбор крыши, входа и способ соединения деталей макета.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Решить, для кого и зачем нужен павильон','Нарисовать план и выбрать материалы макета','Подготовить основание, опоры и крышу, соединить детали','Проверить соединения и свободный вход'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Начни с назначения. Затем нарисуй план, собери модель и проверь вход и соединения.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Павильон во дворе · 4.1.6.2','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Модель павильона для школьного двора','План: '+choice('bodyShape')+'. Крыша: '+choice('wing')+'. Свес: '+choice('base')+'. Вход: '+choice('join')+'. Материал и инструменты: '+choice('material')+'.',
+    'Объяснение: '+el('idea').value.trim(),'Самооценка: '+(Array.from(el('selfReview').querySelectorAll('input:checked'),item=>item.value).join(', ')||'пока без отметок'),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+el('selfReview').onchange=()=>{el('report').textContent=report()};
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к эскизу.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'pavilon-vo-dvore',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

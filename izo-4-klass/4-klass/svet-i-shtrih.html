@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Свет и штрих — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Графика</div><h1>Свет и штрих</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Образцы штриховки">
+<figure><canvas id="sampleFlat" width="340" height="215" aria-label="Круг со штрихами одинаковой плотности"></canvas><figcaption><strong>Ровная штриховка</strong><br>Сравни расстояния между линиями.</figcaption></figure>
+<figure><canvas id="sampleVolume" width="340" height="215" aria-label="Круг, в котором штрихи справа плотнее, чем слева"></canvas><figcaption><strong>Штриховка с переходом</strong><br>Посмотри, как меняется густота линий.</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Передай объём</h2>
+<p>Для выставки «Предметы вокруг нас» нарисуй шар. Представь, что лампа светит сбоку. Сравни ровную штриховку с переходом от света к тени. Подбери штрихи, чтобы шар выглядел объёмным.</p>
+<div class="controls">
+<label class="control">Откуда светит лампа<select id="light"><option value="left">Слева</option><option value="right">Справа</option></select></label>
+<label class="control">Направление штрихов<select id="angle"><option value="-35">Наклон вправо</option><option value="35">Наклон влево</option><option value="0">Горизонтально</option></select></label>
+<label class="control">Штриховка<select id="density"><option value="flat">Ровная</option><option value="soft">Мягкий переход</option><option value="strong">Заметный переход</option></select></label>
+<label class="control">Дополнительный слой<select id="layer"><option value="one">Без второго слоя</option><option value="cross">Перекрёстный штрих в тени</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" aria-label="Твой рисунок шара"></canvas>
+<label class="control">Где тень и как ты её показал(а)?<textarea id="idea" maxlength="250" rows="2" placeholder="Тень находится… Я показал(а) её с помощью…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Плотность штриха','Свет и тень','Перекрёстный штрих'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+  task('Почему часть второго круга кажется темнее?', 'Штрихи там расположены ближе друг к другу', 'Штрихи там лишь длиннее', 'Контур круга там толще', 'Сравни промежутки между штрихами на светлой и тёмной частях.'),
+  task('Лампа стоит слева от шара. Где будет тень на поверхности самого шара?', 'На правой стороне шара', 'На левой стороне шара', 'На обеих сторонах одинаково', 'Найди сторону шара, которая находится дальше от лампы.'),
+  task('Как получить перекрёстную штриховку?', 'Нанести поверх первого ряда штрихи под другим углом', 'Добавить между штрихами параллельные линии', 'Провести второй раз по тем же линиям', 'Подумай, как линии второго слоя могут пересечь линии первого.')
+];
+const training=[
+  [
+    task('Как показать изгиб предмета штрихами одного цвета?', 'Постепенно сокращать промежутки к теневой стороне', 'Сразу заменить редкий штрих густым у середины', 'Штриховать с равными промежутками по всей форме', 'Округлая поверхность поворачивается к свету постепенно.'),
+    task('Как сделать часть рисунка темнее, сохранив цвет и толщину линий?', 'Сблизить соседние штрихи', 'Раздвинуть соседние штрихи', 'Удлинить штрихи без изменения промежутков', 'Где между линиями останется меньше белой бумаги?'),
+    task('На двух участках линии одинаковые. Какой участок выглядит темнее?', 'Тот, где линии идут густо', 'Тот, где линии идут редко', 'Оба всегда одинаковы', 'Мысленно прикрой контур. Сравни только белые промежутки.')
+  ],
+  [
+    task('Ты переставил лампу слева направо. Что поменять на рисунке шара?', 'Затемнить левую сторону сильнее правой', 'Усилить тень только внизу, сохранив стороны', 'Затемнить правую сторону сильнее левой', 'Сначала найди новую светлую сторону. Тень будет напротив.'),
+    task('Лампа справа. Какую сторону шара оставить светлее?', 'Правую', 'Левую', 'Сделать обе одинаковыми', 'Какая сторона повёрнута к лампе?'),
+    task('Слева от шара горит лампа. Где сделать несколько более густых штрихов?', 'Справа', 'Слева', 'Поровну с обеих сторон', 'Укажи сторону лампы. Теперь выбери противоположную сторону.')
+  ],
+  [
+    task('Ты уже заштриховал шар. Где добавить перекрёстные штрихи, чтобы усилить объём?', 'На самом тёмном участке теневой стороны', 'На всей поверхности одним слоем', 'На участке, который освещён сильнее всего', 'Второй слой уменьшает просветы. Где это поможет показать форму?'),
+    task('Первый слой линий наклонён вправо. Как сделать второй перекрёстным?', 'Наклонить новые линии влево', 'Повторить наклон вправо между старыми линиями', 'Снова пройти по старым линиям', 'Представь, как две линии образуют букву Х.'),
+    task('На листе есть горизонтальные штрихи. Какие линии пересекут их?', 'Вертикальные', 'Горизонтальные между ними', 'Горизонтальные поверх них', 'Представь знак «плюс»: какая линия пересекает горизонтальную?')
+  ]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['light','angle','density','layer'];
+const canvas=el('art');
+function sphere(target,{light='left',angle=-35,density='soft',layer='one'}={}){
+  const ctx=target.getContext('2d'),w=target.width,h=target.height;
+  const r=h*.37,cx=w/2,cy=h/2,sign=light==='left'?1:-1;
+  ctx.fillStyle='#fdf8ed';ctx.fillRect(0,0,w,h);
+  ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.clip();
+  ctx.strokeStyle='#342848';ctx.lineWidth=w/510;ctx.lineCap='round';
+  function hatch(degrees,shadowOnly){
+    const theta=degrees*Math.PI/180;
+    ctx.beginPath();
+    for(let y=-r;y<=r;y+=h*.021){
+      let drawing=false;
+      for(let x=-r;x<=r;x+=h*.004){
+        const tone=(1+sign*x/r)/2;
+        const level=Math.round((y+r)/(h*.021));
+        const visible=shadowOnly?tone>.70:
+          density==='flat'?level%2===0:
+          density==='strong'?tone>.33 && (tone>.73 || level%3===0):
+          tone>.17 && (tone>.65 || level%2===0);
+        const py=y+(x*Math.tan(theta));
+        if(visible){if(drawing)ctx.lineTo(cx+x,cy+py);else ctx.moveTo(cx+x,cy+py)}
+        drawing=visible;
+      }
+    }
+    ctx.stroke();
+  }
+  hatch(angle,false);
+  if(layer==='cross')hatch(Number(angle)===0?55:-angle,true);
+  ctx.restore();ctx.strokeStyle='#342848';ctx.lineWidth=w/330;
+  ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.stroke();
+}
+function draw(){sphere(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+sphere(el('sampleFlat'),{density:'flat'});
+sphere(el('sampleVolume'),{density:'strong'});
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Напиши, с какой стороны тень и как её показывают штрихи.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Определить, откуда падает свет','Наметить контур и сторону тени','Заштриховать тень, постепенно сгущая линии','Проверить, стал ли шар объёмным'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Сначала найди источник света. Дальше наметь форму, выполни штриховку и проверь результат. Начни заново.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Свет и штрих · 4.1.2.1, 4.1.2.2','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Рисунок шара','Свет: '+choice('light')+'. Штриховка: '+choice('density')+'. Дополнительный слой: '+choice('layer')+'.',
+    'Объяснение: '+el('idea').value.trim(),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к рисунку.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'svet-i-shtrih',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Проект игрушки — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Дизайн и архитектура</div><h1>Проект игрушки</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Образцы бумажной игрушки">
+<figure><canvas id="sampleFlat" width="340" height="215" role="img" aria-label="Птица из простых форм стоит на одной узкой ножке"></canvas><figcaption><strong>Образец А</strong><br>Узкая опора.</figcaption></figure>
+<figure><canvas id="sampleDepth" width="340" height="215" role="img" aria-label="Та же птица стоит на широкой подставке"></canvas><figcaption><strong>Образец Б</strong><br>Широкая опора.</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Спроектируй игрушку</h2>
+<p>Придумай настольную игрушку «Степная птица». Упрости силуэт до нескольких форм. Сравни две опоры и выбери способ соединения деталей.</p>
+<ul><li>Силуэт птицы узнаваем по главным деталям.</li><li>На схеме видно, как соединить детали.</li><li>Опора подходит настольной игрушке.</li></ul>
+<div class="controls">
+<label class="control">Корпус<select id="bodyShape"><option value="oval">Овал</option><option value="circle">Круг</option><option value="triangle">Треугольник</option></select></label>
+<label class="control">Крыло<select id="wing"><option value="long">Вытянутое</option><option value="round">Округлое</option><option value="raised">Поднятое</option></select></label>
+<label class="control">Опора<select id="base"><option value="wide">Широкая</option><option value="narrow">Узкая</option></select></label>
+<label class="control">Соединение крыла<select id="join"><option value="flap">Клапан с клеем</option><option value="slot">Язычок в прорези</option></select></label>
+<label class="control">Палитра<select id="palette"><option value="blue">Синий и золотой</option><option value="green">Зелёный и кремовый</option><option value="red">Бордовый и розовый</option></select></label>
+<label class="control">Материал и инструменты<select id="material"><option>Картон, карандаш и ножницы</option><option>Плотная бумага, линейка и ножницы</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" role="img" aria-label="Эскиз птицы и схема соединения крыла"></canvas>
+<label class="control">Почему ты выбрал(а) такую опору и соединение?<textarea id="idea" maxlength="330" rows="3" placeholder="Я сравнил(а) две опоры. Выбрал(а)… Крыло закреплю…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre><fieldset id="selfReview"><legend>Оцени свой эскиз</legend>
+<label class="choice"><input type="checkbox" value="Силуэт узнаваем"> Мою птицу можно узнать по силуэту.</label>
+<label class="choice"><input type="checkbox" value="Соединение продумано"> Я продумал(а), как закрепить крыло.</label>
+<label class="choice"><input type="checkbox" value="Опора выбрана"> Я сравнил(а) опоры и выбрал(а) подходящую.</label></fieldset>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Упрощение силуэта','Соединение деталей','Опора'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+ task('Что важно сохранить, чтобы в упрощённом силуэте узнать птицу?', 'Клюв, крыло и хвост', 'Каждое перо на крыле', 'Только цвет и размер корпуса', 'Назови три детали, по которым ты узнаёшь птицу.'),
+ task('Как закрепить бумажное крыло с помощью клапана?', 'Загнуть клапан и приклеить его к корпусу', 'Приклеить крыло одним уголком без клапана', 'Срезать клапан и оставить крыло свободным', 'Клапан создаёт площадку для приклеивания.'),
+ task('У двух игрушек одинаковый корпус. Какая опора устойчивее на ровном столе?', 'Широкая плоская подставка', 'Узкая ножка по центру', 'Подставка с закруглённым низом', 'Сравни площадь, которой опора касается стола.')
+];
+const training=[
+ [task('Как показать птицу в полёте несколькими крупными формами?', 'Поднять крылья и сохранить узнаваемые клюв и хвост', 'Добавить много мелких перьев, оставив крылья прижатыми', 'Увеличить корпус, убрав крылья и хвост', 'Подумай, какая поза передаёт полёт.'),
+  task('Нужно упростить хвост для вырезания. Что подойдёт?', 'Заменить мелкие перья одной веерообразной деталью', 'Вырезать каждое перо отдельно', 'Убрать хвост и увеличить глаз', 'Сохрани общий контур хвоста.'),
+  task('Какая деталь помогает отличить голову птицы от простого кружка?', 'Клюв', 'Травинка', 'Подставка', 'Найди выступ на передней части головы.')],
+ [task('Как закрепить крыло без клея, если у него есть язычок?', 'Сделать подходящую по ширине прорезь и вставить язычок', 'Сделать прорезь уже язычка и смять его', 'Сделать прорезь намного шире язычка', 'Деталь должна входить в прорезь и не болтаться.'),
+  task('Зачем при вырезании оставить полоску у основания крыла?', 'Чтобы загнуть её как клапан для соединения', 'Чтобы удлинить край крыла для украшения', 'Чтобы потом срезать её и приклеить крыло кончиком', 'Представь место соединения крыла с корпусом.'),
+  task('На какую часть крыла нанести клей, если есть клапан?', 'На загнутый клапан', 'На кончик крыла', 'На всю лицевую сторону крыла', 'Клей нужен там, где крыло касается корпуса.')],
+ [task('Крыло вытянули далеко в сторону, и игрушка стала наклоняться. Что проверить первым?', 'Достаточно ли широка опора в сторону наклона', 'Достаточно ли яркий цвет крыла', 'Равны ли размеры клюва и глаза', 'Подумай, где игрушка может потерять опору.'),
+  task('У подставки одна сторона загнулась вверх. Что улучшит опору?', 'Расположить подставку ровно на столе', 'Загнуть второй край вверх', 'Приклеить украшение на верхний край', 'Опора должна плотно прилегать к столу.'),
+  task('Какой низ подставки подходит для ровной полки?', 'Плоский', 'Круглый выпуклый', 'Скошенный', 'Представь, какая поверхность меньше качается.')]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['bodyShape','wing','base','join','palette','material'];
+const canvas=el('art');
+const palettes={blue:['#215a80','#f2bb4c'],green:['#397465','#f8e4aa'],red:['#8c3454','#f3b7bd']};
+function model(target,{bodyShape='oval',wing='long',base='wide',join='flap',palette='blue'}={}){
+ const ctx=target.getContext('2d');
+ const [main,accent]=palettes[palette];
+ ctx.fillStyle='#fbf2e4';ctx.fillRect(0,0,target.width,target.height);
+ ctx.save();ctx.scale(target.width/680,target.height/430);
+ function poly(points,fill,stroke){
+   ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();
+   if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=3;ctx.stroke()}
+ }
+ function oval(x,y,rx,ry,angle,fill){
+   ctx.fillStyle=fill;ctx.beginPath();ctx.ellipse(x,y,rx,ry,angle,0,Math.PI*2);ctx.fill();
+ }
+ const width=base==='wide'?360:66;
+ ctx.fillStyle='#5e433a';ctx.fillRect(265-width/2,315,width,13);
+ ctx.fillStyle='#986e55';ctx.fillRect(255,244,20,71);
+ poly([[175,208],[83,166],[131,239],[169,246]],accent);
+ if(bodyShape==='triangle') poly([[146,245],[244,151],[386,246]],main);
+ else oval(254,214,bodyShape==='circle'?80:118,bodyShape==='circle'?80:66,0,main);
+ oval(326,188,43,26,-.63,main);
+ oval(350,156,43,41,0,main);
+ poly([[385,154],[432,169],[387,180]],accent);
+ oval(361,149,5,5,0,'#241d39');
+ if(wing==='raised') oval(249,184,85,24,-.68,accent);
+ else oval(252,215,wing==='round'?49:83,wing==='round'?39:26,-.17,accent);
+ ctx.fillStyle='#543d56';ctx.font='20px sans-serif';ctx.textAlign='center';ctx.fillText('Соединение крыла',534,109);
+ poly([[457,218],[495,158],[567,158],[605,218],[565,245],[496,245]],accent,main);
+ if(join==='flap'){
+   ctx.fillStyle=main;ctx.fillRect(499,245,63,33);
+   ctx.strokeStyle='#fff6e2';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(499,248);ctx.lineTo(562,248);ctx.stroke();ctx.setLineDash([]);
+ }else{
+   ctx.fillStyle=main;ctx.fillRect(514,245,34,43);ctx.fillRect(494,299,76,5);
+ }
+ ctx.fillStyle='#543d56';ctx.font='18px sans-serif';ctx.fillText(join==='flap'?'Загни клапан':'Вставь в прорезь',534,329);
+ ctx.restore();
+}
+function draw(){model(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+model(el('sampleFlat'),{base:'narrow'});model(el('sampleDepth'));
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Объясни свой выбор опоры и способа соединения.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Выбрать материал и упростить силуэт','Наметить детали, опору и места соединения','Вырезать и соединить детали','Проверить, узнаваема и устойчива ли игрушка'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Сначала придумай форму. Затем наметь соединения, собери игрушку и проверь её.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Проект игрушки · 4.1.6.1','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Эскиз игрушки «Степная птица»','Корпус: '+choice('bodyShape')+'. Крыло: '+choice('wing')+'. Опора: '+choice('base')+'. Соединение: '+choice('join')+'. Материал и инструменты: '+choice('material')+'.',
+    'Объяснение: '+el('idea').value.trim(),'Самооценка: '+(Array.from(el('selfReview').querySelectorAll('input:checked'),item=>item.value).join(', ')||'пока без отметок'),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+el('selfReview').onchange=()=>{el('report').textContent=report()};
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к эскизу.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'proekt-igrushki',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

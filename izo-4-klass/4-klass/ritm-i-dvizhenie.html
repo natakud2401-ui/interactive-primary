@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ритм и движение — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Родные просторы Казахстана</div><h1>Ритм и движение</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Произведения для сравнения">
+<figure><img src="../assets/syrmak.jpg" alt="Казахский сырмак с повторяющимися элементами узора" width="300" height="198"><figcaption><strong>Казахский сырмак</strong><br>Узорчатый войлочный ковёр. <a href="https://commons.wikimedia.org/wiki/File:Syrmaq._Kazakh_carpet.jpg" target="_blank" rel="noopener">Источник изображения</a></figcaption></figure>
+<figure><img src="../assets/hokusai-wave.jpg" alt="Большая волна Хокусая, изгибающаяся над лодками" width="350" height="240"><figcaption><strong>Кацусика Хокусай. «Большая волна»</strong><br>Японская гравюра. <a href="https://www.metmuseum.org/art/collection/search/36491" target="_blank" rel="noopener">Источник изображения</a></figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Создай композицию</h2>
+<p>Представь, что оформляешь панно «Ветер над степью». Создай ритм с помощью повторяющихся знаков. Попробуй два варианта и оставь тот, который лучше передаёт твой замысел.</p>
+<div class="controls">
+<label class="control">Форма<select id="shape"><option value="arc">Дуга</option><option value="diamond">Ромб</option><option value="zig">Зигзаг</option></select></label>
+<label class="control">Цвет знаков<select id="ink"><option value="#782f47">Бордовый</option><option value="#194d76">Синий</option><option value="#15564c">Зелёный</option></select></label>
+<label class="control">Фон<select id="paper"><option value="#f9deb1">Песочный</option><option value="#d7edf3">Голубой</option><option value="#f5d7e6">Розовый</option></select></label>
+<label class="control">Расположение<select id="rhythm"><option value="level">Ровный ряд</option><option value="rise">По восходящей</option><option value="alternate">Выше — ниже</option></select></label>
+<label class="control">Размер<select id="size"><option value="same">Одинаковый</option><option value="grow">От малого к большому</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" aria-label="Предпросмотр твоего панно"></canvas>
+<label class="control">Какой эффект получился и что его создаёт?<textarea id="idea" maxlength="250" rows="2" placeholder="Мне кажется, панно выглядит… потому что…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Ритм орнамента','Движение в гравюре','Сравнение произведений'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+  task('Что создаёт ритм в узоре сырмака?', 'Формы повторяются через промежутки', 'Цвет фона отличается от цвета узора', 'У ковра прямоугольный край', 'Переводи взгляд от одного элемента узора к следующему. Что повторяется?'),
+  task('Какая деталь сильнее всего передаёт движение большой волны?', 'Дуга волны нависает над лодками', 'На горизонте видна гора', 'Лодки показаны тёмными линиями', 'Проследи глазами линию от основания волны до её гребня.'),
+  task('В чём сходство сырмака и гравюры?', 'Повторение деталей направляет взгляд', 'В обоих есть изображение моря', 'В обоих один знак расположен точно в центре', 'Сравни повторяющиеся формы в узоре и повторяющиеся изгибы воды.')
+];
+const training=[
+  [
+    task('Для каймы панно нужен спокойный ритм. Как расположить одинаковые ромбы?', 'Через равные промежутки', 'Всё плотнее к одному краю', 'Одной тесной группой в углу', 'Представь ровные шаги. Что остаётся одинаковым?'),
+    task('Как продолжить ряд: круг, ромб, круг, ромб…?', 'Круг, ромб', 'Ромб, круг', 'Два ромба', 'Назови первые два знака. Повтори их в том же порядке.'),
+    task('Какой знак повторяется в ряду: круг, круг, круг?', 'Круг', 'Ромб', 'Зигзаг', 'Сравни первый и второй знаки. Они одинаковые.')
+  ],
+  [
+    task('Как усилить ощущение порыва ветра в эскизе?', 'Повести длинные изогнутые линии вверх и вправо', 'Разместить три горизонтальные линии одна над другой', 'Поместить неподвижный круг по центру', 'Какая траектория заставит взгляд подниматься по листу?'),
+    task('Где взгляд скорее почувствует подъём?', 'На линии, которая идёт от нижнего края к верхнему', 'На линии, которая идёт параллельно нижнему краю', 'На линии, которая спускается к нижнему краю', 'Проведи пальцем слева направо и сравни направления.'),
+    task('В какую сторону ведёт линия, если её конец выше начала?', 'Вверх', 'Вниз', 'На одном уровне', 'Сравни высоту двух концов линии.')
+  ],
+  [
+    task('Как сохранить связь с орнаментом и показать ветер?', 'Повторить один мотив и расположить его по восходящей', 'Поставить в углу одну фигуру без повторения', 'Заполнить лист одним ровным цветом', 'Нужны два признака. Первый — повтор, второй — направление.'),
+    task('Какой приём можно перенести из обоих произведений в своё панно?', 'Повторять заметную форму', 'Изображать лодки в каждом фрагменте', 'Делать всё изображение прямоугольным узором', 'В сырмаке повторяются детали орнамента, в гравюре — изгибы воды.'),
+    task('Что общего у ряда дуг и ряда ромбов?', 'Формы повторяются', 'Формы одинаковы в обоих рядах', 'В обоих есть только дуги', 'Смотри на каждый ряд отдельно. Что происходит с его формой?')
+  ]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['shape','ink','paper','rhythm','size'];
+const canvas=el('art'),ctx=canvas.getContext('2d');
+function draw(){
+  const [shape, ink, background, rhythm, size]=keys.map(key=>el(key).value);
+  ctx.fillStyle=background;ctx.fillRect(0,0,680,430);
+  ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.strokeRect(19,19,642,392);
+  for(let i=0;i<7;i++){
+    const x=78+i*87,y=rhythm==='rise'?310-i*32:rhythm==='alternate'?215+(i%2?48:-48):215;
+    const k=size==='grow'?0.6+i*0.13:1;
+    ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.strokeStyle=ink;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();
+    if(shape==='arc'){ctx.moveTo(-32,22);ctx.quadraticCurveTo(-5,-56,30,-23)}
+    if(shape==='diamond'){ctx.moveTo(0,-34);ctx.lineTo(28,0);ctx.lineTo(0,34);ctx.lineTo(-28,0);ctx.closePath()}
+    if(shape==='zig'){ctx.moveTo(-32,26);ctx.lineTo(-12,-19);ctx.lineTo(5,6);ctx.lineTo(30,-31)}
+    ctx.stroke();ctx.restore();
+  }
+}
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Напиши, какой эффект создаёт твоя композиция.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Придумать, что передать','Выбрать форму и цвета','Расположить повторяющиеся знаки','Рассмотреть работу и объяснить эффект'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Сначала замысел. Затем выбери средства, выполни композицию и оцени её. Начни заново.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Ритм и движение · 4.1.1.1','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Панно «Ветер над степью»','Форма: '+choice('shape')+'. Ритм: '+choice('rhythm')+'. Размер: '+choice('size')+'.',
+    'Объяснение: '+el('idea').value.trim(),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к композиции.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'ritm-i-dvizhenie',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Степные дали — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Живопись</div><h1>Степные дали</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Два этюда степи">
+<figure><canvas id="sampleFlat" width="340" height="215" role="img" aria-label="Этюд А. Передний и дальний планы близки по цвету и контрасту"></canvas><figcaption><strong>Этюд А</strong><br>Сравни ближнюю траву и дальние холмы.</figcaption></figure>
+<figure><canvas id="sampleDepth" width="340" height="215" role="img" aria-label="Этюд Б. Ближний план контрастный, дальние холмы светлее и мягче"></canvas><figcaption><strong>Этюд Б</strong><br>Какой этюд сильнее передаёт глубину?</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Напиши этюд</h2>
+<p>Для выставки «Родные просторы Казахстана» создай пейзаж степи. Попробуй два варианта дальнего плана. Выбери цвет, силу контраста и характер мазков, чтобы зритель почувствовал расстояние до холмов.</p>
+<div class="controls">
+<label class="control">Палитра<select id="palette"><option value="sun">Солнечный день</option><option value="cloud">Пасмурный день</option><option value="evening">Вечер</option></select></label>
+<label class="control">Цвет дальнего плана<select id="distance"><option value="rich">Насыщенный</option><option value="soft">Приглушённый</option><option value="pale">Светлый</option></select></label>
+<label class="control">Мазки вдалеке<select id="edge"><option value="sharp">Чёткие</option><option value="soft">Мягкие</option></select></label>
+<label class="control">Мазки вблизи<select id="brush"><option value="smooth">Широкие</option><option value="grass">Короткие</option><option value="mix">Широкие и короткие</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" role="img" aria-label="Предпросмотр степного пейзажа"></canvas>
+<label class="control">Что помогает почувствовать глубину твоего пейзажа?<textarea id="idea" maxlength="250" rows="2" placeholder="Ближний план я…, а дальние холмы…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Цвет дальнего плана','Контраст и края','Мазок и детали'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+  task('Почему холмы в этюде Б кажутся дальше?', 'Их цвет светлее и менее насыщен', 'Их цвет ярче, чем цвет ближней травы', 'Они написаны тем же цветом, что и трава вблизи', 'Сравни цвет холмов с цветом переднего плана.'),
+  task('Какие края помогают показать удалённые холмы в этюде Б?', 'Мягкие, с плавным переходом к небу', 'Чёткие, с тёмной обводкой', 'Резкие, с яркой светлой каймой', 'Найди границу холмов и неба и сравни её с ближними деталями.'),
+  task('Где отдельные травинки заметнее и помогают почувствовать близость?', 'На переднем плане', 'На дальних холмах', 'Одинаково на обоих планах', 'Представь, что смотришь сначала под ноги, потом вдаль.')
+];
+const training=[
+  [
+    task('Утро туманное. Как выбрать цвет дальних холмов, сохраняя общую палитру?', 'Добавить немного цвета неба к цвету холмов', 'Добавить самый насыщенный цвет ближней травы', 'Затемнить дальние холмы чёрным сильнее переднего плана', 'Туман сближает цвета неба и дальних предметов.'),
+    task('Дальний зелёный холм кажется слишком близким. Что поможет отодвинуть его?', 'Сделать цвет светлее и приглушённее', 'Сделать зелень ярче', 'Добавить тёмную кайму по краю', 'Сравни, насколько ярко заметны близкие и далёкие предметы.'),
+    task('Для дальнего холма есть два цвета. Какой ближе к эффекту лёгкой дымки?', 'Светлый приглушённый', 'Тёмный насыщенный', 'Яркий контрастный', 'Дымка ослабляет яркость цвета.')
+  ],
+  [
+    task('Дальняя гряда спорит с ярким передним планом. Что исправить?', 'Смягчить границу гряды и снизить её контраст', 'Усилить контур гряды и приглушить передний план', 'Обвести оба плана одинаково тёмной линией', 'Дальняя гряда должна меньше притягивать взгляд.'),
+    task('Как сделать край далёкого холма мягче?', 'Соединить близкие оттенки холма и неба у границы', 'Провести по границе тёмную линию', 'Добавить яркую кайму вдоль границы', 'Мягкий край получается при плавной смене цвета.'),
+    task('Какой край больше подходит холму в дымке?', 'Нечёткий', 'Резкий тёмный', 'Ярко обведённый', 'Представь, как дымка скрывает чёткую границу.')
+  ],
+  [
+    task('Как написать траву на двух планах, чтобы усилить глубину?', 'Вблизи показать отдельные травинки, вдали объединить траву в пятно', 'Вдали выделить травинки, вблизи оставить ровное пятно', 'На обоих планах повторить одинаковые мелкие мазки', 'Количество видимых деталей уменьшается с расстоянием.'),
+    task('На каком участке уместны короткие заметные мазки-травинки?', 'В нижней части пейзажа, на ближнем плане', 'На дальнем холме у линии горизонта', 'На небе над холмами', 'Отдельные детали проще рассмотреть рядом.'),
+    task('Как изобразить далёкую траву, если отдельные стебли почти не видны?', 'Единым цветовым пятном', 'Отдельными крупными линиями', 'Чёткими тёмными точками вокруг каждого стебля', 'Объедини то, что издалека воспринимается вместе.')
+  ]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['palette','distance','edge','brush'];
+const canvas=el('art');
+const colors={
+  sun:{sky:'#a8c9e3',horizon:'#f7dbad',hill:'#637250',field:'#c3a46b',near:'#769056',grass:'#3b572e'},
+  cloud:{sky:'#8ea6b7',horizon:'#d8d8ca',hill:'#516b64',field:'#9e986e',near:'#637d56',grass:'#395848'},
+  evening:{sky:'#6c77a6',horizon:'#f5be9d',hill:'#59546e',field:'#b98772',near:'#866650',grass:'#563e4b'}
+};
+function landscape(target,{palette='sun',distance='soft',edge='soft',brush='mix'}={}){
+  const ctx=target.getContext('2d'),w=target.width,h=target.height,c=colors[palette];
+  const sky=ctx.createLinearGradient(0,0,0,h*.52);
+  sky.addColorStop(0,c.sky);sky.addColorStop(1,c.horizon);
+  ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
+  ctx.save();ctx.scale(w/680,h/430);
+  function hills(fill,y,far=false){
+    ctx.fillStyle=fill;ctx.beginPath();ctx.moveTo(0,y);
+    if(far){ctx.bezierCurveTo(85,y-12,129,y-87,208,y-44);ctx.bezierCurveTo(304,y+9,374,y-50,431,y-71);ctx.bezierCurveTo(534,y-114,620,y-31,680,y-15)}
+    else{ctx.bezierCurveTo(151,y-39,223,y+53,360,y+16);ctx.bezierCurveTo(504,y-25,599,y-67,680,y-56)}
+    ctx.lineTo(680,430);ctx.lineTo(0,430);ctx.closePath();ctx.fill();
+  }
+  ctx.save();
+  if(edge==='soft')ctx.filter='blur('+Math.max(1,w/340)+'px)';
+  hills(c.hill,192,true);
+  if(distance!=='rich'){
+    ctx.globalAlpha=distance==='pale'?.76:.52;
+    hills(c.horizon,192,true);
+  }
+  ctx.restore();
+  hills(c.field,246);
+  hills(c.near,338);
+  ctx.lineCap='round';
+  if(brush!=='grass'){
+    ctx.strokeStyle=c.field;ctx.globalAlpha=.48;
+    for(let i=0;i<17;i++){
+      const x=(i*87)%650,y=344+(i*13)%83;
+      ctx.lineWidth=4+i%5;ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+14,y-4,x+32+i%7,y-5);ctx.stroke();
+    }
+  }
+  if(brush!=='smooth'){
+    ctx.strokeStyle=c.grass;ctx.globalAlpha=.85;
+    for(let i=0;i<50;i++){
+      const x=6+(i*79)%668,y=356+(i*17)%70;
+      const length=6+(i%9)*2;
+      ctx.lineWidth=1.5+i%3*.4;ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+2,y-8,x+6,y-length);ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+function draw(){landscape(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+landscape(el('sampleFlat'),{distance:'rich',edge:'sharp',brush:'smooth'});
+landscape(el('sampleDepth'),{distance:'pale',edge:'soft',brush:'mix'});
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Напиши, чем отличаются ближний и дальний планы твоего этюда.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Наметить горизонт и планы','Написать небо и дальние холмы','Написать ближний план и добавить детали','Проверить, чувствуется ли глубина'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Начни с расположения планов. Затем работай от дальнего к ближнему. Проверяй глубину в конце.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Степные дали · 4.1.3.1, 4.1.3.2','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Этюд степи','Палитра: '+choice('palette')+'. Дальний план: '+choice('distance').toLowerCase()+', мягкость мазков: '+choice('edge').toLowerCase()+'. Ближний план: '+choice('brush').toLowerCase()+'.',
+    'Объяснение: '+el('idea').value.trim(),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к этюду.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'stepnye-dali',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

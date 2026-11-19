@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Орнамент на предмете — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Декоративно-прикладное искусство</div><h1>Орнамент на предмете</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Сравнение вариантов декора">
+<figure><canvas id="sampleFlat" width="340" height="215" role="img" aria-label="Футляр с орнаментом из ромбов. Узкая полоса пересекает края крупных ромбов"></canvas><figcaption><strong>Образец А</strong><br>Узкая полоса, крупные мотивы.</figcaption></figure>
+<figure><canvas id="sampleDepth" width="340" height="215" role="img" aria-label="Тот же футляр. Равномерно расположенные ромбы целиком помещаются в широкой полосе"></canvas><figcaption><strong>Образец Б</strong><br>Широкая полоса, тот же размер мотивов.</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Укрась предмет</h2>
+<p>Придумай декор для футляра или подставки. Проверь один мотив в узкой и широкой полосе. Сохрани удачный вариант.</p>
+<ul><li>Мотивы повторяются в выбранном порядке.</li><li>Размер мотивов подходит ширине полосы.</li><li>Узор заметен на фоне изделия.</li></ul>
+<div class="controls">
+<label class="control">Предмет<select id="object"><option value="case">Футляр</option><option value="mat">Подставка</option></select></label>
+<label class="control">Мотив<select id="motif"><option value="diamond">Ромб</option><option value="curl">Завиток</option><option value="leaf">Листок</option></select></label>
+<label class="control">Ширина полосы<select id="band"><option value="wide">Широкая</option><option value="narrow">Узкая</option></select></label>
+<label class="control">Размер мотива<select id="scale"><option value="big">Крупный</option><option value="small">Мелкий</option></select></label>
+<label class="control">Ритм<select id="rhythm"><option value="repeat">Одинаковые мотивы</option><option value="mirror">Чередование размеров</option></select></label>
+<label class="control">Палитра<select id="palette"><option value="contrast">Синий и кремовый</option><option value="quiet">Два близких зелёных</option><option value="warm">Бордовый и золотой</option></select></label>
+<label class="control">Материал и инструмент<select id="material"><option>Фетр и ножницы</option><option>Цветная бумага и ножницы</option><option>Картон, гуашь и кисть</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" role="img" aria-label="Твой эскиз орнамента на предмете"></canvas>
+<label class="control">Почему ты оставил(а) этот вариант?<textarea id="idea" maxlength="330" rows="3" placeholder="Я сравнил(а) два варианта. Этот подходит, потому что…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre><fieldset id="selfReview"><legend>Оцени свой эскиз</legend>
+<label class="choice"><input type="checkbox" value="Ритм сохранён"> Я сохранил(а) ритм.</label>
+<label class="choice"><input type="checkbox" value="Мотив подходит полосе"> Мой мотив помещается в полосе.</label>
+<label class="choice"><input type="checkbox" value="Мотив заметен на фоне"> Мой мотив заметен на фоне.</label></fieldset>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Ритм','Размер мотива','Цветовой контраст'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+  task('Что создаёт ритм в полосе с ромбами?', 'Мотив повторяется через равные промежутки', 'Мотивы одного цвета расположены произвольно', 'Один мотив крупнее всех остальных', 'Проследи, на каком расстоянии друг от друга стоят ромбы.'),
+  task('Почему в образце А видна только часть каждого ромба?', 'Мотив выше полосы', 'Мотивы слишком далеко друг от друга', 'Цвет ромбов слишком близок к фону', 'Сравни высоту целого ромба с шириной полосы.'),
+  task('Что поможет светлому узору лучше читаться на изделии?', 'Тёмный фон под узором', 'Фон почти того же светлого оттенка', 'Больше повторов при тех же близких оттенках', 'Сравни, где заметнее граница мотива и фона.')
+];
+const training=[
+  [task('Ромбы и листки чередуются: ромб, листок, ромб. Что поставить дальше?', 'Листок, затем ромб', 'Ромб, затем листок', 'Два листка подряд', 'Найди пару, которая повторяется.'),
+   task('Мотивы одинаковые, но ритм сбился. Как исправить полосу?', 'Выровнять промежутки между мотивами', 'Заменить один мотив более крупным', 'Собрать мотивы у одного края', 'Сравни расстояния между соседними элементами.'),
+   task('Как продолжить ряд одинаковых ромбов?', 'Добавить такой же ромб на том же расстоянии', 'Поставить ромб вплотную к предыдущему', 'Заменить следующий ромб крупным листком', 'Повтори форму и промежуток.')],
+  [task('Полосу расширить нельзя. Как сохранить крупный мотив целиком?', 'Уменьшить мотив целиком, сохранив пропорции', 'Уменьшить только промежутки между мотивами', 'Сдвинуть мотив ближе к краю полосы', 'Нужно уменьшить высоту мотива, сохранив его форму.'),
+   task('Завитки выходят за границы узкой полосы. Что изменить?', 'Уменьшить завитки', 'Приблизить завитки друг к другу', 'Сделать завитки темнее', 'Выбери изменение, которое уменьшает высоту.'),
+   task('Какой ромб целиком поместится в узкой полосе?', 'Тот, что ниже полосы', 'Тот, что выше полосы', 'Тот, что выше полосы, но светлее', 'Сравни верхний и нижний края полосы с высотой ромба.')],
+  [task('На кремовом фетре нужен узор, заметный издалека. Какую пару выбрать?', 'Тёмно-синие мотивы на кремовом фоне', 'Светло-бежевые мотивы на кремовом фоне', 'Кремовые мотивы на светло-жёлтом фоне', 'Сравни, насколько пары различаются по светлоте.'),
+   task('Светлый листок теряется на светло-жёлтой полосе. Что поможет?', 'Заменить фон на тёмный', 'Повторить листок чаще', 'Сделать фон ещё светлее и оставить листок белым', 'Нужна заметная граница между фоном и мотивом.'),
+   task('На каком фоне белые ромбы заметнее?', 'На тёмно-синем', 'На молочно-белом', 'На очень светлом жёлтом', 'Сравни светлый мотив с каждым фоном.')]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['object','motif','band','scale','rhythm','palette','material'];
+const canvas=el('art');
+const palettes={contrast:['#214d72','#fff0cb'],quiet:['#437463','#669786'],warm:['#6e2b46','#f6c767']};
+function model(target,{object='case',motif='diamond',band='wide',scale='big',rhythm='repeat',palette='contrast',material='Фетр и ножницы'}={}){
+  const ctx=target.getContext('2d');
+  ctx.fillStyle='#f9ece0';ctx.fillRect(0,0,target.width,target.height);
+  ctx.save();ctx.scale(target.width/680,target.height/430);
+  const [bg,ink]=palettes[palette], isCase=object==='case', height=band==='wide'?112:48;
+  const ground=ctx.createLinearGradient(0,75,0,345);
+  ground.addColorStop(0,'#fae1aa');ground.addColorStop(1,'#d29758');
+  ctx.shadowColor='#714a3655';ctx.shadowBlur=15;ctx.shadowOffsetY=8;ctx.fillStyle=ground;
+  ctx.beginPath();ctx.roundRect(65,isCase?98:65,550,isCase?234:300,isCase?31:14);ctx.fill();
+  ctx.shadowColor='transparent';
+  ctx.strokeStyle='#8e5e46';ctx.lineWidth=3;ctx.stroke();
+  if(material.startsWith('Фетр')){
+    ctx.setLineDash([6,6]);ctx.beginPath();ctx.roundRect(77,isCase?110:77,526,isCase?210:276,15);ctx.stroke();ctx.setLineDash([]);
+  }
+  if(isCase){ctx.strokeStyle='#ad7549';ctx.beginPath();ctx.moveTo(75,144);ctx.lineTo(605,144);ctx.stroke()}
+  ctx.save();ctx.beginPath();ctx.rect(80,215-height/2,520,height);ctx.clip();ctx.fillStyle=bg;ctx.fillRect(80,215-height/2,520,height);
+  for(let i=0;i<7;i++){
+    ctx.save();ctx.translate(116+i*74,215);
+    if(rhythm==='mirror'&&i%2===1)ctx.scale(.68,.68);
+    if(scale==='small')ctx.scale(.52,.52);
+    ctx.fillStyle=ink;ctx.strokeStyle=ink;ctx.lineWidth=8;ctx.lineCap='round';
+    ctx.beginPath();
+    if(motif==='diamond'){ctx.moveTo(0,-42);ctx.lineTo(26,0);ctx.lineTo(0,39);ctx.lineTo(-26,0);ctx.closePath();ctx.fill()}
+    if(motif==='leaf'){ctx.moveTo(-22,30);ctx.quadraticCurveTo(-26,-32,24,-40);ctx.quadraticCurveTo(32,13,-22,30);ctx.fill()}
+    if(motif==='curl'){ctx.moveTo(-20,32);ctx.bezierCurveTo(-36,2,-26,-44,8,-38);ctx.bezierCurveTo(34,-35,36,-2,14,3);ctx.quadraticCurveTo(-2,6,-3,-10);ctx.stroke()}
+    ctx.restore();
+  }
+  ctx.restore();ctx.restore();
+}
+function draw(){model(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+model(el('sampleFlat'),{band:'narrow'});model(el('sampleDepth'));
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Напиши, чем выбранный вариант подходит твоему предмету.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Выбрать предмет и способ работы','Подобрать мотив и его размер','Разместить мотивы, повторяя выбранный ритм','Проверить края полосы и читаемость узора'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Сначала выбери предмет. Затем подбери мотив до того, как начнёшь его повторять.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Орнамент на предмете · 4.1.5.1','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Эскиз декора','Предмет: '+choice('object')+'. Мотив: '+choice('motif')+'. Полоса: '+choice('band')+'. Размер: '+choice('scale')+'. Ритм: '+choice('rhythm')+'. Палитра: '+choice('palette')+'. Материал и инструмент: '+choice('material')+'.',
+    'Объяснение: '+el('idea').value.trim(),'Самооценка: '+(Array.from(el('selfReview').querySelectorAll('input:checked'),item=>item.value).join(', ')||'пока без отметок'),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+el('selfReview').onchange=()=>{el('report').textContent=report()};
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к эскизу.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'ornament-na-predmete',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Фигурка сайгака — ИЗО, 4 класс</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f2ff;color:#261943;font:16px/1.55 "Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#652d9c,#5143b7 55%,#1967aa);color:#fff;padding:26px 0 31px}
+.wrap{max-width:1000px;width:calc(100% - 30px);margin:auto}header a{color:white}h1{margin:4px 0;font-size:clamp(32px,7vw,54px);line-height:1.12}h2{margin-top:0;line-height:1.25}
+main{padding:20px 0 40px}.panel,figure{background:#fff;border:1px solid #e8ddfb;border-radius:17px;box-shadow:0 8px 22px #35295b18;padding:17px;margin:0 0 18px}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:13px}figure img{display:block;width:100%;height:215px;object-fit:contain;background:#f8f3eb;border-radius:8px}figure figcaption{margin-top:10px}a{color:#4e268b}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:9px;background:#592bad;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eee7fc;color:#432575}button:disabled{opacity:.58;cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #176fb2;outline-offset:3px}
+fieldset{border:0;margin:0;padding:0}legend{font-weight:700;padding:0;margin-bottom:8px}
+.choice{display:flex;align-items:baseline;gap:7px;border:1px solid #e4d7f5;border-radius:9px;padding:7px 10px;margin-bottom:7px;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:1.55em;color:#40305f}.good{color:#146645}.retry{color:#8e351b}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(127px,1fr));gap:10px}
+.control{display:grid;gap:4px;margin-bottom:10px;font-weight:650}
+input:not([type=radio]),select,textarea{width:100%;min-width:0;border:1px solid #ccbce7;border-radius:8px;padding:7px;background:white;color:#261943}
+canvas{display:block;width:100%;height:auto;border:1px solid #cdbce4;border-radius:10px}
+.order li{margin:5px 0}.order button{font-weight:500;padding:5px 9px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;background:#f4edfe;border-radius:8px;padding:12px}
+@media(max-width:580px){.examples{grid-template-columns:1fr}.examples img{height:auto;max-height:210px}}
+</style>
+<script src="../assets/github-export.js"></script></head>
+<body>
+<header><div class="wrap"><a href="../index.html">К заданиям по ИЗО</a><div>4 класс · Скульптура</div><h1>Фигурка сайгака</h1></div></header>
+<main class="wrap">
+<div class="examples" aria-label="Два наброска фигурки">
+<figure><canvas id="sampleFlat" width="340" height="215" role="img" aria-label="Фигурка сайгака с корпусом, головой и ногами в профиль"></canvas><figcaption><strong>Вид сбоку</strong><br>Рассмотри голову, корпус и ноги.</figcaption></figure>
+<figure><canvas id="sampleDepth" width="340" height="215" role="img" aria-label="Та же фигурка сайгака в три четверти на подставке"></canvas><figcaption><strong>Вид в три четверти</strong><br>Посмотри, на что опирается фигурка.</figcaption></figure>
+</div>
+<section class="panel" id="check"><h2 tabindex="-1">1. Рассмотри и объясни</h2><p id="questionNumber"></p><form id="quiz"><fieldset><legend id="prompt"></legend><div id="options"></div></fieldset><div class="row"><button>Проверить</button><button type="button" class="secondary" id="hint">Подсказка</button></div></form><p id="feedback" class="status" role="status"></p><button id="next" hidden>Дальше</button></section>
+<section class="panel" id="route" hidden><h2 tabindex="-1">2. Твой маршрут</h2><ul id="routeList"></ul><button id="practiceStart">Начать тренировку</button></section>
+<section class="panel" id="studio" hidden><h2 tabindex="-1">3. Собери модель</h2>
+<p>Подготовь модель сайгака для выставки «Родные просторы Казахстана». Подбери основные формы, позу и опору. Осмотри фигурку с двух сторон.</p>
+<div class="controls">
+<label class="control">Корпус<select id="bodyForm"><option value="oval">Вытянутый овал</option><option value="round">Почти шар</option><option value="slim">Узкий овал</option></select></label>
+<label class="control">Положение головы<select id="pose"><option value="alert">Поднята</option><option value="level">Прямо</option><option value="graze">Опущена</option></select></label>
+<label class="control">Опора<select id="base"><option value="none">Без подставки</option><option value="narrow">Узкая подставка</option><option value="wide">Широкая подставка</option></select></label>
+<label class="control">Ракурс<select id="view"><option value="side">Сбоку</option><option value="turn">В три четверти</option></select></label>
+</div>
+<canvas id="art" width="680" height="430" role="img" aria-label="Предпросмотр модели сайгака"></canvas>
+<label class="control">Как материал, соединения и опора помогут при лепке?<textarea id="idea" maxlength="330" rows="3" placeholder="Я выберу… Детали соединю… Для устойчивости…"></textarea></label>
+<button id="studioNext">К итоговому заданию</button><p id="studioStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="finish" hidden><h2 tabindex="-1">4. Восстанови порядок</h2>
+<p>Нажми на карточки в порядке работы над композицией.</p>
+<ol id="placed" class="order"></ol><div id="steps" class="row"></div>
+<div class="row"><button id="orderCheck">Проверить порядок</button><button id="orderReset" class="secondary">Начать заново</button></div><p id="orderStatus" class="status" role="status"></p>
+</section>
+<section class="panel" id="result" hidden><h2 tabindex="-1">Результат</h2><pre id="report"></pre>
+<form id="submit">
+<label class="control">Твоё имя<input name="studentName" maxlength="60" required autocomplete="off"></label>
+<input name="classCode" type="hidden" value="OFFLINE">
+<button>Скачать работу для учителя</button><p id="sendStatus" class="status" role="status"></p>
+</form></section>
+</main>
+<script>
+const el=id=>document.getElementById(id);
+const skillNames=['Основные объёмы','Соединение деталей','Устойчивость формы'];
+const task=(question, correct, wrongA, wrongB, tip)=>({question,correct,options:[correct,wrongA,wrongB],tip});
+const diagnostic=[
+  task('Из какой формы удобнее начать лепить вытянутое туловище сайгака?', 'Из крупного овала', 'Из нескольких маленьких шариков', 'Из тонкой плоской полоски', 'Сравни длину корпуса с его высотой.'),
+  task('Как присоединить ногу из пластилина к корпусу?', 'Прижать широким концом и сгладить стык', 'Приложить кончиком и не прижимать', 'Сгладить каждую деталь отдельно и просто поднести их друг к другу', 'Подумай, какая площадь соединения позволит ноге лучше держаться.'),
+  task('Какая опора поможет мягкой фигурке устойчиво стоять на полке?', 'Широкая плоская подставка, на которую опираются все ноги', 'Маленький шарик под одной ногой', 'Высокая узкая подставка с опорой на одну точку', 'Посмотри на фигурку с двух сторон. Где ноги соприкасаются с основанием?')
+];
+const training=[
+  [
+    task('Голова опущена к земле. Как изменить форму шеи в модели?', 'Наклонить продолговатую шею вперёд и вниз, сохранив соединение с корпусом', 'Оставить шею направленной вверх и передвинуть только голову', 'Сделать шею шире корпуса и повернуть её назад', 'Посмотри, какой объём связывает плечо и голову в новой позе.'),
+    task('Какие две формы подойдут для крупного корпуса и небольшой головы?', 'Большой вытянутый овал и маленький овал', 'Два одинаковых крупных шара', 'Две одинаковые тонкие пластинки', 'Сравни размеры корпуса и головы на рисунке.'),
+    task('Какую деталь стоит слепить первой, чтобы от неё подобрать размеры остальных?', 'Туловище', 'Ухо', 'Кончик носа', 'Найди самый крупный объём фигурки.')
+  ],
+  [
+    task('Нога держится, но у её основания видна глубокая щель. Что исправить?', 'Добавить немного материала к стыку и примазать его к обеим деталям', 'Намочить пластилин и оставить щель', 'Прижать только нижний конец ноги к подставке', 'Укрепи место, где встречаются обе детали.'),
+    task('Чем удобно сгладить небольшой стык, не сминая корпус?', 'Закруглённым концом стеки для лепки', 'Острым кончиком карандаша', 'Широким краем линейки', 'Подумай, каким инструментом можно аккуратно провести вдоль стыка.'),
+    task('Два кусочка пластилина должны соединиться. Что сделать сначала?', 'Слегка прижать их друг к другу', 'Прорисовать мелкие детали', 'Поставить кусочки на разные подставки', 'Сначала поверхности должны соприкоснуться.')
+  ],
+  [
+    task('У фигурки одна нога приподнята. Как проверить устойчивость?', 'Посмотреть сбоку и в три четверти, стоят ли остальные ноги на подставке', 'Посмотреть только на голову и рога', 'Проверить, одинаков ли цвет всех ног', 'Приподнятая нога не служит опорой. Найди точки, на которых стоит фигурка.'),
+    task('Подставка качается из-за выпуклого дна. Что сделать?', 'Выровнять низ подставки', 'Добавить сверху тяжёлый шарик', 'Сделать подставку ещё выше', 'Какая поверхность лучше соприкасается с ровной полкой?'),
+    task('На какую поверхность легче поставить фигурку?', 'На ровную плоскую', 'На выпуклую круглую', 'На наклонную', 'Представь, какая поверхность не качается и не наклоняет фигурку.')
+  ]
+];
+const routeNames=['Усложнение','Закрепление','С опорой'];
+let mode='diagnostic', index=0, mistakes=0, usedHint=false, aided=false, quizComplete=false;
+const routes=[], practice=[];
+function show(id) {
+  const section=el(id);
+  section.hidden=false;
+  section.querySelector('h2').focus();
+  section.scrollIntoView({block:'start'});
+}
+function currentTask(){return mode==='diagnostic'?diagnostic[index]:training[index][routes[index]]}
+function renderQuestion(){
+  const q=currentTask();
+  mistakes=0;usedHint=false;quizComplete=false;
+  el('quiz').hidden=false;el('next').hidden=true;el('feedback').textContent='';
+  el('check').querySelector('h2').textContent=mode==='diagnostic'?'1. Рассмотри и объясни':'3. Тренировка по маршруту';
+  el('questionNumber').textContent=skillNames[index]+' · '+(index+1)+' из 3';
+  el('prompt').textContent=q.question;
+  const answers=q.options.slice();
+  const shift=(index+1+(mode==='practice'?1:0))%answers.length;
+  answers.push(...answers.splice(0,shift));
+  el('options').replaceChildren(...answers.map(text=>{
+    const label=document.createElement('label'), input=document.createElement('input');
+    label.className='choice';input.type='radio';input.name='answer';input.value=text;
+    label.append(input,document.createTextNode(text));return label;
+  }));
+}
+function message(text,style=''){el('feedback').textContent=text;el('feedback').className='status '+style}
+el('hint').onclick=()=>{usedHint=true;message(currentTask().tip)};
+el('quiz').onsubmit=event=>{
+  event.preventDefault();
+  if(quizComplete)return;
+  const answer=new FormData(event.currentTarget).get('answer');
+  if(!answer){message('Выбери один ответ.','retry');return}
+  const q=currentTask(), correct=answer===q.correct;
+  if(!correct && ++mistakes<2){message('Попробуй ещё раз. '+q.tip,'retry');return}
+  quizComplete=true;
+  if(mode==='diagnostic') routes.push(correct?(usedHint||mistakes?1:0):2);
+  else practice.push(correct?(usedHint||mistakes?'после помощи':'самостоятельно'):'нужно закрепить');
+  message(correct?'Верно! '+q.correct:'Сравни со способом решения. '+q.correct+'. '+q.tip,correct?'good':'retry');
+  el('quiz').hidden=true;el('next').hidden=false;el('next').focus();
+};
+el('next').onclick=()=>{
+  if(++index<3){renderQuestion();return}
+  el('check').hidden=true;
+  if(mode==='practice'){show('studio');draw();return}
+  el('routeList').replaceChildren(...routes.map((n,i)=>{
+    const li=document.createElement('li');li.textContent=skillNames[i]+' — '+routeNames[n];return li;
+  }));
+  show('route');
+};
+el('practiceStart').onclick=()=>{mode='practice';index=0;el('route').hidden=true;renderQuestion();show('check')};
+const keys=['bodyForm','pose','base','view'];
+const canvas=el('art');
+function model(target,{bodyForm='oval',pose='alert',base='wide',view='side'}={}){
+  const ctx=target.getContext('2d'),w=target.width,h=target.height,turn=view==='turn';
+  ctx.fillStyle='#f9eddf';ctx.fillRect(0,0,w,h);
+  ctx.save();ctx.scale(w/680,h/430);
+  const sx=turn?.83:1, depth=turn?1:.27;
+  const point=(x,y,z=0)=>[340+(x-340)*sx+z*(turn?.78:.13),y+z*depth*.25];
+  function volume(x,y,rx,ry,angle,z=0,shade=0){
+    const [px,py]=point(x,y,z);
+    ctx.save();ctx.translate(px,py);ctx.rotate(angle);
+    const light=ctx.createRadialGradient(-rx*.32,-ry*.35,1,0,0,Math.max(rx,ry));
+    light.addColorStop(0,shade?'#efbd8e':'#f8cca3');light.addColorStop(1,shade?'#a3654e':'#b87553');
+    ctx.fillStyle=light;ctx.strokeStyle='#925640';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.ellipse(0,0,rx*Math.sqrt(sx),ry,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();
+  }
+  function line(x,y,endX,endY,z,width,color){
+    const [a,b]=point(x,y,z),[c,d]=point(endX,endY,z);
+    ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();
+  }
+  ctx.fillStyle='#704a3222';ctx.beginPath();ctx.ellipse(340,347,206,33,0,0,Math.PI*2);ctx.fill();
+  if(base!=='none'){
+    const width=base==='wide'?204:136;
+    ctx.fillStyle='#a1604e';ctx.beginPath();ctx.ellipse(340,342,width,turn?33:23,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#d79470';ctx.beginPath();ctx.ellipse(340,332,width,turn?33:23,0,0,Math.PI*2);ctx.fill();
+  }
+  const headY={alert:143,level:181,graze:244}[pose];
+  const bodyR={oval:111,round:81,slim:122}[bodyForm];
+  const bodyH={oval:51,round:63,slim:41}[bodyForm];
+  function legs(z,shade){
+    const color=shade?'#9e6550':'#b87858';
+    line(255,228,244,274,z,19,color);line(244,274,254,324,z,11,color);
+    line(386,229,394,276,z,19,color);line(394,276,382,322,z,11,color);
+    line(249,325,260,325,z,10,'#765044');line(378,324,389,324,z,10,'#765044');
+  }
+  legs(-28,true);
+  volume(217,191,26,12,-.35,-7,1);
+  volume(319,204,bodyR,bodyH,-.05);
+  legs(26,false);
+  const [neckX,neckY]=[411,(headY+196)/2];
+  volume(neckX,neckY,Math.hypot(54,headY-196)/2+13,25,Math.atan2(headY-196,54));
+  for(const z of [-14,14]){
+    line(438,headY-15,425,headY-48,z,9,'#82604d');
+    line(425,headY-48,432,headY-77,z,6,'#82604d');
+    volume(426,headY-7,17,7,-.38,z,1);
+  }
+  volume(453,headY,45,24,.22,7);
+  volume(478,headY+15,25,18,.35,12);
+  const [eyeX,eyeY]=point(454,headY-8,18);
+  ctx.fillStyle='#51382e';ctx.beginPath();ctx.arc(eyeX,eyeY,4,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+function draw(){model(canvas,Object.fromEntries(keys.map(key=>[key,el(key).value])))}
+model(el('sampleFlat'));model(el('sampleDepth'),{view:'turn'});
+keys.forEach(key=>el(key).addEventListener('change',()=>{draw();el('report').textContent=report()}));
+el('idea').addEventListener('input',()=>{if(!el('result').hidden)el('report').textContent=report()});
+el('studioNext').onclick=()=>{
+  if(!el('idea').value.trim()){el('studioStatus').textContent='Напиши, какой материал выберешь и как закрепишь детали и фигурку.';el('idea').focus();return}
+  show('finish');
+};
+const sequence=['Выбрать материал, позу и опору','Слепить крупные объёмы','Соединить детали и сгладить стыки','Проверить фигурку с разных сторон'];
+const placed=[];
+function renderOrder(){
+  el('placed').replaceChildren(...placed.map(n=>{
+    const li=document.createElement('li');li.textContent=sequence[n];return li;
+  }));
+  el('steps').replaceChildren(...[2,0,3,1].filter(n=>!placed.includes(n)).map(n=>{
+    const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=sequence[n];
+    b.onclick=()=>{placed.push(n);renderOrder();(el('steps').querySelector('button')||el('orderCheck')).focus()};
+    return b;
+  }));
+}
+el('orderReset').onclick=()=>{placed.length=0;renderOrder();if(!el('result').hidden)el('result').hidden=true};
+el('orderCheck').onclick=()=>{
+  if(placed.length!==4){el('orderStatus').textContent='Расставь все четыре карточки.';return}
+  if(!placed.every((n,i)=>n===i)){aided=true;el('orderStatus').textContent='Сначала спланируй работу, затем слепи и соедини формы. Проверь устойчивость и силуэт в конце.';return}
+  el('orderStatus').textContent='Верно. Порядок восстановлен.';
+  el('report').textContent=report();
+  show('result');
+};
+function report(){
+  const choice=key=>el(key).selectedOptions[0].textContent;
+  return ['ИЗО · 4 класс','Фигурка сайгака · 4.1.4.1','',
+    ...skillNames.map((skill,i)=>skill+' — диагностика: '+['самостоятельно','с помощью','нужно закрепить'][routes[i]]+', тренировка: '+practice[i]),
+    '', 'Модель сайгака','Корпус: '+choice('bodyForm')+'. Голова: '+choice('pose').toLowerCase()+'. Опора: '+choice('base').toLowerCase()+'. Ракурс: '+choice('view').toLowerCase()+'.',
+    'Объяснение: '+el('idea').value.trim(),'Порядок восстановлен '+(aided?'после подсказки.':'самостоятельно.')
+  ].join('\n');
+}
+const submissionId=crypto.randomUUID();
+el('submit').onsubmit=async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,button=form.querySelector('button'),status=el('sendStatus');
+  button.disabled=true;status.textContent='Готовим файл работы…';
+  try {
+    if(!el('idea').value.trim()) throw new Error('Добавь объяснение к модели.');
+    const response=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:submissionId,lesson:'figurka-saigaka',name:form.elements.studentName.value.trim(),classCode:form.elements.classCode.value.trim().toUpperCase(),summary:report(),artwork:canvas.toDataURL('image/png').split(',')[1]})});
+    const result=await response.json();
+    if(!response.ok || !result.saved) throw new Error(result.error||'Работа не отправилась');
+    status.textContent='Файл работы скачан. Передай его учителю.';
+  } catch(error){status.textContent=error.message||'Попробуй отправить ещё раз.';button.disabled=false}
+};
+renderQuestion();renderOrder();
+</script>
+</body>
+</html>
