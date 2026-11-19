@@ -1,94 +1,412 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ИЗО — начальная школа</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Интерактивная мастерская</title>
 <style>
-:root{font-family:"Segoe UI",Roboto,sans-serif;background:#f5f2ff;color:#20143b}
-*{box-sizing:border-box}body{margin:0}
-header{background:linear-gradient(118deg,#6025a1,#5234bb 55%,#1763ac);color:#fff}
-.wrap{width:min(1040px,calc(100% - 40px));margin:auto}
-header .wrap{padding:46px 0 51px}header p{margin:0 0 10px;color:#efe6ff;font-weight:650}
-h1{font-size:clamp(36px,7vw,62px);line-height:1.05;margin:0;letter-spacing:-.035em}
-main{padding:36px 0 64px}h2{margin:0 0 15px;font-size:27px}
-.card{max-width:820px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:#fff;border:1px solid #e8def9;border-radius:22px;box-shadow:0 14px 30px #27184d21}
-figure{margin:0;background:#e5dcff;min-width:0;display:grid;place-items:center;padding:14px}
-figure svg{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 7px 15px #2816542b}
-.info{padding:27px;align-self:center}h3{margin:0;font-size:clamp(22px,3vw,32px);line-height:1.15;letter-spacing:-.025em}
-.info p{margin:12px 0 20px;color:#4e435f;line-height:1.55}
-a{display:inline-block;background:#6032a8;color:#fff;text-decoration:none;padding:12px 16px;border-radius:11px;font-weight:700}
-a:hover{background:#4d248d}a:focus-visible{outline:3px solid #1465ab;outline-offset:4px}
-@media(max-width:600px){.wrap{width:calc(100% - 28px)}header .wrap{padding:34px 0}.card{grid-template-columns:1fr}figure svg{max-height:235px;width:100%}.info{padding:21px}}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f3f6fc;
+  font-family: Arial, sans-serif;
+  color: #24344b;
+}
+header {
+  background: linear-gradient(120deg,#2456b7,#648ce9);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+}
+h1 { margin: 0 0 12px; font-size: 30px; }
+header p { margin: 0; }
+main { max-width: 950px; margin: auto; padding: 25px 16px; }
+h2 { text-align: center; font-size: 23px; }
+.grades, .subjects, .tasks {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0 30px;
+}
+.grades { grid-template-columns: repeat(4,1fr); }
+.subjects { grid-template-columns: repeat(3,1fr); }
+button {
+  border: 0;
+  border-radius: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+}
+.grade {
+  padding: 18px 5px;
+  background: white;
+  color: #2456b7;
+  box-shadow: 0 2px 8px #dce3f0;
+}
+.grade.active { background: #2456b7; color: white; }
+.subject {
+  min-height: 115px;
+  padding: 20px 10px;
+  font-size: 17px;
+  color: #24344b;
+  box-shadow: 0 3px 8px #dce3f0;
+}
+.subject:nth-child(6n+1) { background: #ffe6a3; }
+.subject:nth-child(6n+2) { background: #cce5ff; }
+.subject:nth-child(6n+3) { background: #c9efd5; }
+.subject:nth-child(6n+4) { background: #e6dbff; }
+.subject:nth-child(6n+5) { background: #ffdbcd; }
+.subject:nth-child(6n+6) { background: #f8d7ec; }
+.subject.active { outline: 3px solid #2456b7; }
+#taskSection {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px #e1e6f0;
+}
+.tasks { grid-template-columns: repeat(2,1fr); }
+.tasks a {
+  display: block;
+  padding: 18px;
+  background: #eaf1ff;
+  border-radius: 10px;
+  color: #194b9c;
+  text-decoration: none;
+  font-weight: bold;
+}
+.tasks a:hover { background: #d5e4ff; }
+.empty {
+  text-align: center;
+  color: #66758d;
+  padding: 20px;
+  line-height: 1.6;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #66758d;
+  font-size: 14px;
+}
+@media(max-width:650px) {
+  .subjects { grid-template-columns: repeat(2,1fr); }
+  .tasks { grid-template-columns: 1fr; }
+  h1 { font-size: 25px; }
+  .subject { font-size: 15px; }
+}
 </style>
 </head>
 <body>
-<header><div class="wrap"><p>Начальная школа</p><h1>Изобразительное искусство</h1><p style="margin:18px 0 0"><a href="uchitelyu.html">Журнал учителя</a></p></div></header>
-<main class="wrap">
-<section aria-labelledby="grade4">
-<h2 id="grade4">4 класс</h2>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr"><div class="info"><h3>Павильон во дворе</h3><p>Спроектируй место отдыха. Сравни крыши, продумай опоры и вход, рассмотри план сверху.</p><a href="4-klass/pavilon-vo-dvore.html">Открыть задание</a></div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Ритм и движение</h3>
-<p>Сравни казахский сырмак и японскую гравюру. Создай панно «Ветер над степью».</p>
-<a href="4-klass/ritm-i-dvizhenie.html">Открыть задание</a>
-</div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Свет и штрих</h3>
-<p>Подбери штрихи, чтобы показать, где на шаре свет и тень.</p>
-<a href="4-klass/svet-i-shtrih.html">Открыть задание</a>
-</div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Степные дали</h3>
-<p>Передай глубину степного пейзажа цветом и мазками.</p>
-<a href="4-klass/stepnye-dali.html">Открыть задание</a>
-</div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Фигурка сайгака</h3>
-<p>Собери модель из объёмных форм и рассмотри её с разных сторон.</p>
-<a href="4-klass/figurka-saigaka.html">Открыть задание</a>
-</div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Орнамент на предмете</h3>
-<p>Придумай декор и проверь, как размер и цвет мотива меняют узор.</p>
-<a href="4-klass/ornament-na-predmete.html">Открыть задание</a>
-</div></article>
-<article class="card" style="margin-bottom:18px;grid-template-columns:1fr">
-<div class="info"><h3>Проект игрушки</h3>
-<p>Упрости силуэт степной птицы и придумай, как собрать устойчивую игрушку.</p>
-<a href="4-klass/proekt-igrushki.html">Открыть задание</a>
-</div></article>
-<article class="card">
-<figure><svg viewBox="0 0 560 400" role="img" aria-label="Яркая абстрактная картина: жёлтый круг, красное полукруглое пятно, зелёный треугольник, синий прямоугольник, голубая дуга, оранжевые пятна и чёрные линии">
- <defs>
- <pattern id="redDots" width="19" height="19" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.6" fill="#fa5c56" opacity=".35"/></pattern>
- <pattern id="greenStripes" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M0 15L15 0" stroke="#e0ffcc" stroke-width="3" opacity=".6"/></pattern>
- </defs>
- <rect x="10" y="10" width="540" height="380" rx="4" fill="#fff9eb" stroke="#253257" stroke-width="5"/>
- <path d="M12 12H207L12 160Z" fill="#ff8f2a"/><path d="M440 12H548V125Z" fill="#b88bf4" opacity=".85"/><path d="M463 389L548 284V389Z" fill="#ff992b"/>
- <path d="M19 198 Q132 85 294 137" fill="none" stroke="#219ee2" stroke-width="39" stroke-linecap="round"/>
- <path d="M21 205 Q127 116 266 163" fill="none" stroke="#68ccef" stroke-width="8" opacity=".8" stroke-linecap="round"/>
- <circle cx="353" cy="108" r="81" fill="#ffcf32" stroke="#efab22" stroke-width="4"/><circle cx="332" cy="89" r="36" fill="#ffe778" opacity=".5"/>
- <rect x="409" y="177" width="116" height="131" fill="#29499f" stroke="#233d82" stroke-width="4"/>
- <path d="M15 369V221Q121 197 258 369Z" fill="#ee5251" stroke="#c43245" stroke-width="3"/><path d="M15 369V221Q121 197 258 369Z" fill="url(#redDots)"/>
- <path d="M291 370L372 227 463 370Z" fill="#55b86b" stroke="#348f4f" stroke-width="4"/><path d="M291 370L372 227 463 370Z" fill="url(#greenStripes)"/>
- <path d="M79 29V368 M34 343H316" stroke="#1d2c49" stroke-width="8" stroke-linecap="round"/>
- <path d="M115 246 Q143 213 169 246 T223 246 T277 246 T331 246 T385 246" fill="none" stroke="#263358" stroke-width="7" stroke-linecap="round"/>
- </svg></figure>
-<div class="info">
-<h3>Окно в воображение художника</h3>
-<p>Рассмотри абстрактную картину, поэкспериментируй с линиями и создай свою композицию.</p>
-<a href="4-klass/okno-v-voobrazhenie.html">Открыть задание</a>
-</div>
-</article>
-<article class="card" style="margin-top:18px;grid-template-columns:1fr">
-<div class="info">
-<h3>Сквозь века. Цветная графика</h3>
-<p>Распознай виды графики, создай цветную композицию и отправь работу учителю.</p>
-<a href="4-klass/skvoz-veka.html">Открыть задание</a>
-</div>
-</article>
-</section>
+
+<header>
+  <h1>Интерактивная мастерская</h1>
+  <p>Учимся, исследуем, решаем!</p>
+</header>
+
+<main>
+  <h2>Выбери свой класс</h2>
+  <div class="grades" id="grades"></div>
+
+  <h2>Выбери предмет</h2>
+  <div class="subjects" id="subjects"></div>
+
+  <section id="taskSection">
+    <h2 id="taskTitle">Интерактивные задания</h2>
+    <div id="taskList" class="empty">
+      Выбери класс и предмет, чтобы увидеть задания.
+    </div>
+  </section>
 </main>
+
+<footer>
+  Интерактивная мастерская · Начальная школа
+</footer>
+
+<script>
+const subjects = [
+  "Математика",
+  "Русский язык",
+  "Естествознание",
+  "Познание мира",
+  "Вычислительное мышление",
+  "Основы языкознания",
+  "Я познаю мир",
+  "Математическое моделирование",
+  "Изобразительное искусство"
+];
+// Здесь будут добавляться опубликованные задания.
+// Пример записи:
+// {
+//   grade: 3,
+//   subject: "Математика",
+//   title: "Таблица умножения",
+//   file: "grade-3/math/multiplication.html"
+// }
+
+
+const lessons = [
+  {
+    grade: 4,
+    subject: "Математика",
+    title: "Умножение и деление чисел с нулями",
+    file: "math-grade4-zeros.html"
+  },
+  {
+    grade: 4,
+    subject: "Русский язык",
+    title: "Определи склонение",
+    file: "russian-grade4-declensions.html"
+  },
+  {
+    grade: 4,
+    subject: "Познание мира",
+    title: "Семейный бюджет",
+    file: "world-grade4-family-budget.html"
+  },
+  {
+    grade: 4,
+    subject: "Познание мира",
+    title: "Достижения Казахстана в экономике",
+    file: "kazakhstan-economy-grade4.html"
+  },
+  {
+    grade: 4,
+    subject: "Я познаю мир",
+    title: "Изменение экосистемы",
+    file: "world-grade4-ecosystem.html"
+  },
+  {
+    grade: 3,
+    subject: "Вычислительное мышление",
+    title: "Алгоритм в виде инструкции",
+    file: "computational-grade3-algorithm-instructions.html"
+  },
+  {
+    grade: 4,
+    subject: "Вычислительное мышление",
+    title: "Мастерская блок-схем",
+    file: "computational-grade4-flowcharts.html"
+  },
+  {
+    grade: 3,
+    subject: "Я познаю мир",
+    title: "Растения города",
+    file: "world-grade3-city-plants.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Окно в воображение художника",
+    file: "izo-4-klass/4-klass/okno-v-voobrazhenie.html"
+  },
+  {
+    grade: 2,
+    subject: "Математика",
+    title: "Решение простых уравнений",
+    file: "math-grade2-simple-equations.html"
+  },
+  {
+    grade: 4,
+    subject: "Математическое моделирование",
+    title: "Масштабирование модели",
+    file: "modeling-grade4-scaling.html"
+  },
+  {
+    grade: 4,
+    subject: "Я познаю мир",
+    title: "Охрана территории",
+    file: "world-grade4-territory-protection.html"
+  },
+  {
+    grade: 1,
+    subject: "Математика",
+    title: "Математическая Ракета",
+    file: "math-grade1-rocket.html"
+  },
+  {
+    grade: 1,
+    subject: "Русский язык",
+    title: "Грамотейка — ЖИ-ШИ, ЧА-ЩА, ЧУ-ЩУ",
+    file: "russian-grade1-gramoteika.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Сквозь века. Цветная графика",
+    file: "izo-4-klass/4-klass/skvoz-veka.html"
+  },
+  {
+    grade: 3,
+    subject: "Вычислительное мышление",
+    title: "Создаём алгоритмы",
+    file: "computational-grade3-create-algorithms.html"
+  },
+  {
+    grade: 1,
+    subject: "Естествознание",
+    title: "Зачем изучать окружающий мир?",
+    file: "science-grade1-lesson1-world.html"
+  },
+  {
+    grade: 2,
+    subject: "Естествознание",
+    title: "Каким должен быть исследователь?",
+    file: "science-grade2-lesson1-researcher.html"
+  },
+  {
+    grade: 3,
+    subject: "Естествознание",
+    title: "Открытия, которые изменили жизнь",
+    file: "science-grade3-lesson1-discoveries.html"
+  },
+  {
+    grade: 4,
+    subject: "Естествознание",
+    title: "Что стоит исследовать?",
+    file: "science-grade4-lesson1-research.html"
+  },
+  {
+    grade: 4,
+    subject: "Познание мира",
+    title: "Развитие науки в Казахстане. Каныш Сатпаев",
+    file: "world-grade4-satpayev-science.html"
+  },
+  {
+    grade: 3,
+    subject: "Я познаю мир",
+    title: "Пищевые связи",
+    file: "world-grade3-food-chains.html"
+  },
+  {
+    grade: 4,
+    subject: "Русский язык",
+    title: "Несклоняемые имена существительные",
+    file: "russian-grade4-indeclinable-nouns.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Павильон во дворе",
+    file: "izo-4-klass/4-klass/pavilon-vo-dvore.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Ритм и движение",
+    file: "izo-4-klass/4-klass/ritm-i-dvizhenie.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Свет и штрих",
+    file: "izo-4-klass/4-klass/svet-i-shtrih.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Степные дали",
+    file: "izo-4-klass/4-klass/stepnye-dali.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Фигурка сайгака",
+    file: "izo-4-klass/4-klass/figurka-saigaka.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Орнамент на предмете",
+    file: "izo-4-klass/4-klass/ornament-na-predmete.html"
+  },
+  {
+    grade: 4,
+    subject: "Изобразительное искусство",
+    title: "Проект игрушки",
+    file: "izo-4-klass/4-klass/proekt-igrushki.html"
+  }
+];
+
+let selectedGrade = 3;
+let selectedSubject = "";
+
+const gradesBox = document.getElementById("grades");
+const subjectsBox = document.getElementById("subjects");
+const taskList = document.getElementById("taskList");
+const taskTitle = document.getElementById("taskTitle");
+
+function showGrades() {
+  gradesBox.innerHTML = "";
+  for (let n = 1; n <= 4; n++) {
+    const button = document.createElement("button");
+    button.className =
+      "grade" + (selectedGrade === n ? " active" : "");
+    button.textContent = n + " класс";
+    button.onclick = () => {
+      selectedGrade = n;
+      selectedSubject = "";
+      showGrades();
+      showSubjects();
+      showTasks();
+    };
+    gradesBox.appendChild(button);
+  }
+}
+
+function showSubjects() {
+  subjectsBox.innerHTML = "";
+  subjects.forEach(name => {
+    const button = document.createElement("button");
+    button.className =
+      "subject" + (selectedSubject === name ? " active" : "");
+    button.textContent = name;
+    button.onclick = () => {
+      selectedSubject = name;
+      showSubjects();
+      showTasks();
+    };
+    subjectsBox.appendChild(button);
+  });
+}
+
+function showTasks() {
+  taskList.replaceChildren();
+
+  if (!selectedSubject) {
+    taskTitle.textContent = "Интерактивные задания";
+    taskList.className = "empty";
+    taskList.textContent =
+      "Выбери предмет, чтобы увидеть задания.";
+    return;
+  }
+
+  taskTitle.textContent =
+    selectedGrade + " класс · " + selectedSubject;
+
+  const found = lessons.filter(item =>
+    item.grade === selectedGrade &&
+    item.subject === selectedSubject
+  );
+
+  if (found.length === 0) {
+    taskList.className = "empty";
+    taskList.textContent =
+      "Задания для этого раздела скоро появятся.";
+    return;
+  }
+
+  taskList.className = "tasks";
+  found.forEach(item => {
+    const link = document.createElement("a");
+    link.href = item.file;
+    link.textContent = item.title;
+    taskList.appendChild(link);
+  });
+}
+
+showGrades();
+showSubjects();
+showTasks();
+</script>
+
 </body>
 </html>
