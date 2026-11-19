@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4e39bb">
+<title>Как устроен текст · Русский язык · 3 класс</title>
+<style>:root {
+  color-scheme: light;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-synthesis: none;
+  --ink: #1d1941;
+  --muted: #534d72;
+  --accent: #4e34bc;
+  --accent-dark: #382392;
+  --line: #ded8f4;
+  --surface: #faf8ff;
+  --page: #f3f1ff;
+  --green: #165f46;
+  --red: #892740;
+  background: var(--page);
+  color: var(--ink);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 280px; font-size: 1.06rem; line-height: 1.52; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+:focus-visible { outline: 3px solid #6044d7; outline-offset: 3px; }
+[hidden] { display: none !important; }
+h1, h2, h3, p { margin-top: 0; }
+h2, h3 { line-height: 1.2; letter-spacing: -.025em; }
+h2 { font-size: clamp(1.55rem, 3vw, 2.17rem); margin-bottom: 14px; }
+h3 { font-size: 1.24rem; margin-bottom: 8px; }
+p { margin-bottom: 13px; }
+.sr, .skip:not(:focus) { position: absolute; overflow: hidden; width: 1px; height: 1px; margin: -1px; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { position: fixed; z-index: 3; top: 6px; left: 6px; background: white; padding: 12px; }
+.wrap { width: min(1000px, calc(100% - 48px)); margin-inline: auto; }
+.top { background: #fff; border-bottom: 1px solid var(--line); }
+.topline { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; gap: 10px; align-items: center; font-weight: 780; white-space: nowrap; }
+.brand-class { border-radius: 8px; padding: 3px 9px; background: #eee8ff; color: #473186; font-size: .89rem; }
+nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.tab { min-height: 42px; border: 1px solid transparent; background: #fff; color: var(--muted); border-radius: 9px; padding: 6px 10px; font-size: .94rem; font-weight: 650; }
+.tab:hover, .tab[aria-pressed=true] { background: #f1ebff; color: var(--accent-dark); }
+.hero { position: relative; overflow: hidden; isolation: isolate; margin-top: 24px; border-radius: 26px; min-height: 210px; padding: clamp(23px,5vw,46px); color: white; background: linear-gradient(111deg,#4824a4 0%,#593ac5 58%,#365cbf 100%); box-shadow: 0 12px 28px #42219e27; }
+.hero-copy { position: relative; z-index: 1; max-width: 74%; }
+.overline { color: #edebff; font-size: .93rem; font-weight: 750; margin-bottom: 10px; }
+h1 { margin-bottom: 12px; font-size: clamp(2rem,5vw,3.48rem); line-height: 1.05; letter-spacing: -.055em; }
+.hero-copy p:last-child { color: #f1eeff; font-size: 1.04rem; margin-bottom: 0; }
+.art { position: absolute; inset: 0 0 0 auto; width: 270px; pointer-events: none; background: radial-gradient(#fff5 1px, transparent 1px) 0 0 / 17px 17px; mask-image: linear-gradient(to right,transparent,#000 16%); }
+.orbit { position: absolute; border: 1px solid #fff5; border-radius: 50%; width: 218px; height: 218px; right: -12px; top: -8px; box-shadow: 0 0 0 27px #fff1, 0 0 0 49px #fff1; }
+.paper { position: absolute; top: 25px; right: 65px; display: grid; align-content: center; gap: 11px; width: 110px; height: 146px; padding: 19px; border-radius: 13px; background: #f8eeff; box-shadow: 0 12px 22px #2d216566, inset 0 -5px #d2b9ee; transform: rotate(-14deg); }
+.paper i { height: 6px; border-radius: 5px; background: #c6a8ef; }
+.paper i:first-child { width: 70%; height: 10px; background: #6c4fc1; }
+.paper i:last-child { width: 83%; }
+.lens { position: absolute; top: 86px; right: 45px; width: 75px; height: 75px; border: 9px solid #9ce9dc; border-radius: 50%; background: #b7eefa55; box-shadow: 0 6px 14px #29205f5e; transform: rotate(-39deg); }
+.lens::after { content: ""; position: absolute; width: 14px; height: 47px; background: #9ce9dc; bottom: -46px; left: calc(50% - 7px); border-radius: 7px; }
+.dot { position: absolute; width: 12px; height: 12px; top: 33px; right: 32px; border-radius: 50%; background: #ffe4a7; }
+.dot.second { width: 8px; height: 8px; top: 151px; right: 182px; background: #d6c6ff; }
+main { padding: 20px 0 48px; }
+.progress { list-style: none; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin: 0 0 17px; padding: 0; }
+.progress li { display: flex; align-items: center; gap: 7px; min-height: 49px; border: 1px solid var(--line); border-radius: 11px; background: #fff; color: var(--muted); padding: 7px 9px; font-size: .9rem; font-weight: 650; line-height: 1.2; }
+.num { display: grid; place-content: center; flex: 0 0 25px; min-height: 25px; border-radius: 7px; background: #f0ebff; color: #513983; }
+.progress li[aria-current="step"] { background: #e9dfff; color: #3e2397; border-color: #ccbaf8; }
+.progress li.done { color: var(--green); background: #e7f7ed; border-color: #c9e8d5; }
+.progress li.done .num { color: var(--green); background: #d5f0de; }
+.panel { padding: clamp(18px,4vw,31px); background: #fff; border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 7px 21px #35216f0b; }
+.panel h2:focus { outline: none; }
+.muted { color: var(--muted); }
+.kicker { font-size: .9rem; font-weight: 760; color: var(--accent-dark); margin-bottom: 7px; }
+.action { min-height: 46px; border: 1px solid transparent; border-radius: 11px; padding: 9px 15px; color: white; background: var(--accent); font-weight: 690; line-height: 1.2; }
+.action:hover { background: var(--accent-dark); }
+.action.secondary { background: #f0eaff; color: var(--accent-dark); border-color: #e1d4fb; }
+.action.secondary:hover { background: #e9dfff; }
+.action:disabled { background: #eeebf6; color: #645d7b; border-color: #e3dff0; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 14px; }
+label.name-label { display: block; font-weight: 690; margin-bottom: 7px; }
+input[name="student"] { display: block; width: min(100%,340px); min-height: 47px; border: 1px solid #cfc6ea; border-radius: 10px; padding: 8px 11px; background: #fcfaff; }
+.context { padding: 14px 17px; background: #f2edff; border-left: 4px solid #9172de; border-radius: 12px; margin-bottom: 16px; }
+.context-title { display: block; font-weight: 760; font-size: 1.16rem; margin-bottom: 4px; }
+.excerpt { margin: 7px 0 0; }
+.excerpt b { display: block; font-size: .88rem; color: var(--accent-dark); }
+.context .muted { font-size: .98rem; }
+.options { margin: 0; padding: 0; border: 0; min-width: 0; display: grid; gap: 8px; }
+.option, .sequence-card { display: flex; align-items: center; gap: 11px; background: #fdfcff; border: 1px solid #ddd5ee; border-radius: 11px; padding: 9px 12px; min-height: 47px; text-align: start; line-height: 1.4; }
+.option { cursor: pointer; }
+.option input { accent-color: var(--accent); width: 18px; height: 18px; flex: none; margin: 0; }
+.option:hover, .sequence-card:hover, .option:has(:checked) { background: #f1eaff; border-color: #a28cdd; }
+.feedback { margin: 14px 0 0; padding: 11px 13px; background: #f0eaff; border-radius: 11px; color: var(--accent-dark); }
+.feedback.ok { background: #e6f7ee; color: var(--green); }
+.feedback.error { background: #fcecf0; color: var(--red); }
+.route { display: grid; gap: 8px; margin: 13px 0 17px; }
+.route-item { background: var(--surface); border-radius: 10px; padding: 10px 13px; }
+.route-item span { color: var(--muted); display: block; }
+details { border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; margin-bottom: 9px; }
+summary { cursor: pointer; font-weight: 710; min-height: 30px; }
+details > :last-child { margin-bottom: 0; }
+.mini-details { margin-bottom: 0; }
+.steps-list { display: grid; gap: 7px; margin: 8px 0 15px; }
+.sequence-card { width: 100%; }
+.story { background: #e8f6f1; padding: 13px 16px; border-radius: 11px; margin-top: 14px; }
+.story p { margin-bottom: 0; }
+.report { line-height: 1.6; margin: 0; padding: 13px 15px; border-radius: 11px; background: var(--surface); white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+textarea { width: 100%; min-height: 130px; margin-top: 12px; padding: 10px; border: 1px solid #cfc6ea; border-radius: 9px; }
+.journal { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); gap: 16px; align-items: start; margin: 18px 0; }
+.journal-list { display: grid; gap: 7px; list-style: none; padding: 0; margin: 0; }
+.report-button { width: 100%; text-align: start; min-height: 48px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow-wrap: anywhere; }
+.report-button:hover, .report-button[aria-pressed="true"] { background: #f1eaff; border-color: #a28cdd; }
+.report-button strong, .report-button small { display: block; }
+.report-button small { color: var(--muted); font-size: .88rem; }
+.import-label { display: block; font-weight: 690; }
+@media (max-width: 675px) {
+  .wrap { width: calc(100% - 26px); }
+  .topline { min-height: 61px; }
+  .hero { margin-top: 15px; min-height: 185px; border-radius: 19px; }
+  .art { width: 169px; transform: scale(.73); transform-origin: center right; opacity: .68; }
+  .hero-copy { max-width: 80%; }
+  .paper { right: 36px; }
+  .lens { right: 23px; }
+  .dot { right: 7px; }
+  .progress { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+  .journal { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .topline { flex-direction: column; align-items: stretch; gap: 2px; padding-block: 7px 3px; }
+  .brand { padding-inline: 2px; }
+  .hero-copy { max-width: 87%; }
+  .art { opacity: .43; right: -16px; }
+  .hero-copy p:last-child { max-width: 235px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#lesson">К заданию</a>
+<header class="top">
+  <div class="wrap topline">
+    <span class="brand">Русский язык<span class="brand-class">3 класс</span></span>
+    <nav aria-label="Режим просмотра">
+      <button class="tab" type="button" data-view="lesson" aria-pressed="true">Урок</button>
+      <button class="tab" type="button" data-view="teacher" aria-pressed="false">Учителю</button>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+  <section class="hero" aria-labelledby="title">
+    <div class="hero-copy">
+      <p class="overline">Живая природа · урок 1</p>
+      <h1 id="title">Как устроен текст</h1>
+      <p>Найди начало, основную часть и концовку в описании и повествовании.</p>
+    </div>
+    <div class="art" aria-hidden="true">
+      <span class="orbit"></span><span class="dot"></span><span class="dot second"></span>
+      <span class="paper"><i></i><i></i><i></i><i></i></span>
+      <span class="lens"></span>
+    </div>
+  </section>
+  <main id="lesson" tabindex="-1" aria-label="Урок">
+    <div id="stagebar"></div>
+    <div id="screen"></div>
+    <p class="sr" id="status" role="status"></p>
+  </main>
+</div>
+<noscript><p>Чтобы пройти тренажёр, включи JavaScript в браузере.</p></noscript>
+<script>
+const task = (heading, excerpt, question, options, answer, hint, why) =>
+  ({heading, excerpt, question, options, answer, hint, why});
+
+const skills = [
+  {
+    name: "Нахожу части повествования",
+    diag: task("У кормушки", [["Начало", "Утром ребята насыпали семечки в кормушку."],
+      ["Концовка", "К обеду кормушка опустела."]],
+      "Какой фрагмент подойдёт для основной части?",
+      ["Ребята разложили семечки по пакетам ещё дома.", "К кормушке прилетели синицы и начали клевать семечки.",
+       "После обеда ребята принесли новую порцию семечек.", "На соседнем дереве висела другая кормушка."], 1,
+      "Какое событие объясняет, почему кормушка опустела?",
+      "Синицы прилетели после того, как ребята насыпали семечки. Это событие связывает начало с концовкой."),
+    main: task("Белка в парке", [], "Собери рассказ для классной газеты из трёх фрагментов.",
+      ["Белка скрылась в ветвях, и мы пошли дальше.", "На прогулке мы увидели белку на сосне.",
+       "Она спустилась на землю, схватила шишку и унесла её вверх."], [1,2,0],
+      "Сначала читатель узнаёт, кого увидели ребята. Затем белка действует. Чем закончилась встреча?",
+      "Сначала ребята заметили белку, затем она подняла шишку, а в конце скрылась в ветвях."),
+    similar: [
+      task("Рисунок на ветру", [["Начало", "Порыв ветра вырвал у Данияра из рук лист с рисунком."],
+        ["Концовка", "Рисунок удалось спасти: он остался сухим."]],
+        "Какой фрагмент поставить между началом и концовкой?",
+        ["По дороге во двор Данияр достал рисунок из папки.", "Данияр положил спасённый рисунок в папку.",
+         "Он догнал и поднял лист, пока тот не упал в лужу.", "Данияр показал рисунок классу на следующий день."], 2,
+        "Что Данияр сделал после порыва ветра, но до того, как рисунок был спасён?",
+        "Данияр догнал лист и поднял его. Благодаря этому рисунок остался сухим."),
+      task("Воробей и лужа", [], "Восстанови порядок фрагментов.",
+        ["Воробей прыгнул в воду и забрызгал крылья.", "Когда он накупался, то взлетел на ветку и отряхнулся.",
+         "После дождя у дорожки осталась лужа. К ней подлетел воробей."], [2,0,1],
+        "Найди фрагмент, в котором воробей только подлетел к луже.",
+        "Сначала воробей подлетел к луже, затем искупался, а в конце взлетел на ветку и отряхнулся.")
+    ],
+    support: [
+      task("Бабочка у окна", [["Рассказ", "Бабочка залетела в класс. Алия открыла окно пошире. Бабочка вылетела в сад."]],
+        "С чего всё началось?",
+        ["Бабочка залетела в класс.", "Алия открыла окно пошире."], 0,
+        "Что случилось до того, как Алия открыла окно?",
+        "Всё началось с того, что бабочка залетела в класс."),
+      task("Бабочка у окна", [["Рассказ", "Бабочка залетела в класс. Алия открыла окно пошире. Бабочка вылетела в сад."]],
+        "Какое предложение становится концовкой рассказа?",
+        ["Алия открыла окно пошире.", "Бабочка вылетела в сад."], 1,
+        "Что случилось после того, как Алия открыла окно?",
+        "Бабочка вылетела в сад. Читатель узнал, чем закончилось событие.")
+    ],
+    quick: task("На ветке", [["Рассказ", "По ветке ползла гусеница. Она добралась до листа и спряталась под ним."]],
+      "Чем закончился рассказ?", ["Гусеница поползла по ветке.", "Гусеница спряталась под листом."], 1,
+      "Найди последнее действие гусеницы.", "Последнее действие — гусеница спряталась под листом.")
+  },
+  {
+    name: "Нахожу части описания",
+    diag: task("Ива у воды", [["Описание", "У пруда растёт плакучая ива. Её длинные ветки склоняются к воде. Листья у неё узкие, с серебристой изнанкой. Издали ива похожа на зелёный шатёр."]],
+      "Какие признаки раскрываются в основной части?",
+      ["Место, где растёт ива, и её сходство с шатром.", "Место, где растёт ива, и форма её веток.",
+       "Форма листьев и сходство ивы с шатром.", "Длина и положение веток, форма листьев и цвет их изнанки."], 3,
+      "Какие предложения помогают представить ветки и листья?",
+      "Основная часть раскрывает признаки ивы: длинные свисающие ветки и узкие листья с серебристой изнанкой."),
+    main: task("Одуванчик у тропинки", [["Начало", "У тропинки я заметила одуванчик."],
+      ["Концовка", "Даже издали его легко узнать."]],
+      "Какой фрагмент лучше всего дополнит описание?",
+      ["У него круглая жёлтая головка и длинные резные листья.", "Вчера я увидела одуванчик утром, а вечером прошла мимо снова.",
+       "У тропинки растут подорожник и клевер.", "Я принесла рисунок одуванчика и повесила его на стенд."], 0,
+      "В каком фрагменте названы именно признаки одуванчика, по которым его можно узнать?",
+      "Круглая жёлтая головка и резные листья помогают представить одуванчик. Эти признаки подходят к основной части описания."),
+    similar: [
+      task("Ёж на рисунке", [], "Восстанови порядок частей описания.",
+        ["У ежа острая мордочка, тёмный нос и короткие лапки. На спине — густые иголки.",
+         "Издали рисунок похож на колючий клубочек с носом.", "На рисунке я изобразил ежа."], [2,0,1],
+        "Сначала представь, кто на рисунке. Потом перечисли его признаки. Оставь общее впечатление на конец.",
+        "Первый фрагмент представляет ежа, второй описывает его признаки, последний передаёт впечатление от рисунка."),
+      task("Клён у школы", [["Описание", "У входа в школу растёт клён. У него широкая крона и высокий ствол. Листья ярко-жёлтые, с острыми краями. Вчера мы собрали под клёном листья для гербария. Издали крона похожа на золотой зонт."]],
+        "Какое предложение можно убрать, чтобы остались признаки клёна и общее впечатление?",
+        ["У него широкая крона и высокий ствол.", "Листья ярко-жёлтые, с острыми краями.",
+         "Вчера мы собрали под клёном листья для гербария.", "Издали крона похожа на золотой зонт."], 2,
+        "Найди предложение, которое рассказывает о поступке ребят.",
+        "Фраза про гербарий рассказывает, что делали ребята. Остальные фразы помогают представить клён.")
+    ],
+    support: [
+      task("Сосна на полянке", [["Описание", "На поляне растёт высокая сосна. У неё прямой ствол и длинные иголки. Сосну легко заметить издалека."]],
+        "В каком предложении читатель узнаёт, о каком дереве пойдёт речь?",
+        ["На поляне растёт высокая сосна.", "У неё прямой ствол и длинные иголки."], 0,
+        "В каком предложении прямо названо дерево?",
+        "В начале названо то, что мы описываем, — сосна."),
+      task("Сосна на полянке", [["Описание", "На поляне растёт высокая сосна. У неё прямой ствол и длинные иголки. Сосну легко заметить издалека."]],
+        "Какое предложение помогает представить ствол и иголки?",
+        ["Сосну легко заметить издалека.", "У неё прямой ствол и длинные иголки."], 1,
+        "В каком предложении сказано, какие у сосны ствол и иголки?",
+        "Признаки сосны раскрываются в основной части описания.")
+    ],
+    quick: task("После дождя", [["Начало", "На паутине у окна остались капли дождя."]],
+      "Каким предложением можно продолжить описание капель?",
+      ["Капли прозрачные, круглые и блестят на свету.", "Дождь начался, когда мы открыли окно."], 0,
+      "Найди предложение о том, как выглядят капли.", "Прозрачность, форма и блеск капель — признаки, которые можно описать.")
+  }
+];
+
+const challenge = task("Два текста о воробье", [["Текст А", "На ветке сидит воробей. У него коричневая спинка, серое брюшко и короткий клюв. Среди веток его трудно заметить."],
+  ["Текст Б", "К кормушке подлетел воробей. Он схватил зёрнышко, да тут налетели голуби. Воробей унёс добычу на ветку."]],
+  "Что делают основные части этих текстов?",
+  ["В обоих текстах показывают, что воробей сделал сначала и что потом.",
+   "В обоих текстах перечисляют признаки, по которым можно узнать воробья.",
+   "В тексте А описывают внешний вид, в тексте Б рассказывают о событиях.",
+   "В тексте А рассказывают о событиях, в тексте Б описывают внешний вид."], 2,
+  "Что узнаём из середины текста А — как выглядит птица или что с ней случилось? Проверь так же текст Б.",
+  "В тексте А середина раскрывает признаки птицы. В тексте Б середина показывает действие воробья и появление голубей.");
+
+const finalTask = task("На берегу озера", [["Текст", "Мы остановились у озера. Вода у берега была прозрачная, на дне лежали светлые камешки. У самой воды росли высокие камыши."]],
+  "Какой фрагмент лучше всего завершит описание берега?",
+  ["Потом мы обошли озеро и вернулись к автобусу.", "Озеро мы заметили ещё из окна автобуса.",
+   "В воде иногда плавают небольшие рыбы.", "У озера было тихо, только камыши шуршали на ветру."], 3,
+  "", "Концовка даёт общее впечатление о берегу. Прозрачная вода, камешки и камыши остаются признаками в основной части.");
+
+const steps = [
+  "Прочитай текст целиком.",
+  "Найди, с чего начинается текст.",
+  "Определи, где даны главные события или признаки.",
+  "Найди, чем заканчивается текст."
+];
+
+function newSession() {
+  return {
+    phase: "start", name: "", diagnostic: [], queue: [], played: [], position: 0, streak: 0,
+    answer: freshAnswer(), order: [], ruleAttempts: 0, ruleHint: false, ruleCorrect: false,
+    finalChoice: null, finishedAt: null,
+  };
+}
+const freshAnswer = () => ({selected: null, parts: [], wrong: 0, hinted: false, done: false, message: "", tone: ""});
+const entry = (item, skill, kind) => ({item, skill, kind});
+const supported = stage => stage.kind === "support" || stage.kind === "quick";
+const supportFor = index => skills[index].support.map(item => entry(item, index, "support"));
+
+function startRoute(session) {
+  session.queue = skills.flatMap((skill, index) => [
+    ...(session.diagnostic[index].correct ? [] : supportFor(index)),
+    entry(skill.main, index, "main"),
+  ]);
+  session.phase = "route";
+}
+
+function recordDiagnostic(session, selected) {
+  const item = skills[session.diagnostic.length].diag;
+  session.diagnostic.push({selected, correct: selected === item.answer});
+  session.answer = freshAnswer();
+  if (session.diagnostic.length === skills.length) startRoute(session);
+}
+
+function isCorrect(item, selected) {
+  if (!Array.isArray(item.answer)) return selected === item.answer;
+  return Array.isArray(selected) && selected.length === item.answer.length &&
+    item.answer.every((part, index) => selected[index] === part);
+}
+
+function practiceFeedback(session, selected) {
+  const current = session.queue[session.position];
+  const answer = session.answer;
+  if (answer.done) return;
+  if (isCorrect(current.item, selected)) {
+    answer.message = "Верно. " + current.item.why;
+    answer.tone = "ok";
+    finishPractice(session, current, true);
+    return;
+  }
+  answer.wrong++;
+  answer.tone = "error";
+  answer.message = Array.isArray(current.item.answer) ?
+    "Проверь порядок. Нажми на фрагмент, чтобы убрать его из своего текста." :
+    "Попробуй ещё раз. Прочитай текст и подумай, какую часть нужно найти.";
+  if (answer.wrong < 2) return;
+  answer.tone = "";
+  answer.message = supported(current) ? "Разберём ответ. " + current.item.why :
+    "Разберём похожее задание по шагам.";
+  finishPractice(session, current, false);
+}
+
+function finishPractice(session, current, correct) {
+  const answer = session.answer;
+  answer.done = true;
+  const {skill, kind, item} = current;
+  const independent = correct && !answer.hinted && answer.wrong === 0 && !supported(current);
+  session.played.push({skill, kind, item, selected: answer.selected, independent, correct, hinted: answer.hinted});
+  session.streak = independent ? session.streak + 1 : 0;
+  let next = [];
+  if (!supported(current)) {
+    const hasSeenSupport = session.queue.some(part => part.skill === skill && supported(part));
+    const freshSimilar = skills[skill].similar.find(example => !session.queue.some(part => part.item === example));
+    if (!correct) {
+      next = hasSeenSupport ? [entry(skills[skill].quick, skill, "quick")] : supportFor(skill);
+      if (freshSimilar) next.push(entry(freshSimilar, skill, "similar"));
+    } else if (answer.hinted && freshSimilar) {
+      next.push(entry(freshSimilar, skill, "similar"));
+    }
+  }
+  if (session.streak >= 2 && !session.queue.some(part => part.kind === "challenge")) {
+    next.push(entry(challenge, 1, "challenge"));
+  }
+  session.queue.splice(session.position + 1, 0, ...next);
+}
+
+function nextPractice(session) {
+  session.answer = freshAnswer();
+  session.position++;
+  if (session.position >= session.queue.length) session.phase = "sequence";
+}
+
+function checkOrder(session) {
+  if (session.order.length !== steps.length) return;
+  session.ruleAttempts++;
+  session.ruleCorrect = session.order.every((id, index) => id === index);
+  if (session.ruleCorrect) {
+    session.phase = "final";
+    session.answer = freshAnswer();
+  }
+}
+
+const reportTitle = "Русский язык · 3 класс · Как устроен текст";
+const formatDate = date => new Date(date).toLocaleString("ru-KZ", {
+  dateStyle: "short", timeStyle: "medium", timeZone: "Asia/Qyzylorda",
+});
+
+function reportFor(session) {
+  const independent = session.played.filter(item => item.independent).length;
+  const hinted = session.played.filter(item => item.hinted).length;
+  const assisted = session.played.filter(item => supported(item)).length;
+  const ruleStatus = session.ruleHint ? "восстановлен с подсказкой" :
+    session.ruleAttempts === 1 ? "восстановлен с первой попытки" : "восстановлен после повторной попытки";
+  return [
+    reportTitle,
+    "Имя ученика — " + session.name,
+    ...(session.finishedAt ? ["Время работы — " + formatDate(session.finishedAt)] : []),
+    ...skills.map((skill, index) =>
+      skill.name + " — " + (session.diagnostic[index].correct ? "верно" : "требуется тренировка")),
+    "Тренировка — " + independent + " из " + session.played.length + " заданий самостоятельно.",
+    "Заданий с подсказкой — " + hinted + ". Шагов с опорой — " + assisted + ".",
+    "Порядок разбора текста — " + ruleStatus + ".",
+    "Итоговое задание — " + (session.finalChoice === finalTask.answer ? "верно" : "требуется тренировка") + ".",
+  ].join("\n");
+}
+
+const screen = document.querySelector("#screen");
+const stagebar = document.querySelector("#stagebar");
+const status = document.querySelector("#status");
+const labels = ["Диагностика", "Маршрут", "Тренировка", "Проверка"];
+const phaseStep = {start: 0, diagnostic: 0, route: 1, practice: 2, sequence: 3, final: 3, result: 4};
+const visibleOrder = [2, 0, 3, 1];
+const typeNames = {
+  main: "Тренировка", similar: "Похожее задание", support: "Пошаговая помощь",
+  quick: "Задание с опорой", challenge: "Задание посложнее",
+};
+const esc = value => String(value ?? "").replace(/[&<>"']/g,
+  char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[char]);
+const btn = (label, action, secondary = false) =>
+  '<button type="button" class="action' + (secondary ? ' secondary' : '') + '" data-action="' + action + '">' + label + '</button>';
+const hdr = text => '<h2 tabindex="-1" id="screen-title">' + esc(text) + '</h2>';
+
+let session = newSession();
+let view = "lesson";
+let draftName = "";
+const journalKey = "russkiy-yazyk-3-urok-01-results";
+let journalAvailable = true;
+let journal = readJournal();
+let activeReport = journal[0]?.id;
+let importDraft = "";
+
+function render(moveFocus = false) {
+  document.querySelectorAll("[data-view]").forEach(button => button.setAttribute("aria-pressed", button.dataset.view === view));
+  if (view === "lesson") {
+    const index = phaseStep[session.phase];
+    stagebar.innerHTML = '<ol class="progress" aria-label="Этапы урока">' + labels.map((label, i) =>
+      '<li' + (i === index ? ' aria-current="step"' : i < index ? ' class="done"' : '') +
+      '><span class="num" aria-hidden="true">' + (i + 1) + '</span>' + label + '</li>').join("") + '</ol>';
+  } else stagebar.innerHTML = "";
+  const renderPhase = {start: intro, diagnostic, route, practice, sequence, final: finalQuestion, result};
+  screen.innerHTML = '<section class="panel" aria-labelledby="screen-title">' +
+    (view === "teacher" ? teacher() : renderPhase[session.phase]()) + '</section>';
+  if (moveFocus) screen.querySelector("#screen-title")?.focus();
+}
+
+function intro() {
+  return hdr("Начни с двух заданий") +
+    '<p class="muted">По твоим ответам тренажёр подберёт следующие задания.</p>' +
+    '<form id="begin"><label class="name-label" for="student">Твоё имя</label>' +
+    '<input id="student" name="student" type="text" maxlength="60" required value="' + esc(draftName) +
+    '" autocomplete="off"><div class="actions"><button type="submit" class="action">Начать диагностику</button></div></form>';
+}
+
+function question(item, stage, outcome = null) {
+  const excerpt = item.excerpt.map(([label, text]) =>
+    '<p class="excerpt"><b>' + esc(label) + '</b><span>' + esc(text) + '</span></p>').join("");
+  const header = '<p class="kicker">' + esc(stage) + '</p>' + hdr(item.question) +
+    '<div class="context"><strong class="context-title">«' + esc(item.heading) + '»</strong>' + excerpt + '</div>';
+  const inOrder = Array.isArray(item.answer);
+  const options = item.options.map((option, i) => '<label class="option"><input type="radio" name="option" value="' +
+    i + '"' + (i === session.answer.selected ? ' checked' : '') + ' required><span>' + esc(option) + '</span></label>').join("");
+  if (outcome) return header + outcome;
+  if (session.phase === "practice" && session.answer.done) {
+    return header + '<p class="feedback ' + session.answer.tone + '">' + esc(session.answer.message) +
+      '</p><div class="actions">' + btn("Дальше", "next") + '</div>';
+  }
+  const practice = session.phase === "practice";
+  const feedback = session.answer.message ? '<p class="feedback ' + session.answer.tone + '">' + esc(session.answer.message) + '</p>' : "";
+  const controls = inOrder ? storyOrder(item.options) :
+    '<fieldset class="options" aria-labelledby="screen-title">' + options + '</fieldset>';
+  return header + '<form id="question"' + (inOrder ? ' data-ordered="true"' : '') + '>' + controls +
+    '<div class="actions"><button class="action" type="submit"' +
+    (inOrder && session.answer.parts.length !== item.options.length ? ' disabled' : '') + '>' + (practice ? "Проверить" : "Ответить") +
+    '</button>' + (practice && !session.answer.hinted ? btn("Подсказка", "hint", true) : "") + '</div></form>' + feedback;
+}
+
+function storyOrder(parts) {
+  const chosen = session.answer.parts;
+  const placed = chosen.map((id, i) => '<button class="sequence-card" type="button" data-unpick-part="' + id +
+    '"><span class="num">' + (i + 1) + '</span><span>' + esc(parts[id]) + '</span></button>').join("");
+  const available = parts.map((text, i) => chosen.includes(i) ? "" :
+    '<button class="sequence-card" type="button" data-part="' + i + '">' + esc(text) + '</button>').join("");
+  return '<p>Нажимай на фрагменты по порядку. Чтобы убрать фрагмент, нажми на него ещё раз.</p>' +
+    '<h3>Твой текст</h3><div class="steps-list" aria-label="Твой текст">' +
+    (placed || '<span class="muted">Выбери первый фрагмент.</span>') +
+    '</div><div class="steps-list" aria-label="Фрагменты на выбор">' + available + '</div>';
+}
+
+function diagnostic() {
+  const number = session.diagnostic.length;
+  return question(skills[number].diag, "Задание " + (number + 1) + " из " + skills.length);
+}
+
+function route() {
+  return hdr("Твой маршрут") + '<div class="route">' + skills.map((skill, index) =>
+    '<div class="route-item"><strong>' + esc(skill.name) + '</strong><span>' +
+    (session.diagnostic[index].correct ? "Самостоятельная тренировка" : "Пошаговая помощь, затем тренировка") +
+    '</span></div>').join("") + '</div><details class="mini-details"><summary>Как найти части текста</summary>' +
+    '<p><strong>Начало</strong> знакомит с тем, о ком или о чём говорится в тексте.</p>' +
+    '<p><strong>Основная часть</strong> показывает главные события в повествовании или раскрывает признаки в описании.</p>' +
+    '<p><strong>Концовка</strong> показывает, чем закончилось событие, или передаёт общее впечатление от описанного.</p></details>' +
+    '<div class="actions">' + btn("Начать тренировку", "practice") + '</div>';
+}
+
+function practice() {
+  const current = session.queue[session.position];
+  return question(current.item, typeNames[current.kind] + " · Задание " + (session.position + 1));
+}
+
+function sequence() {
+  const orderCard = (id, index) => '<button type="button" class="sequence-card" data-remove="' + id +
+    '" aria-label="Убрать шаг ' + (index + 1) + ' из порядка"><span class="num">' + (index + 1) +
+    '</span><span>' + esc(steps[id]) + '</span></button>';
+  const choiceCard = id => '<button type="button" class="sequence-card" data-step="' + id + '">' + esc(steps[id]) + '</button>';
+  return hdr("Восстанови порядок действий") +
+    '<p>Нажимай на шаги в том порядке, в каком ты разбираешь текст.</p><h3>Твой порядок</h3>' +
+    '<div class="steps-list">' + (session.order.map(orderCard).join("") || '<span class="muted">Выбери первый шаг.</span>') +
+    '</div><div class="steps-list">' + visibleOrder.filter(id => !session.order.includes(id)).map(choiceCard).join("") + '</div>' +
+    (session.ruleHint ? '<p class="feedback">Сначала прочитай весь текст. Затем разбери его части от начала к концовке.</p>' :
+      session.ruleAttempts ? '<p class="feedback error">Проверь порядок. Нажми на шаг в своём списке, чтобы убрать его.</p>' : "") +
+    '<div class="actions"><button type="button" class="action" data-action="order"' +
+    (session.order.length !== steps.length ? ' disabled' : '') + '>Проверить порядок</button>' +
+    (session.ruleAttempts && !session.ruleHint ? btn("Подсказка", "order-hint", true) : "") + '</div>';
+}
+
+function finalQuestion() {
+  if (session.finalChoice === null) return question(finalTask, "Проверочное задание");
+  const correct = session.finalChoice === finalTask.answer;
+  return question(finalTask, "Проверочное задание",
+    '<p>Твой ответ — ' + esc(finalTask.options[session.finalChoice]) + '</p>' +
+    '<div class="story"><h3>Концовка описания</h3><p>' + esc(finalTask.options[finalTask.answer]) + '</p></div>' +
+    '<p class="feedback ' + (correct ? 'ok' : 'error') + '">' +
+    (correct ? 'Верно. ' : '') + esc(finalTask.why) + '</p>' +
+    '<div class="actions">' + btn("Посмотреть результат", "result") + '</div>');
+}
+
+function result() {
+  return hdr("Твой результат") + '<pre class="report">' + esc(reportFor(session)) + '</pre>' +
+    '<div class="actions">' + btn("Скопировать результат", "copy") + btn("Пройти ещё раз", "restart", true) + '</div>';
+}
+
+function readJournal() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(journalKey) || "[]");
+    return Array.isArray(stored) ? stored.filter(record => record &&
+      typeof record.id === "string" && typeof record.name === "string" &&
+      typeof record.text === "string" && Number.isFinite(record.addedAt)) : [];
+  } catch {
+    journalAvailable = false;
+    return [];
+  }
+}
+
+function collectReport(name, text, addedAt = Date.now()) {
+  const records = new Map([...journal, ...readJournal()].map(record => [record.id, record]));
+  const known = [...records.values()].find(record => record.text === text);
+  const id = known?.id ?? (globalThis.crypto?.randomUUID?.() || addedAt + "-" + Math.random());
+  records.set(id, known || {id, name, text, addedAt});
+  journal = [...records.values()].sort((a, b) => b.addedAt - a.addedAt);
+  activeReport = id;
+  try {
+    localStorage.setItem(journalKey, JSON.stringify(journal));
+    journalAvailable = true;
+  } catch {
+    journalAvailable = false;
+  }
+  return !known;
+}
+
+function parseReport(raw) {
+  const text = raw.trim().replace(/\r\n?/g, "\n");
+  const [title, nameLine = "", ...lines] = text.split("\n");
+  const name = nameLine.match(/^Имя ученика — (.+)$/)?.[1].trim();
+  if (title !== reportTitle || !name || name.length > 60 ||
+      !lines.some(line => line.startsWith("Тренировка — ")) ||
+      !lines.some(line => line.startsWith("Итоговое задание — "))) return null;
+  return {name, text};
+}
+
+function teacher() {
+  const selected = journal.find(record => record.id === activeReport) || journal[0];
+  const list = journal.map(record => '<li><button class="report-button" type="button" data-report="' +
+    esc(record.id) + '" aria-pressed="' + (record === selected) + '"><strong>' + esc(record.name) +
+    '</strong><small>' + esc(formatDate(record.addedAt)) + '</small></button></li>').join("");
+  const archive = selected ? '<div class="journal"><ul class="journal-list" aria-label="Работы учеников">' + list +
+    '</ul><div><h3>Отчёт ученика</h3><pre class="report">' + esc(selected.text) + '</pre>' +
+    '<div class="actions">' + btn("Скопировать результат", "copy-teacher", true) + '</div></div></div>' :
+    '<p class="muted">После последнего задания здесь появится первая работа.</p>';
+  return hdr("Результаты учеников") +
+    '<p>Здесь собираются работы из этого браузера. С другого устройства можно вставить скопированный отчёт.</p>' +
+    (journalAvailable ? "" : '<p class="feedback">Сохранение в браузере недоступно. Работы видны, пока открыт урок.</p>') +
+    archive + '<form id="import-report"><label class="import-label" for="import-text">Отчёт с другого устройства</label>' +
+    '<textarea id="import-text" name="report" placeholder="Вставьте текст отчёта" maxlength="2400" required>' + esc(importDraft) +
+    '</textarea><div class="actions"><button class="action secondary" type="submit">Добавить отчёт</button></div></form>';
+}
+
+function refocus(selector) { screen.querySelector(selector)?.focus({preventScroll:true}); }
+
+async function copyResult(button, value) {
+  try {
+    await navigator.clipboard.writeText(value);
+    button.textContent = "Результат скопирован";
+    status.textContent = "Результат скопирован.";
+  } catch {
+    let field = screen.querySelector("#copy-text");
+    if (!field) {
+      field = document.createElement("textarea");
+      field.id = "copy-text";
+      field.readOnly = true;
+      field.setAttribute("aria-label", "Результат для копирования");
+      field.value = value;
+      screen.querySelector(".panel").append(field);
+    }
+    field.focus();
+    field.select();
+    try {
+      if (document.execCommand("copy")) {
+        button.textContent = "Результат скопирован";
+        status.textContent = "Результат скопирован.";
+        return;
+      }
+    } catch {}
+    status.textContent = "Текст выделен. Скопируй его.";
+  }
+}
+
+document.querySelector("nav").addEventListener("click", event => {
+  const selected = event.target.closest("[data-view]");
+  if (!selected || view === selected.dataset.view) return;
+  view = selected.dataset.view;
+  render(true);
+});
+screen.addEventListener("input", event => {
+  if (event.target.name === "report") {
+    importDraft = event.target.value;
+    event.target.setCustomValidity("");
+  }
+  if (event.target.name !== "student") return;
+  event.target.setCustomValidity("");
+  draftName = event.target.value;
+});
+screen.addEventListener("change", event => {
+  if (event.target.name === "option") session.answer.selected = Number(event.target.value);
+});
+screen.addEventListener("submit", event => {
+  event.preventDefault();
+  const form = event.target;
+  if (form.id === "begin") {
+    const input = form.elements.student;
+    const name = input.value.trim();
+    if (!name) {
+      input.setCustomValidity("Впиши своё имя.");
+      input.reportValidity();
+      return;
+    }
+    session.name = name;
+    session.phase = "diagnostic";
+    render(true);
+    return;
+  }
+  if (form.id === "import-report") {
+    const field = form.elements.report;
+    const report = parseReport(field.value);
+    if (!report) {
+      field.setCustomValidity("Вставьте полный отчёт по этому уроку.");
+      field.reportValidity();
+      return;
+    }
+    const added = collectReport(report.name, report.text);
+    importDraft = "";
+    render(true);
+    status.textContent = added ? "Отчёт добавлен." : "Этот отчёт уже есть в списке.";
+    return;
+  }
+  if (form.id !== "question") return;
+  const selected = form.dataset.ordered ? session.answer.parts.slice() : new FormData(form).get("option");
+  if (selected === null) return;
+  session.answer.selected = Array.isArray(selected) ? selected : Number(selected);
+  if (session.phase === "diagnostic") recordDiagnostic(session, session.answer.selected);
+  else if (session.phase === "practice") {
+    practiceFeedback(session, session.answer.selected);
+    const answer = session.answer;
+    render();
+    status.textContent = answer.message;
+    refocus(answer.done ? '[data-action="next"]' : 'input:checked, [data-unpick-part]');
+    return;
+  } else if (session.phase === "final") {
+    session.finalChoice = session.answer.selected;
+    session.finishedAt = Date.now();
+    collectReport(session.name, reportFor(session), session.finishedAt);
+  }
+  render(true);
+});
+
+const actions = {
+  practice() { session.phase = "practice"; render(true); },
+  hint() {
+    session.answer.hinted = true;
+    session.answer.message = session.queue[session.position].item.hint;
+    session.answer.tone = "";
+    render();
+    status.textContent = session.answer.message;
+    refocus('input:checked, input[name="option"], [data-part], #question button[type=submit]:enabled');
+  },
+  next() { nextPractice(session); render(true); },
+  order() { checkOrder(session); render(true); },
+  "order-hint"() { session.ruleHint = true; render(true); },
+  result() { session.phase = "result"; render(true); },
+  copy(button) { copyResult(button, reportFor(session)); },
+  "copy-teacher"(button) {
+    const record = journal.find(item => item.id === activeReport) || journal[0];
+    if (record) copyResult(button, record.text);
+  },
+  restart() { session = newSession(); draftName = ""; render(true); },
+};
+
+screen.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button || button.disabled) return;
+  if (button.dataset.step !== undefined) {
+    session.order.push(Number(button.dataset.step));
+    render();
+    refocus('[data-step], [data-action="order"]');
+  } else if (button.dataset.remove !== undefined) {
+    session.order = session.order.filter(id => id !== Number(button.dataset.remove));
+    render();
+    refocus('[data-step="' + button.dataset.remove + '"]');
+  } else if (button.dataset.part !== undefined) {
+    session.answer.parts.push(Number(button.dataset.part));
+    render();
+    refocus('[data-part], #question button[type=submit]:enabled');
+  } else if (button.dataset.unpickPart !== undefined) {
+    session.answer.parts = session.answer.parts.filter(id => id !== Number(button.dataset.unpickPart));
+    render();
+    refocus('[data-part="' + button.dataset.unpickPart + '"]');
+  } else if (button.dataset.report) {
+    activeReport = button.dataset.report;
+    render();
+    refocus('.report-button[aria-pressed="true"]');
+  } else actions[button.dataset.action]?.(button);
+});
+render();
+
+</script>
+</body>
+</html>
