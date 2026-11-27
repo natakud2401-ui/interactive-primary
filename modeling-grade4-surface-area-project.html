@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#6654df" />
+<title>Площадь поверхности в проекте · 4 класс</title>
+<style>
+:root{--ink:#17234b;--muted:#66749a;--violet:#6853e8;--violet2:#8d62ef;--sky:#22adcf;--coral:#fb9475;--lav:#bca8fd;--line:#e0e5fa;--pale:#f4f6ff;--green:#168b6b;--bad:#c53e5f;--shadow:0 12px 30px rgba(43,51,109,.11)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#e7f2ff 0%,#f5f5ff 44%,#f1edff 100%);color:var(--ink);font-size:15px;line-height:1.48;min-height:100vh}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #f3b04a;outline-offset:3px} .shell{max-width:1160px;margin:0 auto;padding:22px 20px 45px}.micro{font-size:11px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase;color:#5a4bc8}.hero{background:linear-gradient(116deg,#4c51cc 0%,#6455dd 52%,#9970ef 100%);color:white;border-radius:27px;min-height:187px;display:flex;justify-content:space-between;align-items:center;gap:22px;padding:28px 34px;box-shadow:0 17px 34px rgba(81,64,187,.19);overflow:hidden;position:relative}.hero:after{content:'';position:absolute;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.17);right:-75px;top:-191px}.hero .micro{color:#dedaff}.hero h1{font-size:clamp(26px,3.5vw,40px);line-height:1.09;margin:8px 0 10px;letter-spacing:-1px;max-width:630px}.hero p{max-width:625px;font-size:14px;line-height:1.55;margin:0;color:#f0edff}.hero-figure{min-width:214px;max-width:250px;filter:drop-shadow(8px 12px 3px rgba(28,25,100,.18));transform:rotate(-5deg)}.lesson-badge{margin:0 0 10px;color:#4c46a9;font-size:11px;font-weight:850;letter-spacing:.8px;text-transform:uppercase}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:15px 0 10px}.tab{border:1px solid #deddf8;background:rgba(255,255,255,.7);border-radius:11px;min-height:43px;color:#7279a4;font-size:12px;font-weight:800;padding:7px 6px}.tab.current{background:#fff;border-color:#8d78f6;color:#543bd9;box-shadow:0 2px 0 #e7e0ff}.tab.done{background:#ebfbf3;border-color:#b0dfcf;color:#16785a}.progress-track{height:5px;border-radius:10px;background:#dddff5;overflow:hidden;margin-bottom:18px}.progress-track>span{display:block;height:100%;width:20%;background:linear-gradient(90deg,#28c7ce,#765bf2);border-radius:10px;transition:width .3s}.panel{background:#fff;border-radius:22px;padding:25px;box-shadow:var(--shadow);border:1px solid #eaedfb}.panel h2{font-size:24px;margin:0 0 5px;line-height:1.2}.sub{color:var(--muted);font-size:13px;margin:0 0 15px}.stage{display:none}.stage.active{display:block;animation:rise .22s ease-out}@keyframes rise{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.twothirds{display:grid;grid-template-columns:minmax(270px,.75fr) minmax(0,1.25fr);gap:16px}.box{border:1px solid var(--line);border-radius:17px;padding:17px;background:#fcfcff}.box h3{font-size:15px;margin:0 0 7px}.hintnote{background:#f1f5ff;border-left:4px solid var(--sky);border-radius:9px;padding:10px 13px;font-size:13px;color:#42547a}.lesson-label{color:#6c57ed;font-size:11px;font-weight:850;letter-spacing:.8px;text-transform:uppercase;margin:0 0 7px}.qtext{font-size:20px;font-weight:800;line-height:1.4;margin:2px 0 12px}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.option{background:#fafbff;border:1.5px solid #dfe3f6;padding:14px;border-radius:13px;min-height:57px;text-align:left;font-weight:740;color:#233165;transition:.15s}.option:hover:not(:disabled){border-color:#8b7aed;transform:translateY(-1px);background:#f6f4ff}.option.selected{border-color:#6d55e4;background:#f1eeff}.option.correct{border:2px solid #32a585;background:#e9faf4;color:#116c54}.option.incorrect{border:2px solid #e67b91;background:#fff0f3;color:#a93550}.option:disabled{cursor:default}.btn{border:0;background:linear-gradient(110deg,#6154e5,#8d64eb);color:#fff;font-weight:800;border-radius:12px;min-height:44px;padding:10px 18px;box-shadow:0 3px 0 rgba(57,42,138,.13)}.btn:disabled{opacity:.43;cursor:not-allowed;box-shadow:none}.btn.secondary{background:#f0edff;color:#5341c0;border:1px solid #d9d0ff;box-shadow:none}.btn.ghost{background:#fff;color:#52608e;border:1px solid #dfe3f6;box-shadow:none}.actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}.step-status{font-size:12px;color:#687394;font-weight:700}.feedback{margin-top:12px;background:#f1f6ff;border-radius:12px;border:1px solid #dce6fd;padding:12px 14px;font-size:14px}.feedback.bad{background:#fff2f4;border-color:#f5ccd6;color:#9d3850}.feedback.good{background:#edfaf4;border-color:#bae9d6;color:#1a7153}.feedback strong{display:block;margin-bottom:2px}.feedback[hidden]{display:none}.mini-stat{background:#f7f8ff;border:1px solid #e6e9fb;border-radius:12px;padding:11px 13px}.mini-stat span{color:#687394;font-size:11px;display:block}.mini-stat strong{font-size:22px;color:#5a4add}.lab-canvas{background:linear-gradient(150deg,#fff,#f7f9ff);border:1px solid #e7e8f9;border-radius:15px;padding:10px;min-height:260px;display:flex;align-items:center;justify-content:center}.lab-canvas svg{width:100%;height:auto;max-height:260px;display:block}.net-canvas{min-height:285px}.net-canvas svg{max-height:280px}.input-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:13px 0}.input-row label{display:block;font-weight:770;font-size:13px}.slider-wrap{display:flex;gap:10px;align-items:center}.slider-wrap input[type=range]{width:100%;accent-color:#6f5ce9;height:22px;cursor:pointer}.dim-badge{display:inline-flex;min-width:61px;justify-content:center;padding:6px 8px;background:#eeeaff;color:#5746bd;border-radius:9px;font-size:14px;font-weight:850}.stepper{width:30px;height:30px;display:grid;place-items:center;border:1px solid #d8d5fa;background:#fff;color:#4e3ec6;border-radius:9px;font-size:19px;font-weight:800;padding:0}.mode-buttons{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0}.mode{border:1px solid #d7dcf3;background:#fff;color:#52618d;padding:9px 10px;border-radius:10px;font-size:12px;font-weight:800}.mode.active{border:1.5px solid #6651db;background:#efeaff;color:#513bc2}.facelegend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.key{display:flex;gap:7px;align-items:center;font-size:12px;color:#425078;font-weight:700}.swatch{width:13px;height:13px;border-radius:4px;flex-shrink:0}.swatch.top{background:#f8a27f}.swatch.front{background:#48c4dc}.swatch.side{background:#b5a4f9}.net-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:13px}.net-table th{background:#f0f2fd;color:#445084;font-weight:850;text-align:left}.net-table td,.net-table th{padding:9px 10px;border:1px solid #e0e5f5}.net-table td:nth-child(n+2),.net-table th:nth-child(n+2){text-align:center}.net-table tr.muted-row{opacity:.48}.area-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.area-summary>div{background:#f5f5fe;border:1px solid #e8e9f8;border-radius:12px;padding:12px 10px;text-align:center}.area-summary span{font-size:11px;color:#687394;display:block}.area-summary strong{font-size:20px;color:#4e45bf;display:block}.comparison{display:flex;gap:10px;align-items:flex-end;margin:12px 0}.comparison .bar-group{flex:1}.bar-label{font-size:12px;font-weight:720;margin-bottom:5px}.bar-track{height:20px;border-radius:6px;background:#eff0fb;overflow:hidden}.bar-fill{height:100%;border-radius:6px;transition:width .25s}.bar-fill.old{background:#a7b5d6}.bar-fill.now{background:linear-gradient(90deg,#33bed5,#785fe6)}.rule-chip{display:inline-block;border-radius:12px;background:#f1ecff;color:#5b46cf;font-size:13px;padding:7px 11px;font-weight:800}.mission{margin-top:14px;border:1px solid #ded8fc;background:#f6f3ff;border-radius:15px;padding:14px}.mission.completed{background:#e9f9f1;border-color:#a9e0c9}.mission strong{display:block;font-size:14px}.mission small{display:block;font-size:12px;color:#657194;margin-top:4px}.formula-line{font-size:13px;background:#f5f5fe;border:1px solid #e8e6fa;border-radius:11px;padding:10px 12px;font-weight:730;line-height:1.7}.visual-task{min-height:120px;background:#f8faff;border:1px solid #e6eaf7;border-radius:14px;padding:10px;display:grid;place-items:center;margin:0 0 12px}.visual-task svg{width:100%;max-width:410px;height:auto;max-height:175px}.visual-pair{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%}.visual-pair .visual-task{margin:0}.bad-example{background:#fff5f6;border:1px dashed #efafbd;border-radius:12px;padding:13px;font-size:16px;font-weight:760;text-align:center;margin-bottom:14px}.error-tag{color:#af405f;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.5px}.conclusion-grid{display:grid;grid-template-columns:1fr;gap:15px}.conclusion-item{padding:14px;border:1px solid #e2e6f6;border-radius:15px;background:#fbfcff}.conclusion-item h3{font-size:15px;margin:0 0 10px}.conclusion-choices{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.conclusion-choices button{padding:11px;text-align:left;border-radius:11px;border:1.5px solid #dfe3f3;background:#fff;color:#35436e;font-size:13px;font-weight:730;min-height:49px}.conclusion-choices button.selected{background:#eeeaff;border-color:#6b59dc;color:#4c3bc0}.conclusion-choices button.good-choice{background:#e8f8f0;border-color:#36a77e;color:#137052}.conclusion-choices button.bad-choice{background:#fef0f2;border-color:#e88a9f;color:#ad3f5c}.scorebox{border-radius:15px;border:1px solid #dfe4f8;background:#f8f9ff;padding:15px}.scoregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scorecard{padding:13px;border-radius:12px;border:1px solid #dfe6f5;background:#fff;text-align:center}.scorecard strong{font-size:27px;display:block;color:#5948ce}.scorecard small{font-size:12px;color:#667297}.summary-text{font-size:14px;color:#405077;line-height:1.7}.note-bottom{font-size:12px;color:#7180a0;text-align:center;margin:20px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:790px){.hero{padding:24px;min-height:unset}.hero-figure{min-width:150px;width:35%}.twothirds,.split{grid-template-columns:1fr}.tabs{gap:5px}.tab{font-size:11px}.shell{padding:12px 12px 34px}.panel{padding:18px}.box{padding:12px}.facelegend{gap:6px}.net-canvas{min-height:250px}.qtext{font-size:18px}}
+@media(max-width:530px){.hero{padding:22px 19px;border-radius:20px}.hero-figure{display:none}.hero h1{font-size:28px;letter-spacing:-.5px}.tabs{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.tab{padding:4px 2px;font-size:9px;line-height:1.25;min-height:44px}.panel h2{font-size:21px}.choice-grid,.conclusion-choices{grid-template-columns:1fr}.area-summary{gap:4px}.area-summary strong{font-size:17px}.area-summary>div{padding:10px 5px}.net-table{font-size:11px}.net-table td,.net-table th{padding:7px 5px}.scoregrid{gap:5px}.scorecard{padding:9px 3px}.scorecard strong{font-size:22px}.scorecard small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+ <div class="lesson-badge">Математическое моделирование · 4 класс · Интерактивная мастерская</div>
+ <header class="hero">
+  <div>
+   <div class="micro">Исследуй → измени → проверь → сделай вывод</div>
+   <h1>Площадь поверхности<br>в проекте</h1>
+   <p>Ты проектируешь коробку и рассчитываешь, сколько материала потребуется для покрытия её граней. Изменяй размеры и наблюдай, как перестраивается сама модель и развёртка.</p>
+  </div>
+  <svg class="hero-figure" viewBox="0 0 230 160" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffcf9c"/><stop offset="1" stop-color="#ff8d8f"/></linearGradient><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#50d9e8"/><stop offset="1" stop-color="#3788cf"/></linearGradient></defs><path d="M33 68 L117 68 171 38 90 38Z" fill="url(#g1)" stroke="#fff" stroke-width="2"/><path d="M33 68 H117 V139 H33Z" fill="url(#g2)" stroke="#fff" stroke-width="2"/><path d="M117 68 L171 38 V107 L117 139 Z" fill="#c0a9ff" stroke="#fff" stroke-width="2"/><path d="M47 90 h55 M47 111 h55" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><path d="M137 75 l20 -10 M137 98 l20 -10" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path d="M160 25 l10 -6 M174 23 l11 -6" stroke="#ffe0bf" stroke-width="3" stroke-linecap="round"/></svg>
+ </header>
+ <nav class="tabs" aria-label="Этапы занятия">
+  <button type="button" class="tab current" data-stage="0">1. Диагностика</button>
+  <button type="button" class="tab" data-stage="1">2. Исследование</button>
+  <button type="button" class="tab" data-stage="2">3. Мой маршрут</button>
+  <button type="button" class="tab" data-stage="3">4. Правило</button>
+  <button type="button" class="tab" data-stage="4">5. Результат</button>
+ </nav>
+ <div class="progress-track"><span id="progress-bar"></span></div>
+
+ <section class="stage active panel" id="stage-0" aria-labelledby="diag-h">
+  <div class="lesson-label">Начальная диагностика · <span id="diag-counter">1 из 3</span></div>
+  <h2 id="diag-h">Что ты уже знаешь?</h2>
+  <p class="sub">Три коротких вопроса без подсказок. Они помогут подобрать задания твоего уровня.</p>
+  <div class="box">
+   <div id="diag-question" class="qtext"></div>
+   <div id="diag-visual" class="visual-task" hidden></div>
+   <div id="diag-options" class="choice-grid"></div>
+   <div id="diag-message" class="feedback" hidden></div>
+  </div>
+  <div class="actions"><span class="step-status">Выбери ответ. На этом этапе мы проверяем знания, а не ставим отметку.</span><button class="btn" id="diag-next" disabled>Дальше</button></div>
+ </section>
+
+ <section class="stage panel" id="stage-1" aria-labelledby="lab-h">
+  <div class="lesson-label">Исследовательская лаборатория</div>
+  <h2 id="lab-h">Меняй размеры — наблюдай площадь</h2>
+  <p class="sub">Шаг размерной сетки на модели соответствует 1 см. Каждая квадратная клетка развёртки имеет площадь 1 см².</p>
+  <div class="box" style="margin:14px 0 16px">
+    <h3>Модель с обозначениями</h3>
+    <p class="sub">Посмотри, где на модели длина, ширина и высота. Эти размеры будем менять в лаборатории.</p>
+    <div style="display:flex;justify-content:center;align-items:center;padding:6px 0 2px">
+      <svg viewBox="0 0 640 280" style="width:100%;max-width:620px;height:auto" aria-label="Модель коробки с подписями длины, ширины и высоты">
+        <defs>
+          <linearGradient id="faceA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67dff2"/><stop offset="1" stop-color="#3e98de"/></linearGradient>
+          <linearGradient id="faceB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd59e"/><stop offset="1" stop-color="#ff9798"/></linearGradient>
+          <linearGradient id="faceC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ccb5ff"/><stop offset="1" stop-color="#a38ef4"/></linearGradient>
+          <marker id="arrowA" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#2b2b55"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="640" height="280" rx="20" fill="#f8f8ff"/>
+        <path d="M180 95 L360 95 460 55 280 55 Z" fill="url(#faceB)" stroke="#ffffff" stroke-width="3"/>
+        <path d="M180 95 L360 95 360 205 180 205 Z" fill="url(#faceA)" stroke="#ffffff" stroke-width="3"/>
+        <path d="M360 95 L460 55 460 165 360 205 Z" fill="url(#faceC)" stroke="#ffffff" stroke-width="3"/>
+        <g stroke="#ffffff" stroke-opacity="0.45" stroke-width="2">
+          <line x1="220" y1="95" x2="220" y2="205"/><line x1="260" y1="95" x2="260" y2="205"/><line x1="300" y1="95" x2="300" y2="205"/><line x1="340" y1="95" x2="340" y2="205"/>
+          <line x1="180" y1="132" x2="360" y2="132"/><line x1="180" y1="168" x2="360" y2="168"/>
+          <line x1="320" y1="55" x2="400" y2="55"/><line x1="300" y1="75" x2="420" y2="75"/>
+        </g>
+        <g stroke="#2b2b55" stroke-width="3" fill="none" marker-start="url(#arrowA)" marker-end="url(#arrowA)">
+          <!-- Длина вдоль переднего горизонтального ребра -->
+          <line x1="180" y1="228" x2="360" y2="228"/>
+          <!-- Высота вдоль вертикального ребра -->
+          <line x1="155" y1="95" x2="155" y2="205"/>
+          <!-- Ширина параллельно наклонному ребру, уходящему в глубину -->
+          <line x1="378" y1="90" x2="478" y2="50"/>
+        </g>
+        <g stroke="#2b2b55" stroke-width="1.4" opacity=".5" stroke-dasharray="4 4">
+          <line x1="360" y1="95" x2="378" y2="90"/>
+          <line x1="460" y1="55" x2="478" y2="50"/>
+        </g>
+        <g font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="#23234a">
+          <text x="244" y="250" font-size="23">Длина</text>
+          <text x="60" y="154" font-size="23">Высота</text>
+          <text x="482" y="39" font-size="23">Ширина</text>
+        </g>
+        <g font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#4f4f79">
+          <text x="220" y="272">Передняя грань</text>
+          <text x="392" y="222">Боковая грань</text>
+          <text x="310" y="88">Верхняя грань</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="twothirds">
+   <div class="box">
+    <h3>1. Размеры коробки</h3>
+    <div class="input-row"><label for="dim-l">Длина</label><output id="out-l" class="dim-badge">4 см</output></div>
+    <div class="slider-wrap"><button class="stepper" data-dim="l" data-change="-1" aria-label="Уменьшить длину">−</button><input type="range" id="dim-l" min="2" max="7" step="1" value="4"/><button class="stepper" data-dim="l" data-change="1" aria-label="Увеличить длину">+</button></div>
+    <div class="input-row"><label for="dim-w">Ширина</label><output id="out-w" class="dim-badge">3 см</output></div>
+    <div class="slider-wrap"><button class="stepper" data-dim="w" data-change="-1" aria-label="Уменьшить ширину">−</button><input type="range" id="dim-w" min="2" max="6" step="1" value="3"/><button class="stepper" data-dim="w" data-change="1" aria-label="Увеличить ширину">+</button></div>
+    <div class="input-row"><label for="dim-h">Высота</label><output id="out-h" class="dim-badge">2 см</output></div>
+    <div class="slider-wrap"><button class="stepper" data-dim="h" data-change="-1" aria-label="Уменьшить высоту">−</button><input type="range" id="dim-h" min="1" max="5" step="1" value="2"/><button class="stepper" data-dim="h" data-change="1" aria-label="Увеличить высоту">+</button></div>
+    <h3 style="margin-top:20px">2. Что покрываем?</h3>
+    <div class="mode-buttons" role="group" aria-label="Выбор граней для покрытия">
+     <button class="mode active" data-mode="all">Все 6 граней</button><button class="mode" data-mode="open">Без нижней грани</button><button class="mode" data-mode="walls">Только 4 стенки</button>
+    </div>
+    <p class="hintnote">Цвета обозначают пары одинаковых граней. Если не покрываем грань, её площадь не входит в расход материала.</p>
+    <button class="btn secondary" style="margin-top:12px" id="lab-reset">Вернуть начальную модель</button>
+   </div>
+   <div class="box">
+    <h3>Объёмная модель</h3>
+    <div class="lab-canvas" id="box-holder"></div>
+    <div class="facelegend"><div class="key"><span class="swatch top"></span>Верх и дно</div><div class="key"><span class="swatch front"></span>Передняя и задняя грани</div><div class="key"><span class="swatch side"></span>Левая и правая</div></div>
+    <div class="area-summary"><div><span>Длина</span><strong id="stat-l">4 см</strong></div><div><span>Ширина</span><strong id="stat-w">3 см</strong></div><div><span>Высота</span><strong id="stat-h">2 см</strong></div></div>
+   </div>
+  </div>
+  <div class="split" style="margin-top:15px">
+   <div class="box">
+    <h3>Развёртка коробки</h3>
+    <p class="sub">Шесть граней показаны отдельно, без наложения.</p>
+    <div class="lab-canvas net-canvas" id="net-holder"></div>
+   </div>
+   <div class="box">
+    <h3>Как рассчитать расход</h3>
+    <table class="net-table"><thead><tr><th>Грани</th><th>Площадь одной</th><th>Покрываем</th><th>Всего</th></tr></thead><tbody id="face-rows"></tbody></table>
+    <div class="area-summary"><div><span>Площадь покрытия</span><strong id="total-area">52 см²</strong></div><div><span>Наклеек 1 см²</span><strong id="tile-count">52</strong></div><div><span>Запас 80 см²</span><strong id="stock-result">Хватит</strong></div></div>
+    <div class="comparison"><div class="bar-group"><div class="bar-label">Было: <span id="old-area">52</span> см²</div><div class="bar-track"><div id="bar-old" class="bar-fill old"></div></div></div><div class="bar-group"><div class="bar-label">Стало: <span id="new-area">52</span> см²</div><div class="bar-track"><div id="bar-now" class="bar-fill now"></div></div></div></div>
+    <div class="formula-line" id="delta-label" aria-live="polite">Пока размеры не изменились.</div>
+    <div class="mission" id="mission-box"><strong>Задача конструктора</strong><small>Выбери покрытие всех граней и измени размеры так, чтобы понадобилось ровно <b>64 см²</b> материала. Подсказка: можно менять все три размера.</small><div id="mission-progress" style="margin-top:7px;font-size:13px;font-weight:800;color:#5f50bf">Пока расход отличается от 64 см².</div></div>
+   </div>
+  </div>
+  <div class="actions"><span class="step-status" id="lab-observation">Изменяй размеры и следи, какие пары граней растут.</span><button class="btn" id="lab-to-practice">Перейти к заданиям</button></div>
+ </section>
+
+ <section class="stage panel" id="stage-2" aria-labelledby="practice-h">
+  <div class="lesson-label">Индивидуальный маршрут · <span id="practice-counter">1 из 5</span></div>
+  <h2 id="practice-h">Решай задачи проектировщика</h2>
+  <p class="sub" id="practice-sub">Задания подобраны с учётом диагностических ответов.</p>
+  <div class="box">
+   <span class="rule-chip" id="practice-type">Проектирование</span>
+   <div id="practice-question" class="qtext" style="margin-top:12px"></div>
+   <div class="visual-task" id="practice-visual" hidden></div>
+   <div id="practice-options" class="choice-grid"></div>
+   <div class="feedback" id="practice-feedback" hidden></div>
+  </div>
+  <div class="actions"><span class="step-status" id="practice-help-status">При ошибке появится вопрос-подсказка.</span><button class="btn" id="practice-next" disabled>Следующее задание</button></div>
+ </section>
+
+ <section class="stage panel" id="stage-3" aria-labelledby="rule-h">
+  <div class="lesson-label">Итог · восстанови правило</div>
+  <h2 id="rule-h">Как работает площадь поверхности?</h2>
+  <p class="sub">Выбери продолжение каждой мысли. Слова нужно не писать, а выбирать.</p>
+  <div id="conclusion-list" class="conclusion-grid"></div>
+  <div class="feedback" id="rule-feedback" hidden></div>
+  <div class="actions"><span class="step-status">При проверке можно исправить выбор.</span><button class="btn" id="rule-check">Проверить правило</button></div>
+ </section>
+
+ <section class="stage panel" id="stage-4" aria-labelledby="result-h">
+  <div class="lesson-label">Мастерская завершена</div>
+  <h2 id="result-h">Что получилось?</h2>
+  <p class="sub">Здесь отражается только работа на этом устройстве. Никакие данные учителю или на сервер не отправляются.</p>
+  <div class="scoregrid"><div class="scorecard"><strong id="result-diag">0/3</strong><small>Начальная диагностика</small></div><div class="scorecard"><strong id="result-practice">0/5</strong><small>Задания выполнены самостоятельно</small></div><div class="scorecard"><strong id="result-help">0</strong><small>Задания с помощью</small></div></div>
+  <div class="scorebox" style="margin-top:14px"><h3 style="margin:0 0 5px">Главный вывод</h3><p class="summary-text" style="margin:0">Площадь одной прямоугольной грани находим умножением её длины на ширину. У коробки противоположные грани одинаковы. Для покрытия складываем площади только нужных граней. Когда размеры модели изменяются, нужно заново определить площади затронутых граней и общий расход.</p></div>
+  <div class="box" style="margin-top:14px"><h3>Твоя исследованная модель</h3><p id="result-model" class="summary-text" style="margin:6px 0 0"></p></div>
+  <div class="actions"><button class="btn secondary" id="copy-result">Скопировать итог</button><button class="btn" id="restart">Пройти ещё раз</button></div>
+  <div class="feedback" id="copy-feedback" hidden></div>
+ </section>
+ <p class="note-bottom">Математическое моделирование · 4 класс · Офлайн HTML · Без регистрации и сбора результатов</p>
+</div>
+<script>
+'use strict';
+const $=(id)=>document.getElementById(id);
+const D={l:4,w:3,h:2};let coverMode='all';const BASE={l:4,w:3,h:2};let currentStage=0;
+const stages=[...document.querySelectorAll('.stage')];let finished=[false,false,false,false,false];
+const diagQuestions=[
+ {text:'Для детали длиной 4 см и шириной 3 см нужно покрыть одну прямоугольную сторону. Какова её площадь?',choices:['7 см²','12 см²','14 см²','24 см²'],answer:1,skill:'area',visual:'flat'},
+ {text:'Сколько граней имеет закрытая коробка в форме прямоугольного параллелепипеда?',choices:['3','4','6','8'],answer:2,skill:'faces',visual:'cuboid'},
+ {text:'У коробки увеличили только ширину. Длина и высота прежние. Площади каких граней изменятся?',choices:['Только передней и задней','Верхней, нижней, левой и правой','Всех шести','Ни одной'],answer:1,skill:'change',visual:'cuboid'}
+];
+let diagIndex=0, diagSelected=null,diagAnswers=[],route=[],practiceIndex=0,practiceWrong=0,practiceFirstCorrect=0,practiceAssisted=0,practiceResolved=false,practiceAnswerShown=false,practiceSelected=null;let missionAchieved=false;let passNumber=0;
+function fmt(n){return String(n).replace('.',',')}
+function surface(v,m='all'){const a=v.l*v.w,b=v.l*v.h,c=v.w*v.h;return (m==='all'?2:m==='open'?1:0)*a+2*b+2*c}
+const ns='http://www.w3.org/2000/svg';
+function svgEl(tag,attrs,parent,txt){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs||{}))e.setAttribute(k,String(v));if(txt!==undefined)e.textContent=txt;if(parent)parent.appendChild(e);return e}
+function poly(parent,points,fill,stroke='#fff'){return svgEl('polygon',{points:points.map(p=>p.join(',')).join(' '),fill,stroke,'stroke-width':2,'stroke-linejoin':'round'},parent)}
+function line(parent,x1,y1,x2,y2,stroke='#fff',width=1.4,opacity=.65){return svgEl('line',{x1,y1,x2,y2,stroke,'stroke-width':width,'stroke-opacity':opacity},parent)}
+function textSvg(parent,x,y,text,opts={}){return svgEl('text',{x,y,'text-anchor':opts.anchor||'middle','font-size':opts.size||14,'font-family':'Segoe UI,Arial,sans-serif','font-weight':opts.weight||850,fill:opts.color||'#22365c','paint-order':'stroke',stroke:opts.stroke||'transparent','stroke-width':opts.strokeWidth||0},parent,text)}
+function drawBox(container,dims,opts={}){
+ container.innerHTML='';const sv=svgEl('svg',{viewBox:'0 0 420 280',role:'img','aria-label':`Прямоугольная коробка ${dims.l} на ${dims.w} на ${dims.h} сантиметров`},container);
+ const l=dims.l,w=dims.w,h=dims.h,sx=34,sy=35,dx=19,dy=15;
+ const x0=(420-(l*sx+w*dx))/2, y0=(280-(h*sy+w*dy))/2+w*dy;
+ const FL=[x0,y0],FR=[x0+l*sx,y0],BR=[x0+l*sx,y0+h*sy],BL=[x0,y0+h*sy],off=[w*dx,-w*dy],add=p=>[p[0]+off[0],p[1]+off[1]];
+ const g=svgEl('g',{},sv);poly(g,[FL,FR,add(FR),add(FL)],'#ffc1a4','#8d7ca8');poly(g,[FR,add(FR),add(BR),BR],'#b5a2f7','#8d7ca8');poly(g,[FL,FR,BR,BL],'#6cd1e5','#6688b8');
+ // subtle 1 cm guide lines, conveying real dimensions rather than decorative stripes
+ for(let i=1;i<l;i++){const x=x0+i*sx;line(g,x,y0,x,y0+h*sy,'#fff',1,.28);line(g,x,y0,x+off[0],y0+off[1],'#fff',1,.33)}
+ for(let i=1;i<h;i++){const y=y0+i*sy;line(g,x0,y,x0+l*sx,y,'#fff',1,.28);line(g,FR[0],y,FR[0]+off[0],y+off[1],'#fff',1,.33)}
+ for(let i=1;i<w;i++){const u=i/w;line(g,FL[0]+off[0]*u,FL[1]+off[1]*u,FR[0]+off[0]*u,FR[1]+off[1]*u,'#fff',1,.33);line(g,FR[0]+off[0]*u,FR[1]+off[1]*u,BR[0]+off[0]*u,BR[1]+off[1]*u,'#fff',1,.33)}
+ textSvg(g,x0+l*sx/2,y0+h*sy/2+5,`${l} × ${h}`,{color:'#173d57',size:Math.min(17,12+l)});
+ textSvg(g,x0+l*sx/2+w*dx/2,y0-w*dy/2+4,`${l} × ${w}`,{color:'#684153',size:14});
+ textSvg(g,x0+l*sx+w*dx/2,y0+h*sy/2-w*dy/2+4,`${w}×${h}`,{color:'#48347d',size:Math.min(14,11+h)});
+ textSvg(sv,210,272,'Все размеры — в сантиметрах',{color:'#7784a3',size:12,weight:650});return sv;
+}
+function svgGridRect(g,x,y,w,h,sz,type,covered=true,num=''){
+ const colors={top:'#ffd3bd',front:'#b9eff6',side:'#dcd3ff'};const border={top:'#e5906f',front:'#3aacc3',side:'#9480e5'};const W=w*sz,H=h*sz;
+ svgEl('rect',{x,y,width:W,height:H,fill:covered?colors[type]:'#f2f3fa',stroke:border[type],'stroke-width':2,'stroke-dasharray':covered?'none':'5 3'},g);
+ for(let i=1;i<w;i++)line(g,x+i*sz,y,x+i*sz,y+H,covered?border[type]:'#bdc1d4',.65,.52);
+ for(let i=1;i<h;i++)line(g,x,y+i*sz,x+W,y+i*sz,covered?border[type]:'#bdc1d4',.65,.52);
+ if(num){const f=Math.max(10,Math.min(14,sz*.5));textSvg(g,x+W/2,y+H/2+f*.35,num,{color:covered?'#304277':'#8c93a7',size:f,weight:850,stroke:'#fff',strokeWidth:3})}
+ if(!covered){line(g,x,y,x+W,y+H,'#9098b6',2,.7);line(g,x+W,y,x,y+H,'#9098b6',2,.7)}
+}
+function drawNet(container,dims,mode){container.innerHTML='';const sv=svgEl('svg',{viewBox:'0 0 560 330',role:'img','aria-label':'Развёртка из 6 прямоугольных граней в клетку 1 на 1 см'},container);const {l,w,h}=dims;
+ const unit=Math.min(31,(560-40)/(2*l+2*w),(330-30)/(2*w+h)),OX=(560-(2*l+2*w)*unit)/2,OY=(330-(2*w+h)*unit)/2;
+ const g=svgEl('g',{},sv);
+ const showTop=mode!=='walls',showBottom=mode==='all';
+ const face=[{x:w,y:0,ww:l,hh:w,t:'top',on:showTop,id:'1'},{x:0,y:w,ww:w,hh:h,t:'side',on:true,id:'2'},{x:w,y:w,ww:l,hh:h,t:'front',on:true,id:'3'},{x:w+l,y:w,ww:w,hh:h,t:'side',on:true,id:'4'},{x:w+l+w,y:w,ww:l,hh:h,t:'front',on:true,id:'5'},{x:w,y:w+h,ww:l,hh:w,t:'top',on:showBottom,id:'6'}];
+ face.forEach(f=>svgGridRect(g,OX+f.x*unit,OY+f.y*unit,f.ww,f.hh,unit,f.t,f.on,f.id));
+ const textColor='#3e4a77';textSvg(sv,278,323,'Каждая клетка: 1 см × 1 см = 1 см²',{color:textColor,size:11,weight:720});
+ return sv;
+}
+function drawFlat(container,l,w){container.innerHTML='';const s=svgEl('svg',{viewBox:'0 0 420 175',role:'img','aria-label':`Прямоугольник ${l} на ${w} клеток, сторона клетки один сантиметр`},container);const sz=Math.min(27,300/l,126/w),ox=(420-l*sz)/2,oy=(160-w*sz)/2;svgGridRect(s,ox,oy,l,w,sz,'front',true,'');textSvg(s,ox+l*sz/2,oy-7,`${l} см`,{size:13,color:'#46618d'});textSvg(s,ox+l*sz+22,oy+w*sz/2,`${w} см`,{size:13,color:'#46618d'});return s}
+function updateLab(){
+ ['l','w','h'].forEach(k=>{$('out-'+k).textContent=D[k]+' см';$('stat-'+k).textContent=D[k]+' см';$('dim-'+k).value=D[k]});
+ drawBox($('box-holder'),D);drawNet($('net-holder'),D,coverMode);
+ const a=D.l*D.w,b=D.l*D.h,c=D.w*D.h,counts=[coverMode==='all'?2:coverMode==='open'?1:0,2,2];
+ const rows=[['Верх и дно',a,counts[0]],['Передняя и задняя грани',b,counts[1]],['Левая и правая',c,counts[2]]];$('face-rows').innerHTML=rows.map(([name,each,cnt],i)=>`<tr class="${cnt===0?'muted-row':''}"><td><span class="swatch ${['top','front','side'][i]}" style="display:inline-block;vertical-align:-2px;margin-right:6px"></span>${name}</td><td>${each} см²</td><td>${cnt} из 2</td><td><b>${each*cnt} см²</b></td></tr>`).join('');
+ const s=surface(D,coverMode),s0=surface(BASE,coverMode);$('total-area').textContent=s+' см²';$('tile-count').textContent=s;$('stock-result').textContent=s<=80?'Хватит':'Не хватит';$('stock-result').style.color=s<=80?'#1a8567':'#ba4261';
+ $('old-area').textContent=s0;$('new-area').textContent=s;const m=Math.max(80,s,s0);$('bar-old').style.width=(100*s0/m)+'%';$('bar-now').style.width=(100*s/m)+'%';
+ let dif=s-s0;$('delta-label').textContent=dif===0?'По сравнению с начальной моделью расход не изменился.':dif>0?`Для покрытия нужно на ${dif} см² больше материала, чем сначала.`:`Для покрытия нужно на ${-dif} см² меньше материала, чем сначала.`;
+ if(coverMode==='all'&&s===64){missionAchieved=true;$('mission-box').classList.add('completed');$('mission-progress').style.color='#147c5b';$('mission-progress').textContent='✓ Получилось! Площадь покрытия — ровно 64 см².'}else{$('mission-box').classList.remove('completed');$('mission-progress').style.color='#5f50bf';$('mission-progress').textContent=`Сейчас ${s} см². Для цели нужно ${s<64?'увеличить':'уменьшить'} площадь покрытия ${Math.abs(64-s)} см².`}
+ $('lab-observation').textContent=`Текущий размер: ${D.l} × ${D.w} × ${D.h} см. Площадь покрытия — ${s} см².`;
+}
+function stageTo(n){if(n<0||n>4)return;if(n>1&&!finished[0])return;if(n>2&&!finished[2])return;if(n>3&&!finished[3])return;currentStage=n;stages.forEach((s,i)=>s.classList.toggle('active',i===n));document.querySelectorAll('.tab').forEach((b,i)=>{b.classList.toggle('current',i===n);b.classList.toggle('done',finished[i]&&i!==n);b.setAttribute('aria-current',i===n?'step':'false')});$('progress-bar').style.width=((n+1)*20)+'%';window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>stageTo(Number(b.dataset.stage))));
+function showChoices(holder,choices,selected,onClick,disabled=false){holder.innerHTML='';choices.forEach((str,i)=>{const b=document.createElement('button');b.type='button';b.className='option'+(selected===i?' selected':'');b.textContent=str;b.disabled=disabled;b.addEventListener('click',()=>onClick(i));holder.appendChild(b)})}
+function renderDiag(){const q=diagQuestions[diagIndex];$('diag-counter').textContent=`${diagIndex+1} из 3`;$('diag-question').textContent=q.text;const vis=$('diag-visual');vis.hidden=false; if(q.visual==='flat')drawFlat(vis,4,3);else drawBox(vis,{l:4,w:3,h:2});showChoices($('diag-options'),q.choices,diagSelected,chooseDiag);$('diag-next').disabled=diagSelected===null;$('diag-next').textContent=diagIndex===2?'К исследованию':'Следующий вопрос';$('diag-message').hidden=diagSelected===null;if(diagSelected!==null){$('diag-message').className='feedback';$('diag-message').textContent='Ответ сохранён. После диагностики получишь задания по своему маршруту.'}}
+function chooseDiag(i){if(diagSelected!==null)return;diagSelected=i;diagAnswers.push(i);renderDiag()}
+$('diag-next').addEventListener('click',()=>{if(diagSelected===null)return;if(diagIndex<2){diagIndex++;diagSelected=null;renderDiag()}else{finished[0]=true;route=buildRoute();updateLab();stageTo(1)}});
+function buildRoute(){const a=[];if(diagAnswers[0]!==1)a.push('flat');if(diagAnswers[1]!==2)a.push('faces');if(diagAnswers[2]!==1)a.push('changeWidth');a.push('noBottom','error','grow','stock');return a}
+['l','w','h'].forEach(k=>{$('dim-'+k).addEventListener('input',e=>{D[k]=Number(e.target.value);updateLab()})});document.querySelectorAll('.stepper').forEach(b=>b.addEventListener('click',()=>{let k=b.dataset.dim,inp=$('dim-'+k);D[k]=Math.max(Number(inp.min),Math.min(Number(inp.max),D[k]+Number(b.dataset.change)));updateLab()}));document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>{coverMode=b.dataset.mode;document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b));updateLab()}));$('lab-reset').addEventListener('click',()=>{Object.assign(D,BASE);coverMode='all';document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode==='all'));updateLab()});$('lab-to-practice').addEventListener('click',()=>{finished[1]=true;renderPractice();stageTo(2)});
+const tasks={
+ flat:{type:'Площадь одной грани',text:'Для крышки макета нужна деталь 6 × 4 см. Сколько квадратных сантиметров материала пойдёт на её лицевую сторону?',opts:['10 см²','20 см²','24 см²','48 см²'],a:2,visual:'flat6',hint:'Представь прямоугольник в клетку 1 см. Сколько рядов и сколько клеток в каждом ряду?',explain:'6 рядов по 4 клетки или 4 ряда по 6 клеток: 6 × 4 = 24 см².'},
+ faces:{type:'Видимая и невидимая поверхность',text:'На объёмном рисунке видно только три грани. Сколько граней нужно учесть, если плёнкой обклеивают всю закрытую коробку?',opts:['3','4','5','6'],a:3,visual:'box43',hint:'Вспомни: у каждой видимой грани есть противоположная, даже если её не видно.',explain:'У прямоугольной коробки 6 граней: верх и низ, перед и зад, левая и правая.'},
+ changeWidth:{type:'Измени параметр',text:'Длина и высота коробки остались прежними, а ширина увеличилась. Какие площади обязательно изменятся?',opts:['Только передней и задней','Верхней, нижней и двух боковых','Только передней и верхней','Все шесть'],a:1,visual:'box43',hint:'У каких прямоугольных граней ширина коробки является одной из сторон?',explain:'Ширина участвует в размерах верхней, нижней, левой и правой граней. Передняя и задняя зависят от длины и высоты.'},
+ noBottom:{type:'Выбери покрытие',text:'Коробка имеет длину 4 см, ширину 3 см, высоту 2 см. Плёнкой покрывают все грани, КРОМЕ нижней. Сколько см² плёнки потребуется?',opts:['52 см²','40 см²','28 см²','12 см²'],a:1,visual:'box43',hint:'Сначала вспомни площадь всех шести граней. Затем не учитывай площадь дна 4 × 3 см.',explain:'Все 6 граней: 2 × 12 + 2 × 8 + 2 × 6 = 52 см². Дно 12 см² не покрываем: 52 − 12 = 40 см².'},
+ error:{type:'Найди ошибку проектировщика',text:'Для коробки 4 × 3 × 2 см ученик записал: «12 + 8 + 6 = 26 см² — площадь всех граней». В чём ошибка?',opts:['Он перепутал сантиметры и метры','Он учёл только по одной грани каждого вида','Нужно было складывать длины рёбер','Ошибки нет'],a:1,visual:'wrong',hint:'Посмотри на развёртку: у коробки есть по две одинаковые грани трёх видов.',explain:'26 см² — сумма площадей лишь трёх граней. Пары противоположных граней дают 2 × 26 = 52 см².'},
+ grow:{type:'Что изменилось?',text:'Коробку 4 × 3 × 2 см удлинили до 6 × 3 × 2 см. Все шесть граней покрывают плёнкой. НА СКОЛЬКО см² увеличился расход?',opts:['На 2 см²','На 12 см²','На 20 см²','На 24 см²'],a:2,visual:'grow',hint:'Сравни площади двух развёрток: сначала 52 см², после изменения 2 × (18 + 12 + 6) см².',explain:'Новая площадь 72 см², первоначальная 52 см². Изменение: 72 − 52 = 20 см².'},
+ stock:{type:'Хватит ли материала?',text:'Для всех граней коробки 4 × 3 × 2 см есть 55 квадратных наклеек 1 × 1 см. Хватит ли наклеек и сколько останется? (Наклейки можно размещать без промежутков.)',opts:['Не хватит 3 наклеек','Хватит, останется 3','Хватит, останется 13','Нужно ровно 55'],a:1,visual:'box43',hint:'Найди площадь поверхности коробки в см² и сравни с количеством наклеек площадью 1 см².',explain:'Вся площадь 52 см², на неё нужно 52 наклейки. Имеем 55, значит останется 55 − 52 = 3.'}
+};
+// On a second attempt the practice scenarios change; the exercise type and skills stay the same.
+const altTasks={
+ flat:{type:'Площадь одной грани · новый вариант',text:'Для лицевой стороны таблички нужна прямоугольная деталь 5 × 3 см. Какова её площадь?',opts:['8 см²','15 см²','16 см²','30 см²'],a:1,visual:'flat5',hint:'У каждой из трёх строк по 5 клеток размером 1 см².',explain:'5 × 3 = 15 см².'},
+ faces:{type:'Пары граней · новый вариант',text:'Сколько пар одинаковых противоположных граней имеет закрытая прямоугольная коробка?',opts:['1 пара','2 пары','3 пары','6 пар'],a:2,visual:'box43',hint:'Найди пару для верхней, передней и левой грани.',explain:'Всего 6 граней, которые образуют 3 пары противоположных граней.'},
+ changeWidth:{type:'Изменение параметра · новый вариант',text:'У коробки увеличили только ВЫСОТУ, не меняя длину и ширину. Какие площади изменились?',opts:['Передней, задней и двух боковых','Верхней и нижней','Только передней','Все шесть'],a:0,visual:'box43',hint:'Высота входит в размеры вертикальных граней, но не входит в размеры верхней и нижней.',explain:'Четыре боковые грани меняют площадь, верхняя и нижняя остаются прежними.'},
+ noBottom:{type:'Материал без дна · новый вариант',text:'Коробка 5 × 2 × 2 см покрывается плёнкой со всех сторон, кроме дна. Сколько материала нужно?',opts:['48 см²','38 см²','28 см²','20 см²'],a:1,visual:'box522',hint:'Площадь всех граней 48 см². Дно 5 × 2 = 10 см² не покрывают.',explain:'48 − 10 = 38 см².'},
+ error:{type:'Найди ошибку · новый вариант',text:'Коробка имеет размеры 5 × 3 × 2 см. Ученик сложил 15 + 10 + 6 = 31 см² и назвал это площадью всей поверхности. Что пропущено?',opts:['Площадь нужно измерять сантиметрами','Не учтены три противоположные грани','Следует добавить периметр','Ничего не пропущено'],a:1,visual:'wrongAlt',hint:'В коробке не три, а шесть граней. Каждый вид представлен дважды.',explain:'Правильный расчёт: 2 × (15 + 10 + 6) = 62 см².'},
+ grow:{type:'Новая длина · новый вариант',text:'Коробка 4 × 2 × 2 см стала длиннее: 6 × 2 × 2 см. Обклеивают все грани. На сколько см² вырос расход?',opts:['На 4 см²','На 8 см²','На 16 см²','На 24 см²'],a:2,visual:'growAlt',hint:'Было 40 см²; стало 2 × (12 + 12 + 4) см².',explain:'Новая площадь 56 см², прежняя 40 см². Прирост 16 см².'},
+ stock:{type:'Запас наклеек · новый вариант',text:'Для коробки 5 × 2 × 2 см есть 54 квадратные наклейки 1 × 1 см. Сколько останется после покрытия всех граней?',opts:['Не хватит 6','Останется 6','Останется 10','Не останется ничего'],a:1,visual:'box522',hint:'Вся площадь коробки 48 см². Вычти это число из 54.',explain:'54 − 48 = 6 наклеек останется.'}
+};
+function activeTask(){const id=route[practiceIndex];return passNumber%2===0?tasks[id]:altTasks[id]}
+function taskVisual(which,holder){holder.hidden=false;holder.innerHTML='';if(which==='flat6'){drawFlat(holder,6,4);return}if(which==='flat5'){drawFlat(holder,5,3);return}if(which==='box522'){drawBox(holder,{l:5,w:2,h:2});return}if(which==='wrongAlt'){holder.innerHTML='<div style="text-align:center"><div class="error-tag">Запись ученика</div><div class="bad-example" style="margin:8px 0 3px">15 + 10 + 6 = 31 см²</div><div style="font-size:12px;color:#607095">А сколько граней у самой коробки?</div></div>';return}if(which==='wrong'){holder.innerHTML='<div style="text-align:center"><div class="error-tag">Запись ученика</div><div class="bad-example" style="margin:8px 0 3px">4 × 3 + 4 × 2 + 3 × 2 = 26 см²</div><div style="font-size:12px;color:#607095">Ученик назвал это площадью всех шести граней</div></div>';return}if(which==='grow'||which==='growAlt'){const wrap=document.createElement('div');wrap.className='visual-pair';holder.appendChild(wrap);(which==='grow'?[{l:4,w:3,h:2},{l:6,w:3,h:2}]:[{l:4,w:2,h:2},{l:6,w:2,h:2}]).forEach((d,i)=>{const block=document.createElement('div');block.className='visual-task';block.style.cssText='min-height:100px;display:block;text-align:center;padding:4px';block.innerHTML=`<div style="font-size:12px;font-weight:800">${i?'После':'До'}: ${d.l} × ${d.w} × ${d.h} см</div>`;const sub=document.createElement('div');block.appendChild(sub);drawBox(sub,d);wrap.appendChild(block)});return}drawBox(holder,{l:4,w:3,h:2})}
+function renderPractice(){if(practiceIndex>=route.length){finished[2]=true;renderRule();stageTo(3);return}let t=activeTask();$('practice-counter').textContent=`${practiceIndex+1} из ${route.length}`;$('practice-type').textContent=t.type;$('practice-question').textContent=t.text;taskVisual(t.visual,$('practice-visual'));showChoices($('practice-options'),t.opts,practiceSelected,choosePractice,practiceResolved);$('practice-next').disabled=!practiceResolved;$('practice-next').textContent=practiceIndex===route.length-1?'Восстановить правило':'Следующее задание';$('practice-help-status').textContent=practiceResolved?(practiceWrong===0?'Верно с первой попытки.':'Задание разобрано.'):'При ошибке появится вопрос-подсказка.';
+ const fb=$('practice-feedback');if(!practiceResolved&&practiceWrong===0){fb.hidden=true}else if(practiceResolved){fb.hidden=false;fb.className='feedback good';fb.innerHTML=`<strong>${practiceWrong===0?'Верно! Самостоятельное решение.':'Решение найдено.'}</strong>${t.explain}`} }
+function choosePractice(i){if(practiceResolved)return;const t=activeTask();practiceSelected=i;if(i===t.a){practiceResolved=true;if(practiceWrong===0)practiceFirstCorrect++;else practiceAssisted++;renderPractice();const btns=$('practice-options').querySelectorAll('button');btns[i].classList.add('correct');return}practiceWrong++;const fb=$('practice-feedback');fb.hidden=false;fb.className='feedback bad';fb.innerHTML=practiceWrong===1?`<strong>Проверь ход рассуждения.</strong>${t.hint}`:`<strong>Подумай ещё.</strong>${t.hint} Посмотри на развёртку или вспомни парные грани. Попробуй другой вариант.`;showChoices($('practice-options'),t.opts,i,choosePractice,false);$('practice-options').querySelectorAll('button')[i].classList.add('incorrect');$('practice-help-status').textContent=practiceWrong===1?'Первая подсказка. Попробуй ещё.':'Можно повторить попытку. Ответ не показан.'}
+$('practice-next').addEventListener('click',()=>{if(!practiceResolved)return;practiceIndex++;practiceWrong=0;practiceResolved=false;practiceSelected=null;renderPractice()});
+const ruleItems=[
+ {t:'Площадь одной прямоугольной грани можно найти, если…',options:['сложить все длины её сторон','умножить длину на ширину','умножить число углов на 2','посчитать все рёбра коробки'],a:1},
+ {t:'У закрытой прямоугольной коробки…',options:['только три грани','все грани разного размера','противоположные грани равны','нет нижней грани'],a:2},
+ {t:'Когда плёнкой покрывают не всю коробку…',options:['учитывают только нужные грани','всегда считают все шесть','измеряют только высоту','площадь заменяют периметром'],a:0},
+ {t:'Если изменить размер детали, для нового расхода…',options:['оставляют прежний расчёт','достаточно пересчитать длину рамки','нужно пересчитать площади изменившихся граней','увеличивают ответ всегда вдвое'],a:2}
+];let ruleSelect=Array(ruleItems.length).fill(null),ruleDone=false,ruleFirstTry=true;
+function renderRule(){const el=$('conclusion-list');el.innerHTML='';ruleItems.forEach((item,i)=>{const section=document.createElement('div');section.className='conclusion-item';const h=document.createElement('h3');h.textContent=`${i+1}. ${item.t}`;section.appendChild(h);const choices=document.createElement('div');choices.className='conclusion-choices';item.options.forEach((opt,j)=>{const b=document.createElement('button');b.type='button';b.textContent=opt;if(ruleSelect[i]===j)b.classList.add('selected');if(ruleDone&&ruleSelect[i]===j)b.classList.add(j===item.a?'good-choice':'bad-choice');b.addEventListener('click',()=>{if(ruleDone)return;ruleSelect[i]=j;renderRule();$('rule-feedback').hidden=true});choices.appendChild(b)});section.appendChild(choices);el.appendChild(section)});$('rule-check').textContent=ruleDone?'Посмотреть результат':'Проверить правило'}
+$('rule-check').addEventListener('click',()=>{if(ruleDone){finishResults();return}if(ruleSelect.some(x=>x===null)){$('rule-feedback').hidden=false;$('rule-feedback').className='feedback bad';$('rule-feedback').textContent='Сначала выбери по одному ответу в каждом пункте.';return}let wrong=ruleItems.filter((t,i)=>ruleSelect[i]!==t.a).length;if(wrong){ruleFirstTry=false;$('rule-feedback').hidden=false;$('rule-feedback').className='feedback bad';$('rule-feedback').textContent=`Есть неточности: ${wrong}. Проверь смысл каждого утверждения и исправь выбор.`;return}ruleDone=true;finished[3]=true;$('rule-feedback').hidden=false;$('rule-feedback').className='feedback good';$('rule-feedback').innerHTML=`<strong>Правило восстановлено!</strong>${ruleFirstTry?'Все четыре утверждения выбраны самостоятельно.':'Ты проверил варианты и исправил неточности.'}`;renderRule();$('rule-check').textContent='Посмотреть результат'});
+function finishResults(){finished[4]=true;$('result-diag').textContent=`${diagQuestions.filter((q,i)=>diagAnswers[i]===q.answer).length}/3`;$('result-practice').textContent=`${practiceFirstCorrect}/${route.length}`;$('result-help').textContent=String(practiceAssisted);$('result-model').textContent=`Размеры последней исследованной модели: ${D.l} × ${D.w} × ${D.h} см. Тип покрытия: ${coverMode==='all'?'все шесть граней':coverMode==='open'?'без нижней грани':'только четыре боковые стенки'}. Потребность в материале: ${surface(D,coverMode)} см². ${missionAchieved?'Во время исследования удалось подобрать модель с расходом 64 см².':''}`;stageTo(4)}
+$('restart').addEventListener('click',()=>{passNumber++;diagIndex=0;diagSelected=null;diagAnswers=[];route=[];practiceIndex=0;practiceWrong=0;practiceFirstCorrect=0;practiceAssisted=0;practiceResolved=false;practiceSelected=null;ruleSelect=Array(ruleItems.length).fill(null);ruleDone=false;ruleFirstTry=true;missionAchieved=false;Object.assign(D,BASE);coverMode='all';finished=[false,false,false,false,false];document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode==='all'));$('rule-feedback').hidden=true;$('copy-feedback').hidden=true;renderDiag();updateLab();stageTo(0)});
+$('copy-result').addEventListener('click',async()=>{const s=`Математическое моделирование, 4 класс. Тема: Площадь поверхности в проекте. Диагностика: ${diagQuestions.filter((q,i)=>diagAnswers[i]===q.answer).length}/3. Маршрут: самостоятельно ${practiceFirstCorrect}/${route.length}, с повторной попыткой ${practiceAssisted}. Площадь исследованной модели ${D.l}×${D.w}×${D.h} см: ${surface(D,coverMode)} см².`;try{await navigator.clipboard.writeText(s);$('copy-feedback').textContent='Итог скопирован в буфер обмена.'}catch(e){$('copy-feedback').textContent='Автоматическое копирование недоступно в этом браузере. Результат можно прочитать на экране.'}$('copy-feedback').hidden=false;$('copy-feedback').className='feedback good'});
+renderDiag();updateLab();
+</script>
+</body>
+</html>
